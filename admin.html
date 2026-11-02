@@ -1,0 +1,1427 @@
+<!doctype html>
+<html lang="en"><head><script>
+/* Screen profile: labels the page with the size class it opened at (data-screen), the orientation, short landscape screens
+   and big system text, and updates when the phone rotates, the window resizes or the text size changes. The keyboard opening is ignored. */
+(function () {
+  var d = document.documentElement, lw = 0, lf = 0;
+  function mq(q) { try { return window.matchMedia(q).matches; } catch (e) { return false; } }
+  function profile() {
+    var w = window.innerWidth || d.clientWidth || 360, h = window.innerHeight || d.clientHeight || 640, f = parseFloat(getComputedStyle(d).fontSize) || 16;
+    if (w === lw && f === lf) return;
+    lw = w; lf = f;
+    d.setAttribute("data-screen", w < 340 ? "xs" : w < 380 ? "sm" : w < 480 ? "md" : w < 768 ? "lg" : w < 1024 ? "tablet" : "desktop");
+    d.setAttribute("data-orient", w > h ? "land" : "port");
+    if (mq("(orientation: landscape) and (max-height: 520px)")) d.setAttribute("data-short", "1"); else d.removeAttribute("data-short");
+    if (f > 17.5) d.setAttribute("data-bigtext", "1"); else d.removeAttribute("data-bigtext");
+  }
+  profile();
+  window.addEventListener("resize", profile); window.addEventListener("orientationchange", profile); window.addEventListener("DOMContentLoaded", profile);
+})();
+</script>
+<link rel="preconnect" href="https://script.google.com"><link rel="preconnect" href="https://script.googleusercontent.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Tinos:wght@400;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Tinos:wght@400;700&display=swap"></noscript><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>247Bet Admin</title>
+<style>
+:root{--bg:#050d1d;--s:#0a1830;--s2:#0f2244;--l:#1a3159;--t:#eef4fb;--m:#8aa0bf;--g:#4ff32c;--r:#ff6b6b;--a:#ffc247}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--t);font:400 13px/1.45 "Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}
+.side{background:var(--s);border-right:1px solid var(--l);padding:16px 10px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{font-weight:700;font-size:16px;padding:2px 10px 14px}.brand b{color:var(--g)}
+#nav details{margin:6px 0;border-radius:10px}#nav summary{cursor:pointer;list-style:none;padding:9px 10px;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--m);font-weight:700;border-radius:8px}#nav summary::-webkit-details-marker{display:none}#nav summary::after{content:'+';float:right}#nav details[open]>summary::after{content:'\2212'}#nav details[open]>summary{color:var(--t)}#nav details.aff{border:1px solid rgba(79,243,44,.45);background:rgba(79,243,44,.05)}#nav details.aff summary{color:var(--g)}#nav details>button{padding-left:18px}.mbar{display:none}
+#nav button{display:block;width:100%;text-align:left;background:none;border:0;border-radius:8px;padding:8px 10px;color:var(--t)}
+#nav button:hover{background:var(--s2)}#nav button.on{background:var(--g);color:#032008;font-weight:700}
+.main{padding:16px 20px 40px;min-width:0}
+.top{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.top input{flex:1;min-width:220px}
+h2{margin:0 0 4px;font-size:20px}h3{margin:0 0 10px}
+button,input,select{font:inherit;color:var(--t);background:var(--s2);border:1px solid var(--l);border-radius:8px;padding:8px 11px}
+input:focus,select:focus{outline:2px solid rgba(79,243,44,.45);border-color:var(--g)}
+button{cursor:pointer}button:hover{border-color:var(--m)}button.on,button.go{background:var(--g);color:#032008;border-color:var(--g);font-weight:700}
+button.sm{padding:4px 8px;font-size:11.5px;margin:1px}button.bad{color:var(--r)}
+.card{background:var(--s);border:1px solid var(--l);border-radius:14px;padding:14px;margin:12px 0}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.bal{font-size:26px;font-weight:700;color:var(--g);text-align:right}.bal small{display:block;font-size:11.5px;font-weight:400;color:var(--m)}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.k div{background:var(--s);border:1px solid var(--l);border-radius:12px;padding:12px}
+.k b{display:block;font-size:20px;color:var(--g)}.k span{color:var(--m);font-size:11.5px}
+.tw{overflow-x:auto;border:1px solid var(--l);border-radius:12px}table{border-collapse:collapse;width:100%}
+th,td{padding:8px 10px;border-bottom:1px solid var(--l);text-align:left;white-space:nowrap;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+th{color:var(--m);font-weight:600;background:var(--s);position:sticky;top:0}tr:hover td{background:rgba(255,255,255,.03)}
+.f{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;align-items:center}.err{color:var(--r)}.m{color:var(--m)}
+/* in-page loading: a slim bar at the top while anything is loading; the current screen stays in place and is swapped when the new one is ready */
+#nbar{position:fixed;left:0;top:0;height:3px;width:100%;z-index:200;pointer-events:none;opacity:0;transition:opacity .2s;background:linear-gradient(90deg,transparent,var(--g,#4ff32c),transparent);background-size:40% 100%;background-repeat:no-repeat;animation:nbar 1s linear infinite}#nbar.on{opacity:1}@keyframes nbar{0%{background-position:-40% 0}100%{background-position:140% 0}}
+#out.busy{opacity:.55;pointer-events:none;transition:opacity .15s}@media (prefers-reduced-motion:reduce){#nbar{animation:none;background-size:100% 100%}}
+#toast{position:fixed;right:16px;top:16px;z-index:99;background:var(--g);color:#032008;font-weight:700;padding:11px 16px;border-radius:10px;max-width:360px;display:none}#toast.bad{background:var(--r);color:#fff}
+dialog{background:var(--s);color:var(--t);border:1px solid var(--l);border-radius:16px;padding:20px;width:min(460px,94vw)}dialog::backdrop{background:rgba(2,7,14,.75)}
+dialog label{display:block;margin:8px 0;font-size:11.5px;color:var(--m)}dialog input,dialog select{display:block;width:100%;margin-top:3px}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;margin:0;border:0;border-radius:0;background:radial-gradient(900px 500px at 50% -10%,rgba(79,243,44,.10),transparent 60%),var(--bg)}
+.lbox{width:100%;max-width:400px;background:var(--s);border:1px solid var(--l);border-radius:18px;padding:30px 26px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.lbox .lg{font-size:26px;font-weight:700;letter-spacing:0}.lbox .lg b{color:var(--g)}.lbox .tag{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--m);border:1px solid var(--l);border-radius:6px;padding:2px 7px;vertical-align:middle}
+.lbox p{margin:6px 0 20px}.lbox label{display:block;font-size:11.5px;color:var(--m);margin:12px 0 5px}.lbox input{width:100%;padding:12px 13px;font-size:16px}
+.kw{position:relative}.kw input{padding-right:64px}.kw button{position:absolute;right:5px;top:5px;bottom:5px;padding:0 10px;font-size:11.5px;background:transparent;border:0;color:var(--m)}
+.lbox .go{width:100%;margin-top:18px;padding:13px;font-size:16px}.lbox .go[disabled]{opacity:.6;cursor:wait}
+.lbox details{margin-top:14px;font-size:11.5px;color:var(--m)}.lbox summary{cursor:pointer}.lbox .err{min-height:18px;margin-top:10px;font-size:13px}
+.lfoot{margin-top:18px;text-align:center;font-size:11.5px;color:var(--m)}
+#boot{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:80;color:var(--m);font-size:14px}
+.sp{width:18px;height:18px;border:2px solid var(--l);border-top-color:var(--g);border-radius:50%;animation:sp .8s linear infinite;margin-right:10px}@keyframes sp{to{transform:rotate(360deg)}}
+.sidef{margin-top:14px;padding:12px 10px 4px;border-top:1px solid var(--l)}.sidef .who{font-size:11.5px;color:var(--m);margin-bottom:8px}.sidef .who b{color:var(--t);text-transform:capitalize}.sidef button{width:100%}
+.mbar .so{margin-left:auto;font-size:13px!important;padding:6px 10px!important}
+.ag{width:76px;text-align:center;text-transform:uppercase;font-weight:700}
+@media(max-width:860px){.shell{grid-template-columns:1fr}.mbar{display:flex;position:sticky;top:0;z-index:30;background:var(--s);border-bottom:1px solid var(--l);padding:8px 12px;gap:12px;align-items:center}.mbar button{font-size:16px;padding:6px 12px}#mcur{font-weight:700;line-height:1}#mcur small{display:block;font-size:10.5px;color:var(--m);text-transform:uppercase;letter-spacing:.08em}
+.side{display:none;position:fixed;left:0;right:0;top:56px;bottom:0;z-index:25;height:auto;overflow:auto;border-right:0;padding:12px}body.menu .side{display:block}#nav button{padding:12px 14px;font-size:16px}#nav summary{padding:13px 10px}
+.main{padding:12px 12px 70px}.top input{min-width:0}input,select,textarea{font-size:16px}button.sm{padding:8px 10px}.k{grid-template-columns:repeat(2,minmax(0,1fr))}.k b{font-size:16px}.bal{font-size:20px}th,td{padding:8px 8px;font-size:13px}dialog{width:94vw}#toast{left:12px;right:12px;max-width:none}}
+</style><style id="sl-css">
+.slm{padding:8px 0;border-top:1px solid var(--l)}.slm:first-child{border-top:0}
+#slM{max-height:380px;overflow:auto;margin-top:6px}
+.slf{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.slf label{font-size:11.5px;color:var(--m);display:block}.slf input,.slf select{margin-top:4px}
+.slc{display:flex;align-items:center;gap:6px;font-size:11.5px}.slc input{width:auto}
+button.sm{padding:5px 9px;font-size:11.5px}
+</style>
+<style id="b2-css">
+.bell{position:relative;padding:8px 11px;font-size:16px;line-height:1}.bell .bc{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;border-radius:9px;background:var(--r);color:#fff;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}.bell .bc[hidden]{display:none}
+#bellp{position:fixed;top:58px;right:14px;width:min(380px,94vw);max-height:70vh;overflow:auto;background:var(--s);border:1px solid var(--l);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.5);z-index:97;padding:8px}
+#bellp .bh{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:4px 6px 8px;border-bottom:1px solid var(--l);margin-bottom:4px}#bellp label{font-size:11.5px;color:var(--m);display:flex;gap:6px;align-items:center}#bellp input{width:auto}
+.bi{display:block;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:9px 10px}.bi:hover{background:var(--s2)}.bi.nw::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--g);margin-right:8px}.bi small{display:block;color:var(--m)}
+#ntoasts{position:fixed;right:16px;bottom:16px;z-index:98;display:flex;flex-direction:column;gap:8px;width:min(340px,calc(100vw - 24px))}
+.nt{background:var(--s2);border:1px solid var(--g);border-left-width:5px;border-radius:12px;padding:10px 34px 10px 12px;cursor:pointer;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.5);animation:ntin .25s ease}
+.nt b{display:block}.nt span{color:var(--m);font-size:11.5px}.nt .x{position:absolute;top:4px;right:6px;background:none;border:0;color:var(--m);font-size:16px;padding:2px 6px}
+@keyframes ntin{from{transform:translateY(12px);opacity:0}}
+.nb{display:inline-block;margin-left:8px;min-width:18px;padding:0 6px;border-radius:9px;background:var(--r);color:#fff;font-size:11.5px;font-weight:700;text-align:center;line-height:18px;letter-spacing:0}
+#pnlbg{position:fixed;inset:0;background:rgba(2,7,14,.55);z-index:60}
+#pnl{position:fixed;top:0;right:0;bottom:0;width:min(540px,100vw);background:var(--bg);border-left:1px solid var(--l);z-index:61;overflow:auto;box-shadow:-20px 0 50px rgba(0,0,0,.5)}
+.pnlh{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--s);border-bottom:1px solid var(--l);z-index:2}.pnlh button{font-size:20px;padding:2px 12px}
+#pnlb{padding:12px 14px 40px}.pcard{background:var(--s);border:1px solid var(--l);border-radius:14px;padding:12px;margin:10px 0}.pcard .tw{margin-top:6px}
+.pfl{margin:6px 0;padding-left:18px}.chip{display:inline-block;border:1px solid var(--m);border-radius:20px;padding:0 9px;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+.bt td.why{white-space:normal;max-width:300px;min-width:200px}.bt .clk{text-decoration:underline;text-decoration-color:var(--m);text-underline-offset:3px}.btsum{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.btsum div{background:var(--s);border:1px solid var(--l);border-radius:10px;padding:8px 12px;min-width:110px}.btsum b{display:block;font-size:16px}.btsum span{font-size:11.5px;color:var(--m)}
+tr[data-pu],.clk{cursor:pointer}td.act{max-width:none;overflow:visible;white-space:normal}
+button[disabled]{opacity:.45;cursor:not-allowed}button.wait{opacity:.6;cursor:wait}
+button.bad.solid{background:var(--r);color:#fff;border-color:var(--r)}
+dialog.uim{width:min(440px,94vw)}.uim-m{margin:6px 0 14px;line-height:1.45;white-space:normal;max-height:50vh;overflow:auto}
+tr.flash td{animation:fl 1.2s ease}@keyframes fl{from{background:rgba(79,243,44,.28)}}
+a.lk{color:var(--g)}body.pnlon{overflow:hidden}
+@media(max-width:860px){.top .bell{display:none}#bellp{top:54px}#ntoasts{left:12px;right:12px;width:auto;bottom:12px}}
+
+.pgb{display:inline-block;width:90px;height:8px;border-radius:99px;background:var(--s2);border:1px solid var(--l);overflow:hidden;vertical-align:middle;margin-right:6px}.pgb i{display:block;height:100%;background:var(--g)}
+.gt{display:inline-block;border-radius:20px;padding:1px 9px;font-size:11px;font-weight:700;letter-spacing:.03em;border:1px solid var(--m);white-space:nowrap}
+.gt.g1,.gt.g0{background:rgba(79,243,44,.16);border-color:var(--g);color:var(--g)}.gt.g2{border-color:#ffc247;color:#ffc247}.gt.gm{border-color:var(--r);color:var(--r)}
+tr.hot td{background:rgba(79,243,44,.07)}.wtc{border-color:var(--g)}.wtd td{background:var(--s2);white-space:normal}.wtd ul{margin:4px 0 8px;padding-left:18px}.k .clk{cursor:pointer}
+/* ===== Typography system: one scale for index and admin ===== */
+:root{--fs-micro:10.5px;--fs-small:11.5px;--fs-body:13px;--fs-h4:14px;--fs-h3:16px;--fs-h2:20px;--fs-title:24px}
+body{font-size:var(--fs-body);line-height:1.45}
+h2,h3,h4{line-height:1.25!important;letter-spacing:0!important;font-style:normal!important}
+h2{font-size:var(--fs-h2)!important;font-weight:700!important}
+h3{font-size:var(--fs-h3)!important;font-weight:600!important}
+h4{font-size:var(--fs-h4)!important;font-weight:600!important}
+.sheet h2{font-size:var(--fs-title)!important}
+
+/* ===== Click feedback ===== */
+html{-webkit-tap-highlight-color:transparent}
+button,a,summary,select,[role=button],label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.tap{scale:.96;filter:brightness(.8);transition:scale .06s ease-out,filter .06s ease-out}
+.hs-dots button.tap{scale:1}
+button:disabled:not(.busy){opacity:.55;cursor:not-allowed}
+html.bg-hidden *,html.bg-hidden *::before,html.bg-hidden *::after{animation-play-state:paused!important}
+.skl{display:block;height:12px;border-radius:6px;margin:9px 0;background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.15),rgba(255,255,255,.06));background-size:200% 100%;animation:sklm 1.1s linear infinite}
+.skl2{display:block;height:12px;border-radius:6px;margin:9px 0;width:70%;background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.15),rgba(255,255,255,.06));background-size:200% 100%;animation:sklm 1.1s linear infinite}.skl3{display:block;height:12px;border-radius:6px;margin:9px 0;width:45%;background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.15),rgba(255,255,255,.06));background-size:200% 100%;animation:sklm 1.1s linear infinite}.skl.w2{width:70%}.skl.w3{width:45%}
+@keyframes sklm{to{background-position:-200% 0}}
+
+button.busy{position:relative;pointer-events:none;color:transparent!important}
+button.busy::after{content:".";position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:20px;line-height:1;color:var(--fbc,#eef4fb);letter-spacing:2px;animation:fbdt 1s steps(1) infinite}
+@keyframes fbdt{0%{content:"."}34%{content:".."}67%{content:"..."}}
+
+/* ===== Screens: stops phones inflating text; layout self-check only exists with ?layout=debug ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.ly-bad{outline:2px solid #ff3b30!important;outline-offset:-2px}
+#lyDbg{position:fixed;left:8px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:99999;max-width:calc(100% - 16px);padding:7px 11px;border-radius:999px;border:1px solid #fff3;font:700 11px/1.2 system-ui,sans-serif;color:#fff;background:#0b6b2a;box-shadow:0 4px 14px #0008}
+#lyDbg.bad{background:#b3261e}
+#lyPanel{position:fixed;left:8px;right:8px;bottom:calc(54px + env(safe-area-inset-bottom,0px));z-index:99999;max-height:45vh;overflow:auto;padding:10px 12px;border-radius:12px;border:1px solid #fff3;background:#000e;color:#fff;font:11px/1.5 ui-monospace,monospace;white-space:pre-wrap}
+#lyPanel[hidden]{display:none}
+</style>
+<style id="v8-serif">
+/* v8: admin keeps its sans-serif tables and tools; only titles and headings use the Times look */
+h1,h2,.sheet h2,.mhead,#mcur{font-family:"Tinos","Times New Roman",Times,"Liberation Serif","Noto Serif",serif!important;font-weight:700}
+
+/* v9: centred sign-in screen and page titles; tables and lists stay left-aligned */
+#login .lbox,#login .lbox .lg,#login .lbox p{text-align:center}
+#login .lbox input{text-align:center}
+#mcur,#out>h2{text-align:center}
+</style>
+
+</head><body><div id="nbar" aria-hidden="true"></div><div id="toast"></div><div id="ntoasts"></div><div id="bellp" hidden></div><div id="pnlbg" hidden></div><aside id="pnl" hidden><div class="pnlh"><b id="pnlt">Player</b><button id="pnlx" aria-label="Close">&times;</button></div><div id="pnlb"></div></aside>
+<div id="boot"><span class="sp"></span>Loading...</div>
+<div id="login" hidden><form class="lbox" id="lf" autocomplete="off"><div class="lg">247<b>Bet</b><span class="tag">Admin</span></div><p class="m">Staff sign-in. Enter your admin key to continue.</p>
+<label for="k">Admin key</label><div class="kw"><input id="k" type="password" placeholder="Enter admin key" autocomplete="current-password" autocapitalize="off" spellcheck="false"><button type="button" id="ks">Show</button></div>
+<details id="adv"><summary>Connection settings</summary><label for="u">Apps Script URL</label><input id="u" placeholder="https://script.google.com/macros/s/.../exec" autocapitalize="off" spellcheck="false"></details>
+<div id="le" class="err" role="alert"></div><button class="go" id="in" type="submit">Log in</button><div class="lfoot">Authorised staff only. Activity is logged.</div></form></div>
+<div id="app" class="shell" hidden><div class="mbar"><button id="mbtn" aria-label="Menu">&#9776;</button><div id="mcur">Menu</div><button class="bell" aria-label="Notifications" title="Notifications">&#128276;<span class="bc" hidden></span></button><button class="so" id="out3">Sign out</button></div><aside class="side"><div class="brand">247<b>Bet</b> Admin</div><nav id="nav"></nav><div class="sidef"><div class="who">Signed in as <b id="whoR">owner</b><span id="whoA"></span></div><button class="sm" id="out2">Sign out</button></div></aside><main class="main"><div class="top"><input id="q" placeholder="Find a player: account no, phone, name or ID"><button class="go" id="qb">Search</button><button class="bell" aria-label="Notifications" title="Notifications">&#128276;<span class="bc" hidden></span></button></div><div id="out"></div></main></div>
+<script>
+(function(){
+  var si=window.setInterval;
+  window.setInterval=function(f,t){ if(typeof f!=="function") return si.apply(window,arguments); var a=[].slice.call(arguments,2);
+    return si.call(window,function(){ if(document.hidden&&t<5000) return; return f.apply(this,a); },t); };
+  document.addEventListener("visibilitychange",function(){document.documentElement.classList.toggle("bg-hidden",document.hidden);});
+  function clickable(el){ for(var i=0;el&&el!==document.body&&el.nodeType===1&&i<6;i++,el=el.parentElement){
+    if(el.disabled) return null; var t=el.tagName;
+    if(t==="BUTTON"||t==="A"||t==="SUMMARY"||t==="SELECT"||el.getAttribute("role")==="button") return el;
+    try{ if(getComputedStyle(el).cursor==="pointer") return el; }catch(e){} } return null; }
+  document.addEventListener("pointerdown",function(e){ var el=clickable(e.target); if(!el) return; el.classList.add("tap");
+    clearTimeout(el.__tt); el.__tt=setTimeout(function(){el.classList.remove("tap");},700); },true);
+  function rel(){ setTimeout(function(){ [].forEach.call(document.querySelectorAll(".tap"),function(n){n.classList.remove("tap");}); },140); }
+  document.addEventListener("pointerup",rel,true); document.addEventListener("pointercancel",rel,true);
+  var LD=null,LB=null;
+  document.addEventListener("click",function(e){ var b=e.target.closest&&e.target.closest("button"); if(!b||b.disabled) return;
+    var o={el:b,t:Date.now()}; LD=o; if(!b.closest("dialog")) LB=o; },true);
+  window.__fb={
+    pick:function(){ var n=Date.now(); if(!LD||n-LD.t>400) return null;
+      if(LD.el.isConnected&&!LD.el.closest("dialog")) return LD.el;
+      if(LB&&LB.el.isConnected&&n-LB.t<60000) return LB.el; return null; },
+    on:function(b){ if(!b||b.classList.contains("busy")) return false;
+      try{ b.style.setProperty("--fbc",getComputedStyle(b).color); }catch(e){}
+      b.classList.add("busy"); b.setAttribute("aria-busy","true"); return true; },
+    off:function(b,added){ if(!b||!added) return; b.classList.remove("busy"); b.removeAttribute("aria-busy"); }
+  };
+})();
+</script>
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s, root) { return Array.prototype.slice.call((root || document).querySelectorAll(s)); };   // was missing: opening a game round in Admin threw an error
+  var U = sessionStorage.getItem("u") || "", K = sessionStorage.getItem("k") || "";
+  var ROLE = "owner", FULL = false;
+  var TABS = [["stats","Dashboard"],["BetsHome","Overview"],["Watch","Watchlist"],["BetsActive","Active bets"],["BetsPlayers","Active players"],["Bets","All bets"],["BetsSettled","Settled bets"],["DepHome","Overview"],["DepPending","Pending"],["DepDone","Received"],["DepFailed","Failed"],["DepAll","All deposits"],["WdHome","Overview"],["WdOpen","Open requests"],["WdPaid","Paid"],["WdRejected","Rejected"],["WdAll","All withdrawals"],["JpHome","Overview"],["JpDesk","Jackpot desk"],["PredDesk","Predictor desk"],["JackpotEntries","Placed jackpot bets"],["Jackpots","All jackpots"],["Users","Users"],["Ledger","Ledger"],["Bonuses","Bonuses"],["BonusTrail","Bonuses awarded"],["Referrals","Player referrals"],["Devices","Devices"],["BonusBlocks","Bonus blocks"],["SharedSlips","Shared slips"],["SharedPlays","Shared slip bets"],["Affiliates","Overview"],["AffApprovals","Tuesday approvals"],["AffApps","Applications"],["AffList","All affiliates"],["AffPayouts","Payout history"],["AffAdjust","Adjustments"],["AffContracts","Signed contracts"],["AffLog","Change log"],["SlipLinks","Share links"],["Chat","Live chat"],["Holds","Holds"],["Resets","Password resets"],["Messages","Messages"],["Activity","Activity"],["Results","Results"],["OddsCredits","Odds credits"],["Logos","Team logos"],["tools","Tools"],["Reports","Reports"],["AuditLog","Audit log"],["GameCtl","Save My Girl"],["Rounds","Game rounds"],["GameBets","Game bets"]],
+    LISTS = { DepPending: { sheet: "Deposits", col: 4, title: "Pending deposits", f: function (v) { return v === "pending"; } }, DepDone: { sheet: "Deposits", col: 4, title: "Received deposits", f: function (v) { return v === "success"; } }, DepFailed: { sheet: "Deposits", col: 4, title: "Failed deposits", f: function (v) { return v !== "pending" && v !== "success"; } }, DepAll: { sheet: "Deposits", col: 4, title: "All deposits" },
+      WdOpen: { sheet: "Withdrawals", col: 4, title: "Open withdrawal requests", f: function (v) { return v === "pending" || v === "processing" || v === "verified"; } }, WdPaid: { sheet: "Withdrawals", col: 4, title: "Paid withdrawals", f: function (v) { return v === "paid"; } }, WdRejected: { sheet: "Withdrawals", col: 4, title: "Rejected withdrawals", f: function (v) { return v === "rejected"; } }, WdAll: { sheet: "Withdrawals", col: 4, title: "All withdrawals" },
+      JackpotEntries: { sheet: "JackpotEntries", col: 9, title: "Placed jackpot bets" } },
+    DESK = { BetsHome: "bets", DepHome: "deposits", WdHome: "withdrawals", JpHome: "jackpots" }, BETS = { BetsActive: "open", Bets: "all", BetsSettled: "settled" },
+    GROUPS = [["ops","Operations","stats"],["bets","Bets","BetsHome Watch BetsActive BetsPlayers Bets BetsSettled"],["dep","Deposits","DepHome DepPending DepDone DepFailed DepAll"],["wd","Withdrawals","WdHome WdOpen WdPaid WdRejected WdAll"],["jp","Jackpots","JpHome JpDesk PredDesk JackpotEntries Jackpots"],["players","Players","Users Ledger Bonuses BonusTrail Referrals Devices BonusBlocks SharedSlips SharedPlays"],["aff","Affiliate programme","Affiliates AffApprovals AffApps AffList AffPayouts AffAdjust AffContracts AffLog SlipLinks"],["support","Support &amp; risk","Chat Holds Resets Messages"],["sys","System","Activity Results OddsCredits Logos tools"],["rep","Reports &amp; security","Reports AuditLog"],["game","Save My Girl","GameCtl Rounds GameBets"]];
+  function esc(v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  /* ===== BATCH 2 core: server calls with a short read cache, in-page dialogs ===== */
+  var SOFT = false, VK = 0, EP = 0, OUT_DIRTY = false, PN = null, RC = {};
+  var RC_OK = { admStats: 1, admList: 1, admBets: 1, admBet: 1, admDesk: 1, admAffOverview: 1, admAffReport: 1, admActive: 1, admAff: 1, admFind: 1, admPlayer: 1, admOddsCredits: 1, admRounds: 1, admRound: 1, admGame: 1, admSlipMatches: 1, admSlipList: 1, admBonusTrail: 1 };
+  var RC_TTL = 25000, NOSOFT = { SlipLinks: 1, tools: 1, Reports: 1 };
+  var NB = { n: 0 };
+  function nbar(d) { NB.n = Math.max(0, NB.n + d); var e = $("#nbar"); if (e) e.classList.toggle("on", NB.n > 0); if (!NB.n) setTimeout(function () { if (!NB.n) unbusy($("#out")); }, 150); }   // everything finished: never leave the screen dimmed, even if a view could not draw
+  function apiRaw(b, quiet) { b.key = K; if (!quiet) nbar(1); var done = function () { if (!quiet) nbar(-1); }; var p = fetch(U, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(b) }).then(function (r) { return r.json(); }); p.then(done, done); return p; }
+  /* Reads are answered from memory for 25 s (so switching tabs is instant) and quietly re-fetched in the background;
+     the page is only redrawn if the data really changed and you are not typing or in a panel. Any action clears the cache. */
+  function api(b) {
+    if (!RC_OK[b.action]) return apiRaw(b);
+    var k = JSON.stringify(b), hit = RC[k], now = Date.now(), ep = EP;
+    if (hit && now - hit.t < RC_TTL) {
+      if (now - hit.t > 4000 && !hit.busy) {
+        hit.busy = true; var vk = VK;
+        apiRaw(JSON.parse(k), true).then(function (r) { hit.busy = false; if (ep !== EP || !r || !r.ok) return; var j = JSON.stringify(r), ch = j !== hit.j; RC[k] = { t: Date.now(), j: j }; if (ch && vk === VK) softRefresh(); }).catch(function () { hit.busy = false; });
+      }
+      return Promise.resolve(JSON.parse(hit.j));
+    }
+    return apiRaw(JSON.parse(k)).then(function (r) { if (ep === EP && r && r.ok) RC[k] = { t: Date.now(), j: JSON.stringify(r) }; return r; });
+  }
+  function act(o) {
+    var fb=window.__fb, bb=fb&&fb.pick(), ad=fb&&fb.on(bb);
+    var p=act_(o); var d=function(){ if(fb) fb.off(bb,ad); }; p.then(d,d); return p;
+  }
+  function act_(o) {
+    o.action = "admDo"; RC = {}; EP++;
+    return api(o).then(function (r) { RC = {}; EP++; var t = r.ok ? (r.info || "Done.") : r.error; if (t && (t.length > 90 || t.indexOf("\n") > -1)) uiAlert(t, r.ok ? "Done" : "Notice"); else toast(t, !r.ok); return r; })
+      .catch(function () { toast("Network problem. Try again.", true); return { ok: false, error: "Network problem." }; });
+  }
+  function uiAsk(o) {
+    return new Promise(function (res) {
+      var d = document.createElement("dialog"); d.className = "uim";
+      d.innerHTML = "<h3>" + esc(o.title || "") + "</h3>" + (o.msg ? '<div class="uim-m">' + esc(o.msg).replace(/\n/g, "<br>") + "</div>" : "") +
+        (o.input ? '<label>' + esc(o.input.label || "") + '<input id="uiI" type="text" autocomplete="off" value="' + esc(o.input.value == null ? "" : o.input.value) + '"></label>' : "") +
+        '<div class="f"><button id="uiOk" class="' + (o.danger ? "bad solid" : "go") + '">' + esc(o.ok || "OK") + "</button>" + (o.cancel === false ? "" : '<button id="uiNo">' + esc(o.cancel || "Cancel") + "</button>") + "</div>";
+      var done = false;
+      function fin(v) { if (done) return; done = true; try { d.close(); } catch (e) {} d.remove(); res(v); }
+      document.body.appendChild(d); d.showModal();
+      d.querySelector("#uiOk").onclick = function () { fin(o.input ? d.querySelector("#uiI").value : true); };
+      var no = d.querySelector("#uiNo"); if (no) no.onclick = function () { fin(o.input ? null : false); };
+      d.addEventListener("cancel", function (ev) { ev.preventDefault(); fin(o.cancel === false ? (o.input ? "" : true) : (o.input ? null : false)); });
+      if (o.input) { var i = d.querySelector("#uiI"); i.focus(); i.select(); i.onkeydown = function (ev) { if (ev.key === "Enter") { ev.preventDefault(); d.querySelector("#uiOk").click(); } }; } else d.querySelector("#uiOk").focus();
+    });
+  }
+  function uiConfirm(msg, title, ok, danger, cancel) { return uiAsk({ title: title || "Please confirm", msg: msg, ok: ok || "Confirm", danger: danger, cancel: cancel }); }
+  function uiPrompt(msg, def, label) { return uiAsk({ title: "Input needed", msg: msg, input: { label: label || "", value: def }, ok: "OK" }); }
+  function uiAlert(msg, title) { return uiAsk({ title: title || "Notice", msg: msg, ok: "OK", cancel: false }); }
+  var BUSYT = 0, BUSYMO = null;
+  function unbusy(o) { clearTimeout(BUSYT); o.classList.remove("busy"); }
+  /* Opening a screen no longer blanks the page: the current screen stays visible (slightly dimmed) under the top loading bar and is replaced
+     in one step when the new one is ready. Grey placeholders only show when there is nothing on screen yet. */
+  function loading(o) {
+    if (SOFT) return;
+    if (!BUSYMO) { BUSYMO = new MutationObserver(function () { if (o.classList.contains("busy")) unbusy(o); }); BUSYMO.observe(o, { childList: true }); }
+    if (o.children.length && !o.querySelector(".skl")) { o.classList.add("busy"); clearTimeout(BUSYT); BUSYT = setTimeout(function () { unbusy(o); }, 25000); return; }
+    o.innerHTML = '<div class=skl></div><div class=skl2></div><div class=skl3></div>';
+  }
+  function reView() { if (lastView) return lastView(); var cur = document.querySelector("#nav .on"); if (cur) return show(cur.dataset.t); }
+  function softView() { SOFT = true; var y = window.scrollY; try { reView(); } finally { SOFT = false; } setTimeout(function () { window.scrollTo(0, y); }, 0); }
+  function isBusy() {
+    var a = document.activeElement;
+    if (document.querySelector("dialog[open]") || PN) return true;
+    if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && $("#out").contains(a)) return true;
+    return OUT_DIRTY;
+  }
+  function softRefresh() {
+    var cur = document.querySelector("#nav .on"); if (cur && NOSOFT[cur.dataset.t]) return false;
+    if (isBusy()) return false; softView(); return true;
+  }
+  $("#out").addEventListener("input", function () { OUT_DIRTY = true; }, true);
+  $("#out").addEventListener("change", function () { OUT_DIRTY = true; }, true);
+  function legs(v) { try { return JSON.parse(v).map(function (g) { return g.home + " v " + g.away + ": " + g.l + "@" + g.p; }).join(" | "); } catch (e) { return v; } }
+  function canSee(g, k) {
+    if (ROLE === "owner") return true;
+    if (ROLE === "finance") return ["ops", "bets", "dep", "wd", "players", "aff", "rep"].indexOf(g) > -1 && k !== "AuditLog";
+    return g === "ops" || (g === "support" && k !== "Holds") || (g === "players" && k === "Users");
+  }
+  function bkWarn(r) {
+    if (r.role === "support") return "";
+    var w = [], t = r.lastBackup ? new Date(String(r.lastBackup).replace(" ", "T") + ":00+03:00").getTime() : 0;
+    if (!t) w.push("No automatic backup has run yet. In Apps Script run installOpsTriggers(), then dailyBackup().");
+    else if (Date.now() - t > 36 * 3600000) w.push("The last backup was " + r.lastBackup + ". It should run every day.");
+    if (r.lastRecon && /problem/.test(r.lastRecon)) w.push("The last reconciliation (" + r.lastRecon + ") found mismatches.");
+    return w.length ? '<div class="card" style="border-color:#ff6b6b"><b>' + w.map(esc).join("<br>") + '</b> <button class="sm go" data-t="Reports">Open reports</button></div>' : "";
+  }
+  function nav(cur) {
+    if (SOFT) return;
+    VK++; OUT_DIRTY = false;
+    var nm = {}; TABS.forEach(function (t) { nm[t[0]] = t[1]; }); var wide = window.innerWidth > 860, sec = "";
+    $("#nav").innerHTML = GROUPS.map(function (g) {
+      var keys = g[2].split(" ").filter(function (k) { return canSee(g[0], k); }), has = keys.indexOf(cur) > -1; if (has) sec = g[1]; if (!keys.length) return "";
+      return '<details class="sec' + (g[0] === "aff" ? " aff" : "") + '"' + (has || (!cur && g[0] === "ops") ? " open" : "") + "><summary>" + g[1] + "</summary>" + keys.map(function (k) { return '<button class="' + (k === cur ? "on" : "") + '" data-t="' + k + '">' + nm[k] + "</button>"; }).join("") + "</details>";
+    }).join("");
+    var mc = $("#mcur"); if (mc) mc.innerHTML = nm[cur] ? (sec ? "<small>" + sec + "</small>" : "") + nm[cur] : "Menu";
+    document.body.classList.remove("menu"); applyBadges();
+  }
+  function toast(msg, bad) { var t = $("#toast"); t.textContent = msg; t.className = bad ? "bad" : ""; t.style.display = "block"; clearTimeout(toast.h); toast.h = setTimeout(function () { t.style.display = "none"; }, 3800); }
+  function dlg(title, fields, ok, okLabel) {
+    var d = document.createElement("dialog");
+    d.innerHTML = "<h3>" + esc(title) + "</h3>" + fields.map(function (f) { return "<label>" + esc(f[1]) + (f[3] === "select" ? '<select id="m_' + f[0] + '">' + f[4].map(function (o) { return "<option" + (o === f[2] ? " selected" : "") + ">" + o + "</option>"; }).join("") + "</select>" : '<input id="m_' + f[0] + '" type="' + (f[3] || "text") + '" value="' + esc(f[2]) + '">') + "</label>"; }).join("") + '<div class="f"><button class="go" id="m_ok">' + esc(okLabel || "Save") + '</button><button id="m_x">Cancel</button></div>';
+    document.body.appendChild(d); d.showModal();
+    d.querySelector("#m_x").onclick = function () { d.close(); d.remove(); };
+    d.querySelector("#m_ok").onclick = function () { var v = {}; fields.forEach(function (f) { v[f[0]] = d.querySelector("#m_" + f[0]).value; }); d.close(); d.remove(); ok(v); };
+  }
+  function gameRounds(o) {
+    api({ action: "admRounds" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var n = function (v) { return Math.round(v * 100) / 100; };
+      o.innerHTML = '<div class="f"><button data-t="GameCtl">&lsaquo; Save My Girl</button></div><h2 style="margin:8px 0 6px">Game rounds</h2><p class="m">Latest 100 rounds. Tap a round to open it. The live round shows its crash point too.</p><div class="tw"><table><tr><th>Round</th><th>Started</th><th>Crash</th><th>State</th><th>Bets</th><th>Staked</th><th>Paid</th><th>Profit</th><th></th></tr>' + r.rounds.map(function (x) { return "<tr><td>" + esc(x.id) + "</td><td>" + esc(when(x.at)) + "</td><td>" + n(x.crash) + "x</td><td>" + x.status + "</td><td>" + x.bets + "</td><td>" + n(x.staked) + "</td><td>" + n(x.paid) + "</td><td>" + n(x.profit) + '</td><td><button class="sm go" data-rid="' + esc(x.id) + '">Open</button></td></tr>'; }).join("") + "</table></div>";
+      $$("[data-rid]", o).forEach(function (b) { b.onclick = function () { gameRound(o, b.getAttribute("data-rid")); }; });
+    });
+  }
+  function gameRound(o, id) {
+    loading(o);
+    api({ action: "admRound", id: id }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var n = function (v) { return Math.round(v * 100) / 100; }, x = r.round;
+      o.innerHTML = '<div class="f"><button id="grB">&lsaquo; All rounds</button></div><div class="card"><b>Round ' + esc(x.id) + "</b> &middot; " + x.status + '<p class="m">Crash point <b>' + n(x.crash) + "x</b> &middot; betting opened " + esc(when(x.bettingAt)) + " &middot; flight " + esc(when(x.flyAt)) + " &middot; popped " + esc(when(x.crashAt)) + '<br>Seed: <code>' + esc(x.seed) + "</code><br>Hash: <code>" + esc(x.hash) + '</code></p><div class="k"><div><b>Bets</b><span>' + r.bets.length + "</span></div><div><b>Staked</b><span>" + n(r.staked) + "</span></div><div><b>Paid out</b><span>" + n(r.paid) + "</span></div><div><b>Profit</b><span>" + n(r.profit) + '</span></div></div></div><div class="tw"><table><tr><th>Bet</th><th>Placed</th><th>Player</th><th>Slot</th><th>Stake</th><th>Auto</th><th>Result</th><th>Cash-out</th><th>Payout</th></tr>' + r.bets.map(function (b) { return "<tr><td>" + esc(b.id) + "</td><td>" + esc(when(b.at)) + "</td><td>" + esc(b.name) + " (" + esc(b.user) + ")</td><td>" + b.slot + "</td><td>" + n(b.stake) + "</td><td>" + (b.auto ? n(b.auto) + "x" : "") + "</td><td>" + b.status + "</td><td>" + (b.cashAt ? n(b.cashAt) + "x" : "") + "</td><td>" + (b.payout ? n(b.payout) : "") + "</td></tr>"; }).join("") + "</table></div>";
+      $("#grB").onclick = function () { gameRounds(o); };
+    });
+  }
+  function gameCtl(o) {
+    api({ action: "admGame" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var n = function (v) { return Math.round(v * 100) / 100; };
+      o.innerHTML = '<div class="card"><b>Save My Girl</b><p class="m">Game is ' + (r.paused ? "PAUSED" : "LIVE") + " &middot; house edge " + n(r.edge * 100) + '%</p><div class="k">' + [["Bets (last 2000)", r.bets], ["Staked", r.staked], ["Paid out", r.paid], ["GGR", r.ggr], ["Real return %", r.rtp]].map(function (x) { return "<div><b>" + esc(x[0]) + "</b><span>" + n(x[1]) + "</span></div>"; }).join("") + '</div><div class="f"><button class="go" id="gcP">' + (r.paused ? "Resume game" : "Pause game") + '</button><button id="gcE">Change edge</button><button data-t="Rounds">Rounds</button><button data-t="GameBets">Game bets</button></div><p class="m">Pause finishes the current round first. A new edge applies to rounds created after the change.</p></div>';
+      $("#gcP").onclick = function () { act({ op: "smgPause", on: r.paused ? 0 : 1 }).then(function () { gameCtl(o); }); };
+      $("#gcE").onclick = function () { uiPrompt("House edge in percent (1 to 30):", n(r.edge * 100)).then(function (v) { if (v) act({ op: "smgEdge", edge: v }).then(function () { gameCtl(o); }); }); };
+    });
+  }
+  function show(t) {
+    var view = t, spec = LISTS[t]; if (FULL) FULLV = t; else if (FULLV !== t) FULLV = ""; var mx = FULLV ? 5000 : 200; FULL = false; nav(view); lastView = null; var o = $("#out"); loading(o);
+    o.dataset.list = ""; if (DESK[view]) return deskHome(o, DESK[view]);
+    if (BETS[view]) { BF.st = BETS[view]; BF.q = ""; return betsList(o); }
+    if (spec) t = spec.sheet;
+    if (t === "stats") return api({ action: "admStats" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      if (r.role === "support") { o.innerHTML = '<div class="card"><b>Support desk</b><p class="m">' + (Number(r.humanChats) || 0) + " customer(s) waiting for a human agent. " + (Number(r.pendingResets) || 0) + ' password reset request(s) waiting.</p><div class="f"><button class="go" data-t="Chat">Open chats</button><button data-t="Resets">Password resets</button></div></div>'; return; }
+      var c = [["Users", r.users], ["Wallet balances", r.wallets], ["Open bets", r.openBets], ["Open stakes", r.openStake], ["Max payout owed", r.openLiability], ["Boost paid (all time)", "KES " + (r.boostPaid || 0) + " (" + (r.boostWins || 0) + " bets)"], ["Boost paid, last 7 days", "KES " + (r.boostWeek || 0)], ["Boost on open bets", "KES " + (r.boostOpen || 0)], ["Share bonus paid (all time)", "KES " + (r.sharePaid || 0) + " (" + (r.shareCount || 0) + " wins)"], ["Share bonus paid, last 7 days", "KES " + (r.shareWeek || 0)], ["Pending withdrawals", r.pendingWithdrawals + " (KES " + r.pendingWithdrawalSum + ")"], ["Pending deposits", r.pendingDeposits], ["Locked bonuses", r.activeBonusCount + " (KES " + r.activeBonus + ")"], ["Pending referrals", r.pendingReferrals], ["Matches live", r.odds], ["Payments", r.paymentsOn ? "Connected" : "Not set up"]];
+      var pend = Number(r.pendingWithdrawals) + 0, rp = Number(r.pendingResets) || 0, pdr = Number(r.pendingDrafts) || 0, jaw = Number(r.jpAwaiting) || 0;
+      o.innerHTML = bkWarn(r) + (Number(r.humanChats) > 0 ? '<div class="card" style="border-color:#ff6b6b"><b>' + r.humanChats + ' customer(s) waiting for a human agent</b> <button class="sm go" data-t="Chat">Open chats</button></div>' : "") + (jaw > 0 ? '<div class="card" style="border-color:#4ff32c"><b>' + jaw + ' jackpot' + (jaw > 1 ? 's' : '') + ' with results in, waiting for your prizes</b> <button class="sm go" data-t="JpDesk">Set prizes</button></div>' : "") + (pdr > 0 ? '<div class="card" style="border-color:#4ff32c"><b>' + pdr + ' jackpot draft' + (pdr > 1 ? 's' : '') + ' waiting for your approval</b> <button class="sm go" data-t="JpDesk">Open Jackpot desk</button></div>' : "") + (rp > 0 ? '<div class="card" style="border-color:#ffc247"><b>' + rp + ' password reset request' + (rp > 1 ? 's' : '') + ' waiting</b> <button class="sm go" data-t="Resets">Open resets</button></div>' : "") + (pend > 0 ? '<div class="card" style="border-color:#ffc247"><b>' + pend + ' withdrawal request' + (pend > 1 ? 's' : '') + ' waiting (KES ' + esc(r.pendingWithdrawalSum) + ')</b> <button class="sm go" data-t="Withdrawals">Open requests</button></div>' : "") + '<div class="k">' + c.map(function (x) { return "<div><b>" + esc(x[1]) + "</b><span>" + x[0] + "</span></div>"; }).join("") + '</div><div class="card"><b>Ledger totals</b><br>' + Object.keys(r.byType).map(function (k) { return esc(k) + ": " + esc(Math.round(r.byType[k] * 100) / 100); }).join(" &middot; ") + "</div>" + payCard(r) + funnelCard(r);
+    });
+    if (t === "GameCtl") return gameCtl(o);
+    if (t === "Rounds") return gameRounds(o);
+    if (t === "Reports") return reports(o);
+    if (t === "tools") return tools(o);
+    if (t === "Chat") return chatInbox(o);
+    if (t === "Affiliates") return affHome(o);
+    if (t === "AffApprovals") return affApprovals(o);
+    if (t === "AffApps") return affApps(o);
+    if (t === "SlipLinks") return slipLinks(o);
+    if (t === "AffList") return affList(o);
+    if (t === "OddsCredits") return oddsCredits(o);
+    if (t === "Logos") return logosTab(o);
+    if (t === "Watch") return watchView(o);
+    if (t === "BetsPlayers") return activePlayers(o);
+    if (t === "BonusTrail") return bonusTrail(o);
+    if (t === "JpDesk") return jpDesk(o);
+    if (t === "PredDesk") return predDesk(o);
+    api({ action: "admList", sheet: t, max: mx }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      if (spec && spec.f) r.rows = r.rows.filter(function (x) { return spec.f(x[spec.col]); });
+      if (t === "Withdrawals" || t === "AffPayouts") { var si = t === "Withdrawals" ? 4 : 5; r.rows = r.rows.filter(function (x) { return x[si] !== "paid" && x[si] !== "rejected"; }).concat(r.rows.filter(function (x) { return x[si] === "paid" || x[si] === "rejected"; })); }
+      o.dataset.list = t; var h = r.headers, hasAct = ["Ledger", "Messages", "Referrals", "Holds", "Users", "Chat", "Resets", "Bets", "Withdrawals", "Deposits", "Bonuses", "Devices", "BonusBlocks", "Affiliates", "AffPayouts"].indexOf(t) > -1;
+      o.innerHTML = (spec ? '<h2 style="margin:0 0 6px">' + spec.title + "</h2>" : "") + '<p class="m">' + (t === "Withdrawals" ? "Click a request to open the player's dashboard first: Sent / Paid unlocks once you have opened that player. Open requests first. Send the NET amount (column net) on M-Pesa, then press Sent / Paid; use In process and Verified to update the player\'s status. Reject refunds the player. Large requests are split into parts (ids end -1, -2, ...) of at most KES 250,000 each: pay each part separately. A note saying High payout means the request is above KES 500,000: pay the parts one after another, or arrange a bank transfer with the player." : t === "Resets" ? "Players who tapped Forgot password. Press Reset password, then send them the temporary password (WhatsApp or call)." : t === "Activity" ? "Every sign-up, deposit and withdrawal, newest first." : "Newest 200 rows") + '</p><div class="tw"><table><tr>' + h.map(function (x) { return "<th>" + esc(x) + "</th>"; }).join("") + (hasAct ? "<th>Actions</th>" : "") + "</tr>" +
+        r.rows.map(function (row) { return rowHtml(t, h, row, hasAct); }).join("") + "</table></div>";
+      LV = { t: t, h: h, spec: spec, hasAct: hasAct };
+    });
+  }
+
+  /* ===== BATCH 3: Bonuses awarded trail ===== */
+  var BT = { rows: [], f: { type: "", status: "", d1: "", d2: "", q: "" }, capped: false };
+  function btLabel(r) { return r.type === "welcome" ? "Welcome" + (r.half ? " " + r.half : "") : r.type === "weekend" ? "Saturday" : r.type === "referral" ? "Referral" : r.type; }
+  function btDay(t) { return t ? new Date(t).toLocaleDateString("en-CA", { timeZone: "Africa/Nairobi" }) : ""; }
+  function btMoney(n) { return "KES " + (Math.round(Number(n) * 100) / 100).toLocaleString("en-KE"); }
+  function btTypeOk(r, v) { return !v || (v === "welcome" ? r.type === "welcome" : btLabel(r) === v); }
+  function btFiltered() {
+    var f = BT.f, q = f.q.toLowerCase().trim();
+    return BT.rows.filter(function (r) {
+      if (!btTypeOk(r, f.type) || (f.status && r.status !== f.status)) return false;
+      var d = btDay(r.t); if ((f.d1 && d < f.d1) || (f.d2 && d > f.d2)) return false;
+      return !q || [r.name, r.acct, r.id, r.ref, r.why, r.friendName, btLabel(r), r.status].join(" ").toLowerCase().indexOf(q) > -1;
+    });
+  }
+  function btDraw() {
+    var rows = btFiltered(), tot = 0, left = 0, by = {}, sm = $("#btSum"), tb = $("#btTb"); if (!sm || !tb) return;
+    rows.forEach(function (r) { tot += r.amount; left += r.left; var k = btLabel(r); by[k] = by[k] || { n: 0, a: 0 }; by[k].n++; by[k].a += r.amount; });
+    sm.innerHTML = '<div><b>' + rows.length + '</b><span>Bonuses shown</span></div><div><b>' + btMoney(tot) + '</b><span>Total awarded</span></div><div><b>' + btMoney(left) + '</b><span>Still unused (active)</span></div>' +
+      Object.keys(by).sort().map(function (k) { return '<div><b>' + btMoney(by[k].a) + '</b><span>' + esc(k) + " (" + by[k].n + ")</span></div>"; }).join("");
+    if (!rows.length) { tb.innerHTML = '<p class="m">No bonuses match these filters.</p>'; return; }
+    var shown = rows.slice(0, 300);
+    tb.innerHTML = '<div style="overflow-x:auto"><table class="bt"><tr><th>When</th><th>Player</th><th>Type</th><th>Amount</th><th>Why</th><th>Deposit</th><th>Status</th><th>Left</th><th>Expires</th></tr>' + shown.map(function (r) {
+      var pl = '<span class="clk" role="button" tabindex="0" data-pu="' + esc(r.uid) + '">' + esc(r.name) + "</span>" + (r.acct ? '<div class="m">' + esc(r.acct) + "</div>" : "");
+      var dp = r.ref ? '<span class="clk" role="button" tabindex="0" data-pu="' + esc(r.uid) + '" data-pc="dep" data-px="Deposits" data-pi="' + esc(r.ref) + '">' + esc(r.ref) + "</span>" + (r.depAmt != null ? '<div class="m">' + btMoney(r.depAmt) + "</div>" : "") : '<span class="m">-</span>';
+      var fr = r.friendId ? '<div class="m">Friend: <span class="clk" role="button" tabindex="0" data-pu="' + esc(r.friendId) + '">' + esc(r.friendName || r.friendId) + "</span></div>" : "";
+      return "<tr><td>" + esc(r.t ? when(r.t) : "") + "</td><td>" + pl + "</td><td>" + esc(btLabel(r)) + "</td><td>" + btMoney(r.amount) + '</td><td class="why">' + esc(r.why) + fr + "</td><td>" + dp + "</td><td>" + chip(r.status) + "</td><td>" + (r.status === "active" ? btMoney(r.left) : "-") + "</td><td>" + esc(r.expires ? btDay(r.expires) : "") + "</td></tr>";
+    }).join("") + "</table></div>" + (rows.length > shown.length ? '<p class="m">Showing the newest ' + shown.length + " of " + rows.length + ". Narrow the filters or export the CSV to get every row.</p>" : "") + (BT.capped ? '<p class="m">Only the newest 3,000 bonuses are loaded.</p>' : "");
+  }
+  function bonusTrail(o) {
+    api({ action: "admBonusTrail" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      BT.rows = r.rows || []; BT.capped = !!r.capped; var f = BT.f, st = {};
+      BT.rows.forEach(function (x) { st[x.status] = 1; });
+      var types = [["", "All types"], ["welcome", "Welcome (A and B)"], ["Welcome A", "Welcome A"], ["Welcome B", "Welcome B"], ["Saturday", "Saturday"], ["Referral", "Referral"]];
+      o.innerHTML = '<div class="f"><h2 style="margin:0">Bonuses awarded</h2><button class="sm" id="btRf">Refresh</button></div><p class="m">Every bonus given, newest first, with the reason. Click a player to open their account, or a deposit reference to open that deposit.</p>' +
+        '<div class="f tbar" id="btBar"><input id="btQ" placeholder="Search player, account, reference" style="flex:1;min-width:150px" value="' + esc(f.q) + '"><select id="btT">' + types.map(function (t) { return '<option value="' + esc(t[0]) + '"' + (f.type === t[0] ? " selected" : "") + ">" + t[1] + "</option>"; }).join("") + '</select><select id="btS"><option value="">All statuses</option>' + Object.keys(st).sort().map(function (s) { return '<option value="' + esc(s) + '"' + (f.status === s ? " selected" : "") + ">" + esc(s) + "</option>"; }).join("") + '</select><label class="m">From <input type="date" id="btD1" value="' + esc(f.d1) + '"></label><label class="m">To <input type="date" id="btD2" value="' + esc(f.d2) + '"></label><button class="sm" id="btX">Export CSV</button></div><div class="btsum" id="btSum"></div><div id="btTb"></div>';
+      var bar = $("#btBar"); function sync() { f.q = $("#btQ").value; f.type = $("#btT").value; f.status = $("#btS").value; f.d1 = $("#btD1").value; f.d2 = $("#btD2").value; btDraw(); }
+      bar.addEventListener("input", sync); bar.addEventListener("change", sync);
+      $("#btRf").onclick = function () { RC = {}; bonusTrail(o); };
+      $("#btX").onclick = function () {
+        var out = [["When (EAT)", "Player", "Account", "Type", "Amount KES", "Why", "Deposit ref", "Deposit KES", "Referred friend", "Status", "Left KES", "Expires"]];
+        btFiltered().forEach(function (x) { out.push([x.t ? new Date(x.t).toLocaleString("en-KE", { timeZone: "Africa/Nairobi" }) : "", x.name, x.acct, btLabel(x), x.amount, x.why, x.ref, x.depAmt == null ? "" : x.depAmt, x.friendName, x.status, x.status === "active" ? x.left : 0, x.expires ? btDay(x.expires) : ""]); });
+        dlCsv(out, "247bet-bonuses-awarded");
+      };
+      btDraw();
+    });
+  }
+  var lastView = null, FULLV = "", LV = null;
+  function rowHtml(t, h, row, hasAct) {
+          var tds = row.map(function (v, i) { return '<td title="' + esc(h[i] === "legs" ? legs(v) : v) + '">' + esc(h[i] === "legs" ? legs(v) : v) + "</td>"; }).join(""), a = "", id = esc(row[0]);
+          if (t === "Bets") a = betBtns(row);
+          if (t === "Holds" && row[5] === "open") a = row[1] === "match" ? '<button class="sm go" data-do="setResult" data-id="' + esc(row[2]) + '">Enter score</button><button class="sm" data-do="voidMatch" data-id="' + esc(row[2]) + '">Void match</button><button class="sm bad" data-do="holdDismiss" data-id="' + id + '">Dismiss</button>' : '<button class="sm go" data-do="holdApprove" data-id="' + id + '">Approve</button><button class="sm bad" data-do="holdDismiss" data-id="' + id + '">Dismiss</button>';
+          if (t === "Chat" && row[3] === "user") a = '<button class="sm go" data-do="chatReply" data-id="' + esc(row[1]) + '">Reply</button>';
+          if (t === "Withdrawals" && row[4] !== "paid" && row[4] !== "rejected") a = '<button class="sm" data-do="wdProcess" data-id="' + id + '">In process</button><button class="sm" data-do="wdVerify" data-id="' + id + '">Verified</button><button class="sm go" data-do="wdPaid" data-id="' + id + '" data-uid="' + esc(row[1]) + '"' + (opened(String(row[1])) ? "" : ' disabled title="Open the player first: click this row or Player"') + '>Sent / Paid</button><button class="sm bad" data-do="wdReject" data-id="' + id + '">Reject</button>';
+          if (t === "Deposits" && row[4] === "pending") a = '<button class="sm" data-do="recheckDeposit" data-id="' + id + '">Re-check</button>';
+          if (t === "Bonuses" && row[7] === "active") a = '<button class="sm" data-do="bonusRelease" data-id="' + id + '">Release</button><button class="sm bad" data-do="bonusCancel" data-id="' + id + '">Cancel</button>';
+          if (t === "Affiliates") a = (row[3] === "pending" || row[3] === "suspended" ? '<button class="sm" data-do="affSet" data-id="' + id + '" data-r="approved">Approve</button>' : "") + (row[3] === "approved" ? '<button class="sm bad" data-do="affSet" data-id="' + id + '" data-r="suspended">Suspend</button>' : "") + (row[3] === "pending" ? '<button class="sm bad" data-do="affSet" data-id="' + id + '" data-r="rejected">Reject</button>' : "");
+          
+          if (t === "BonusBlocks" && row[2] === "free" && row[5] !== "granted") a = '<button class="sm go" data-do="freeGrant" data-id="' + esc(row[1]) + '">Give free bonus</button>';
+          if (t === "Devices") a = '<button class="sm bad" data-do="devRemove" data-id="' + id + '" data-r="' + esc(row[1]) + '">Remove</button>';
+          if (t === "Resets" && row[4] === "pending") a = '<button class="sm" data-do="resetPw" data-id="' + esc(row[1]) + '">Reset password</button>';
+          if (t === "Users") a = '<button class="sm go" data-open="' + id + '">Open</button><button class="sm bad" data-do="resetPw" data-id="' + id + '">Reset pw</button>' + '<button class="sm" data-do="userStatus" data-id="' + id + '" data-r="' + (row[5] === "active" ? "suspended" : "active") + '">' + (row[5] === "active" ? "Suspend" : "Activate") + "</button>";
+          if (t === "Affiliates") a = '<button class="sm go" data-af="' + id + '">Open</button>' + a;
+          var attrs = ' data-row="' + id + '" data-sheet="' + t + '"', pu = "", pcx = { Withdrawals: "wd", Deposits: "dep", Resets: "reset" }[t];
+          if (pcx) pu = String(row[1]);
+          if (t === "Holds" && (row[1] === "bet" || row[1] === "large")) { pu = String(row[2]); pcx = "hold"; }
+          if (pu) { attrs += ' data-pu="' + esc(pu) + '" data-pc="' + pcx + '" data-px="' + t + '" data-pi="' + id + '"'; a += '<button class="sm" data-pu="' + esc(pu) + '" data-pc="' + pcx + '" data-px="' + t + '" data-pi="' + id + '">Player</button>'; }
+          if (DEL.indexOf(t) > -1) a += delBtn(t, id);
+          if (t === "Users") a += '<button class="sm bad" data-du="' + id + '">Delete</button>';
+          return "<tr" + attrs + ">" + tds + (hasAct ? '<td class="act">' + a + "</td>" : "") + "</tr>";
+  }
+  function th(x) { return "<th>" + esc(x) + "</th>"; }
+  function cell(h, v) { var s = h === "legs" ? legs(v) : v; return '<td title="' + esc(s) + '">' + esc(s) + "</td>"; }
+  function bigTable(h, rows, extra) { return '<div class="tw"><table><tr>' + h.map(th).join("") + (extra ? "<th>Actions</th>" : "") + "</tr>" + rows.map(function (r) { return "<tr>" + r.map(function (v, i) { return cell(h[i], v); }).join("") + (extra ? "<td>" + extra(r) + "</td>" : "") + "</tr>"; }).join("") + "</table></div>"; }
+  function betBtns(r) { var id = esc(r[0]); return (r[7] === "open" ? ["won", "lost", "void"].map(function (x) { return '<button class="sm" data-do="settleBet" data-id="' + id + '" data-r="' + x + '">' + x + "</button>"; }).join("") : "") + '<button class="sm go" data-be="' + id + '" data-v="' + esc([r[7], r[4], r[5], r[6]].join("|")) + '">Edit</button>' + delBtn("Bets", id); }
+  var DEL = ["Ledger", "Deposits", "Withdrawals", "Bonuses", "Messages", "Chat", "Resets", "Holds", "Referrals"];
+  function delBtn(sheet, id) { return '<button class="sm bad" data-del="' + sheet + '" data-id="' + id + '">Delete</button>'; }
+  var curP = "";
+  /* ---------- Live chat inbox ---------- */
+  var chatU = "";
+  function when(t) { return new Date(t).toLocaleString("en-KE", { dateStyle: "short", timeStyle: "short" }); }
+  function chatInbox(o) {
+    chatU = "";
+    api({ action: "admChats" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      o.innerHTML = '<div class="f"><h2 style="margin:0">Live chat</h2><button data-ci="refresh">Refresh</button></div><p class="m">Players are helped by the automatic assistant first. Red = asked for a human. Amber = sent a message and is waiting. Every conversation, including the automatic answers, is saved here.</p>' +
+        (r.chats.length ? '<div class="tw"><table><tr><th>Status</th><th>Player</th><th>Last message</th><th>When</th><th>Msgs</th><th></th></tr>' + r.chats.map(function (c) {
+          return "<tr><td>" + (c.human ? '<span class="err">&#9679; Human needed</span>' : c.waiting ? '<span style="color:var(--a)">&#9679; Waiting</span>' : '<span class="m">Auto</span>') + "</td><td>" + esc(c.name || c.userId) + "</td><td>" + esc(c.last) + "</td><td>" + esc(when(c.at)) + "</td><td>" + c.count + '</td><td><button class="sm go" data-ct="' + esc(c.userId) + '">Open</button></td></tr>';
+        }).join("") + "</table></div>" : '<p class="m">No chats yet.</p>');
+    });
+  }
+  function chatThread(uid) {
+    chatU = uid; nav("Chat"); lastView = function () { chatThread(uid); }; var o = $("#out");
+    api({ action: "admChatThread", id: uid }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var typed = $("#crT") ? $("#crT").value : "";
+      o.innerHTML = '<div class="f"><button data-ci="back">&lsaquo; All chats</button><button data-open="' + esc(uid) + '">Player account</button><button class="bad" data-ci="close">Close chat</button></div><div class="card" id="ct" style="max-height:58vh;overflow:auto">' +
+        r.items.map(function (x) {
+          var st = x.from === "admin", bot = x.from === "bot", who = st ? "You (" + esc(x.agent || "Support") + ")" : bot ? "Assistant (auto)" : x.from === "sys" ? "System" : x.from === "botq" ? "Player (bot flow)" : "Player";
+          return '<div style="margin:6px 0;text-align:' + (st ? "right" : "left") + '"><span style="display:inline-block;max-width:80%;text-align:left;padding:8px 11px;border-radius:12px;background:' + (st ? "var(--g);color:#032008" : bot ? "var(--s2);color:var(--m)" : "var(--l)") + '">' + esc(x.text) + '<small style="display:block;opacity:.7;font-size:11.5px">' + who + " &middot; " + esc(when(x.t)) + "</small></span></div>";
+        }).join("") + '</div><div class="f"><input id="crA" class="ag" maxlength="4" placeholder="JK" title="Your initials. The player sees them beside your reply." value="' + esc(agent()) + '"><input id="crT" style="flex:1" placeholder="Reply to the player" value="' + esc(typed) + '"><button class="go" data-ci="send">Send reply</button></div>';
+      var ct = $("#ct"); if (ct) ct.scrollTop = ct.scrollHeight;
+    });
+  }
+  /* Live chat refresh is now driven by the 5-second counts-only pulse (see BATCH 2 below). */
+  /* ---------- All bets: active first, then newest to oldest ---------- */
+  var BF = { st: "all", q: "" };
+  function chart(pts, key, color, unit) {
+    if (!pts || !pts.length) return "";
+    var W = 640, H = 120, mx = Math.max.apply(null, pts.map(function (p) { return Math.abs(p[key]); }).concat([1])), bw = W / pts.length;
+    return '<svg viewBox="0 0 ' + W + " " + (H + 20) + '" style="width:100%;height:auto">' + pts.map(function (p, i) { var h = Math.max(1, Math.abs(p[key]) / mx * H); return '<rect x="' + (i * bw + 2) + '" y="' + (H - h) + '" width="' + (bw - 4) + '" height="' + h + '" rx="2" fill="' + (p[key] < 0 ? "#ff6b6b" : color) + '"><title>' + p.d + ": " + unit + p[key] + "</title></rect>"; }).join("") +
+      '<text x="0" y="' + (H + 15) + '" fill="#8aa0bf" font-size="11">' + pts[0].d.slice(5) + '</text><text x="' + W + '" y="' + (H + 15) + '" text-anchor="end" fill="#8aa0bf" font-size="11">' + pts[pts.length - 1].d.slice(5) + "</text></svg>";
+  }
+  function sum(pts, k) { return Math.round(pts.reduce(function (a, p) { return a + p[k]; }, 0) * 100) / 100; }
+  function ago(t) {
+    t = Number(t) || 0; if (!t) return "never";
+    var s = Math.max(0, Math.round((Date.now() - t) / 1000));
+    if (s < 90) return "just now"; if (s < 3600) return Math.round(s / 60) + " min ago";
+    if (s < 86400) return Math.round(s / 3600) + " h ago"; return Math.round(s / 86400) + " d ago";
+  }
+  var ACT = { login: "Signed in", placeBet: "Placed a bet", deposit: "Started a deposit", withdraw: "Requested a withdrawal", jpEnter: "Entered a jackpot", gameStart: "Played Crash", gameCash: "Cashed out (Crash)", chatSend: "Sent a chat message", chatHuman: "Asked for a human agent", setLimit: "Changed limits", changePw: "Changed password", affApply: "Applied as affiliate", bonusForfeit: "Forfeited a bonus", register: "Registered" };
+  function seenCell(t) { var on = Number(t) > Date.now() - 300000; return '<span style="color:' + (on ? "var(--g)" : "inherit") + '">' + (on ? "&#9679; " : "") + esc(ago(t)) + "</span>"; }
+  function activePlayers(o) {
+    api({ action: "admActive" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      o.innerHTML = '<div class="f"><h2 style="margin:0">Active players</h2><span class="m">' + r.players + " player(s) with " + r.open + " active bet(s) &middot; <b>" + r.online + '</b> online now (seen in the last 5 minutes). Most recently seen first. "Last seen" means their last time on the site; "Last action" is the last thing they did.</span></div>' +
+        '<div class="f"><button class="go" id="apR">Refresh</button></div>' +
+        (r.rows.length ? '<div class="tw"><table><tr><th>Player</th><th>Acct</th><th>Phone</th><th>Active bets</th><th>Stake</th><th>Max payout</th><th>Next kickoff</th><th>Last login</th><th>Last seen</th><th>Last action</th><th></th></tr>' + r.rows.map(function (x) {
+          return "<tr><td><b>" + esc(x.name) + "</b></td><td>" + esc(x.acct) + "</td><td>" + esc(x.phone) + "</td><td>" + x.bets + "</td><td>" + x.stake + "</td><td>" + x.pot + "</td><td>" + (x.next ? esc(when(x.next)) : "-") + "</td><td title=\"" + (x.login ? esc(when(x.login)) : "") + '">' + esc(ago(x.login)) + (x.logins > 1 ? ' <span class="m">(' + x.logins + " sign-ins)</span>" : "") + '</td><td>' + openCell(x) + '</td><td title="' + (x.seen ? esc(when(x.seen)) : "") + '">' + seenCell(x.seen) + "</td><td>" + esc(ACT[x.action] || x.action || "-") + '</td><td><button class="sm go" data-open="' + esc(x.id) + '">Open account</button><button class="sm" data-msg="' + esc(x.id) + '">Message</button></td></tr>';
+        }).join("") + "</table></div>" : '<p class="m">No player has an active bet right now.</p>');
+      var b = $("#apR"); if (b) b.onclick = function () { activePlayers(o); };
+    });
+  }
+  function betsList(o) {
+    api({ action: "admBets", status: BF.st, q: BF.q }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var chip = { open: "var(--a)", won: "var(--g)", lost: "var(--r)", void: "var(--m)" };
+      o.innerHTML = '<div class="f"><h2 style="margin:0">' + (BF.st === "open" ? "Active bets" : BF.st === "settled" ? "Settled bets" : "All bets") + '</h2><span class="m">' + r.open + " active &middot; showing " + r.shown + " of " + r.matched + " (latest " + r.total + ' loaded). Active bets first, then newest to oldest. Click a bet to open it.</span></div>' +
+        '<div class="f"><select id="bfS">' + ["all", "open", "settled", "won", "lost", "void"].map(function (x) { return '<option value="' + x + '"' + (x === BF.st ? " selected" : "") + ">" + (x === "all" ? "All statuses" : x === "open" ? "Active" : x) + "</option>"; }).join("") + '</select><input id="bfQ" size="36" placeholder="Bet ID, player, account no or team" value="' + esc(BF.q) + '"><button class="go" data-bf="go">Filter</button></div>' +
+        (r.rows.length ? '<div class="tw"><table><tr><th>Bet ID</th><th>Placed</th><th>Player</th><th>Acct</th><th>Stake</th><th>Odds</th><th>Payout</th><th>Status</th><th>Bet opened</th><th>Player online</th><th>Selections</th></tr>' + r.rows.map(function (x) {
+          return '<tr style="cursor:pointer" data-bet="' + esc(x.id) + '"><td><b>' + esc(x.id) + "</b></td><td>" + esc(when(x.t)) + "</td><td>" + esc(x.name) + "</td><td>" + esc(x.acct) + "</td><td>" + x.stake + (x.bonus ? ' <span style="color:#ffd166;font-weight:700">BONUS</span>' : "") + "</td><td>" + x.odds + "</td><td>" + x.pot + '</td><td style="color:' + (chip[x.st] || "inherit") + '">' + (x.st === "open" ? "ACTIVE" : esc(x.st)) + '</td><td title="' + (x.seen ? esc(when(x.seen)) : "") + '">' + seenCell(x.seen) + '</td><td title="' + esc(x.sum) + '">' + x.n + " &middot; " + esc(x.sum) + "</td></tr>";
+        }).join("") + "</table></div>" : '<p class="m">No bets match.</p>');
+    });
+  }
+
+  /* ---------- Watchlist: bets flowing, multibets, tickets close to winning ---------- */
+  var WV = { f: "all" };
+  function inT(t) {
+    t = Number(t) || 0; if (!t) return "-";
+    var d = t - Date.now(), m = Math.round(Math.abs(d) / 60000), txt = m < 60 ? m + " min" : m < 1440 ? Math.floor(m / 60) + " h " + (m % 60) + " min" : Math.round(m / 1440) + " d";
+    return d >= 0 ? "in " + txt : "started " + txt + " ago";
+  }
+  function pgBar(w, n) { return '<span class="pgb"><i style="width:' + (n ? Math.round(w / n * 100) : 0) + '%"></i></span>'; }
+  function goTag(n) { return '<span class="gt g' + n + '">' + n + " TO GO</span>"; }
+  function openCell(x) { return x.vl ? '<span title="First opened ' + esc(when(x.vf)) + " - opened " + x.vn + " time" + (x.vn === 1 ? "" : "s") + '">' + esc(ago(x.vl)) + "</span>" : '<span class="m">Not opened yet</span>'; }
+  function watchView(o) {
+    api({ action: "admWatch" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var F = r.flow, c = r.counts, h = "";
+      h += '<div class="f"><h2 style="margin:0">Bet watchlist</h2><span class="m">Open bets and jackpot tickets, nearest kickoff first. Click a bet to open it and edit anything. Based on the latest ' + r.scanned + ' bets.</span><button id="wtR">Refresh</button></div>';
+      if (c.one) h += '<div class="card wtc"><b>Congratulation alert</b><p style="margin:6px 0 0">' + c.one + (c.one === 1 ? " ticket is" : " tickets are") + " one match away from winning (or already has every match right). Get ready to settle, or message the player.</p></div>";
+      h += '<div class="k">' + [["Active bets", F.open, "BetsActive"], ["In play", F.inplay], ["Waiting for kickoff", F.wait], ["Active multibets", F.multi], ["Placed in 24 h", F.day], ["Won", F.won, "BetsSettled"], ["Lost", F.lost, "BetsSettled"], ["Void", F["void"], "BetsSettled"]].map(function (x) {
+        return "<div" + (x[2] ? ' class="clk" data-wt="' + x[2] + '"' : "") + "><b>" + x[1] + "</b><span>" + x[0] + "</span></div>";
+      }).join("") + "</div>";
+      var rows = [];
+      r.near.forEach(function (x) { rows.push({ k: "bet", next: x.next, toGo: x.toGo, x: x }); });
+      r.jp.forEach(function (x) { rows.push({ k: "jp", next: x.next, toGo: x.kind === "full" ? 0 : x.kind === "miss1" ? 9 : x.toGo, x: x }); });
+      rows.sort(function (a, b) { return (a.next || 9e15) - (b.next || 9e15) || a.toGo - b.toGo; });
+      var fl = WV.f; rows = rows.filter(function (z) { return fl === "all" || (fl === "1" && z.toGo <= 1) || (fl === "2" && z.toGo === 2) || (fl === "bets" && z.k === "bet") || (fl === "jp" && z.k === "jp"); });
+      h += '<h3 style="margin:16px 0 6px">Close to winning</h3><div class="f">' + [["all", "All"], ["1", "1 to go"], ["2", "2 to go"], ["bets", "Multibets"], ["jp", "Jackpots"]].map(function (x) { return '<button class="' + (fl === x[0] ? "go" : "") + '" data-wf="' + x[0] + '">' + x[1] + "</button>"; }).join("") + "</div>";
+      if (!rows.length) h += '<p class="m">Nothing is close to winning right now. Multibets with every decided match won and only 1 or 2 left, and jackpot tickets that are still perfect, will appear here.</p>';
+      else h += '<div class="tw"><table><tr><th>Alert</th><th>Type</th><th>Ticket</th><th>Player</th><th>Progress</th><th>Next kickoff</th><th>Stake / To win</th><th>Bet opened</th></tr>' + rows.map(function (z) {
+        var x = z.x;
+        if (z.k === "bet") return '<tr class="' + (x.toGo === 1 ? "hot" : "") + '" style="cursor:pointer" data-bet="' + esc(x.id) + '"><td>' + goTag(x.toGo) + "</td><td>Multibet " + x.won + "/" + x.n + "</td><td><b>" + esc(x.id) + "</b></td><td>" + esc(x.name) + "<br><small>" + esc(x.acct) + "</small></td><td>" + pgBar(x.won, x.n) + x.won + " of " + x.n + " won</td><td>" + esc(inT(x.next)) + "<br><small>" + (x.next ? esc(when(x.next)) : "") + "</small></td><td>" + x.stake + " / " + x.pot + "</td><td>" + openCell(x) + "</td></tr>";
+        var tag = x.kind === "full" ? '<span class="gt g0">ALL CORRECT</span>' : x.kind === "miss1" ? '<span class="gt gm">MISSED BY 1</span>' : goTag(x.toGo);
+        var det = (x.det || []).map(function (d) { return "<li>" + esc(d.home) + " v " + esc(d.away) + ": pick <b>" + esc(d.pick) + "</b> &middot; " + (d.res ? "result " + esc(d.res) + (d.hit ? " &#10003;" : " &#10007;") : "waiting") + "</li>"; }).join("");
+        return '<tr class="' + (x.kind === "full" || x.toGo === 1 ? "hot" : "") + '" style="cursor:pointer" data-jp="' + esc(x.id) + '"><td>' + tag + "</td><td>Jackpot<br><small>" + esc(x.jpName) + "</small></td><td><b>" + esc(x.id) + "</b></td><td>" + esc(x.name) + "<br><small>" + esc(x.acct) + "</small></td><td>" + pgBar(x.c, x.size) + x.c + " of " + x.size + " right</td><td>" + (x.pend ? esc(inT(x.next)) + "<br><small>" + esc(when(x.next)) + "</small>" : "all results in") + "</td><td>Entry " + x.fee + '</td><td><span class="m">tap to open</span></td></tr>' +
+          '<tr class="wtd" hidden><td colspan="8"><ul>' + det + '</ul><div class="f"><button class="go" data-open="' + esc(x.uid) + '">Open player</button><button data-msg="' + esc(x.uid) + '">Message player</button><button data-t="JpDesk">Jackpot desk</button></div></td></tr>';
+      }).join("") + "</table></div>";
+      h += '<h3 style="margin:16px 0 6px">Active multibets</h3>';
+      h += r.multis.length ? '<div class="tw"><table><tr><th>Bet ID</th><th>Placed</th><th>Player</th><th>Progress</th><th>Next kickoff</th><th>Stake / To win</th><th>Bet opened</th></tr>' + r.multis.map(function (x) {
+        return '<tr class="' + (x.toGo ? "hot" : "") + '" style="cursor:pointer" data-bet="' + esc(x.id) + '"><td><b>' + esc(x.id) + "</b>" + (x.toGo ? " " + goTag(x.toGo) : "") + "</td><td>" + esc(when(x.t)) + "</td><td>" + esc(x.name) + "<br><small>" + esc(x.acct) + "</small></td><td>" + pgBar(x.won, x.n) + x.won + "/" + x.n + (x.lost ? " (lost " + x.lost + ")" : "") + "</td><td>" + esc(inT(x.next)) + "</td><td>" + x.stake + " / " + x.pot + "</td><td>" + openCell(x) + "</td></tr>";
+      }).join("") + "</table></div>" : '<p class="m">No active multibets.</p>';
+      o.innerHTML = h;
+      var rb = $("#wtR"); if (rb) rb.onclick = function () { RC = {}; watchView(o); };
+    });
+  }
+  function betPage(id) {
+    nav("Bets"); lastView = function () { betPage(id); }; var o = $("#out"); loading(o);
+    api({ action: "admBet", id: id }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var b = r.bet, u = r.user, ei = esc(b.id), MK = ["1x2", "dc", "dnb", "ou25", "ou15", "ou35", "btts", "oe"];
+      o.innerHTML = '<div class="f"><button data-t="Bets">&lsaquo; All bets</button></div><div class="card hero"><div><h2>' + ei + '</h2><span class="m">Placed ' + esc(when(b.t)) + " &middot; status <b>" + (b.st === "open" ? "ACTIVE" : esc(b.st)) + "</b>" + (b.boost ? " &middot; boost " + b.boostPct + "% (KES " + b.boost + ")" : "") + (b.bonusStake ? ' &middot; <b style="color:#ffd166">BONUS BET</b>: KES ' + b.bonusStake + " staked from bonus balance, winnings only paid to cash" : "") + '</span></div><div class="bal">KES ' + b.pot + "<small>Stake " + b.stake + " &middot; odds " + b.odds + "</small></div></div>" +
+        '<div class="card"><b>Player</b><p style="margin:6px 0"><b>' + esc(u.name) + "</b> &middot; Account " + esc(u.acct) + " &middot; " + esc(u.phone) + " &middot; " + esc(u.status) + " &middot; joined " + esc(String(u.created).slice(0, 10)) + " &middot; wallet <b>KES " + u.balance + '</b> &middot; bonus balance <b>KES ' + (u.bonusBalance || 0) + '</b></p><p style="margin:6px 0" class="m">Last login <b>' + esc(ago(u.lastLogin)) + (u.lastLogin ? " (" + esc(when(u.lastLogin)) + ")" : "") + '</b> &middot; last seen <b>' + seenCell(u.lastSeen) + (u.lastSeen ? " (" + esc(when(u.lastSeen)) + ")" : "") + '</b> &middot; last action <b>' + esc(ACT[u.lastAction] || u.lastAction || "-") + '</b></p><div class="f"><button class="go" data-open="' + esc(u.id) + '">Open full account</button><button data-msg="' + esc(u.id) + '">Message</button></div></div>' +
+        '<div class="card"><b>Bet viewing</b><p class="m" style="margin:6px 0 0">' + (b.vl ? 'First opened by the player <b>' + esc(when(b.vf)) + '</b> &middot; last opened <b>' + esc(ago(b.vl)) + " (" + esc(when(b.vl)) + ')</b> &middot; opened <b>' + b.vn + " time" + (b.vn === 1 ? "" : "s") + "</b>" : "The player has not opened this bet since placing it.") + "</p></div>" +
+        '<div class="card"><b>Selections</b> <span class="m">Edit teams, market, selection or odds, then save. Total odds, boost and payout are recalculated; a won bet corrects the wallet.</span><div class="tw"><table><tr><th>Home</th><th>Away</th><th>Market</th><th>Selection</th><th>Odds</th><th></th></tr>' +
+        b.legs.map(function (g, i) { return '<tr data-lg="' + i + '"><td><input data-f="home" value="' + esc(g.home) + '"></td><td><input data-f="away" value="' + esc(g.away) + '"></td><td><select data-f="mk">' + MK.map(function (m) { return "<option" + (m === g.mk ? " selected" : "") + ">" + m + "</option>"; }).join("") + '</select></td><td><input data-f="l" size="8" value="' + esc(g.l) + '"></td><td><input data-f="p" type="number" step="0.01" size="6" style="width:80px" value="' + esc(g.p) + '"></td><td><button class="sm bad" data-lgx="' + i + '">Remove</button></td></tr>'; }).join("") +
+        '</table></div><div class="f"><input id="lgN" size="28" placeholder="Reason (optional)"><button class="go" data-lgsave="' + ei + '">Save selections</button></div></div>' +
+        '<div class="card"><b>Actions</b><div class="f">' + (b.st === "open" ? ["won", "lost", "void"].map(function (x) { return '<button data-do="settleBet" data-id="' + ei + '" data-r="' + x + '">Settle ' + x + "</button>"; }).join("") : "") + '<button class="go" data-be="' + ei + '" data-v="' + esc([b.st, b.stake, b.odds, b.pot].join("|")) + '">Edit status, stake, odds, payout</button>' + delBtn("Bets", ei) + "</div></div>";
+    });
+  }
+  /* ---------- Affiliates: earnings overview ---------- */
+  function apprCard(r) {
+    var rows = r.affs.filter(function (a) { return a.status === "approved" && (a.avail >= r.min || a.apst); });
+    var head = '<div class="card" style="border-color:' + (r.window ? "#4ff32c" : "#ffc247") + '"><b>Earnings awaiting approval</b><p class="m">Approve each affiliate\'s earnings from Monday ' + r.from + ':00 until Tuesday ' + r.to + ':00 (' + esc(r.tz || "East Africa") + ' time). Only approved earnings are credited, automatically on Tuesday from ' + r.pay + ':00. ' + (r.window ? "<b>Approvals are open now.</b>" : "Approvals are closed right now.") + "</p>";
+    var tb = rows.length ? '<div class="tw"><table><tr><th>Affiliate</th><th>Code</th><th>Available</th><th>Approved for ' + esc(r.week) + "</th><th></th></tr>" + rows.map(function (a) {
+      var ok = a.apst === "approved", paid = a.apst === "paid";
+      return '<tr data-pu="' + esc(a.uid) + '" data-pc="aprv" data-pa="' + esc(a.id) + '" data-ps="' + (ok ? "ok" : "") + '"><td>' + esc(a.name) + (a.flags && a.flags.length ? '<br><small style="color:#ffc247">&#9873; ' + esc(a.flags.join("; ")) + "</small>" : "") + "</td><td>" + esc(a.code) + "</td><td>KES " + a.avail + "</td><td>" + (paid ? "Paid KES " + a.appr : ok ? "Approved KES " + a.appr : "Not approved") + "</td><td>" + (paid ? "" : (r.window ? '<button class="sm go" data-do="affApprove" data-id="' + esc(a.id) + '">' + (ok ? "Re-approve" : "Approve") + "</button>" : "") + (ok && r.window ? '<button class="sm bad" data-do="affUnapprove" data-id="' + esc(a.id) + '">Withdraw</button>' : "")) + '<button class="sm" data-af="' + esc(a.id) + '">Open</button></td></tr>';
+    }).join("") + "</table></div>" + (r.window ? '<div class="f"><button class="go" data-do="affApproveAll" data-id="all">Approve all</button></div>' : "") : '<p class="m">No affiliate has KES ' + r.min + " or more available yet.</p>";
+    return head + tb + '<div class="f"><button data-affdl="due">Download payout list (CSV)</button><button data-affdl="rounds">Approval history (CSV)</button></div></div>';
+  }
+  function deskHome(o, kind) {
+    var T = { bets: "Bets", deposits: "Deposits", withdrawals: "Withdrawals", jackpots: "Jackpots" }[kind];
+    api({ action: "admDesk", kind: kind }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      o.innerHTML = '<h2 style="margin:0 0 8px">' + T + " overview</h2>" + '<div class="card"><div class="f">' + r.go.map(function (g) { return '<button class="' + (g.n ? "go" : "") + '" data-t="' + g.k + '">' + esc(g.t) + (g.n ? " (" + g.n + ")" : "") + "</button>"; }).join("") + "</div></div>" +
+        '<div class="k">' + r.kpis.map(function (x) { return "<div><b>" + esc(x[1]) + "</b><span>" + esc(x[0]) + "</span></div>"; }).join("") + "</div>" +
+        r.charts.map(function (c) { return '<div class="card"><b>' + esc(c.t) + '</b><span class="m"> (last 30 days)</span>' + chart(r.days, c.k, c.c, c.u) + "</div>"; }).join("");
+    });
+  }
+  function affTodo(r) {
+    var pend = r.affs.filter(function (a) { return a.status === "pending"; }).length, due = r.affs.filter(function (a) { return a.status === "approved" && a.avail >= r.min && a.apst !== "approved" && a.apst !== "paid"; }).length;
+    return '<div class="card"><b>To do</b><div class="f"><button class="' + (pend ? "go" : "") + '" data-t="AffApps">Applications' + (pend ? " (" + pend + ")" : "") + '</button><button class="' + (due && r.window ? "go" : "") + '" data-t="AffApprovals">Payout approvals' + (due ? " (" + due + " waiting)" : "") + '</button><button data-t="AffList">All affiliates</button><button data-t="AffPayouts">Payout history</button></div><p class="m">Rate 25% to 45%. Earnings are approved from Monday ' + r.from + ':00 until Tuesday ' + r.to + ':00 (' + esc(r.tz || "EAT") + ') and paid automatically on Tuesday from ' + r.pay + ':00.</p></div>';
+  }
+  function affApprovals(o) {
+    api({ action: "admAffOverview" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      o.innerHTML = '<h2 style="margin:0 0 8px">Payout approvals</h2>' + apprCard(r) + '<p class="m">Only approved earnings are credited to affiliates\' wallets (minimum KES ' + r.min + "). Anything not approved rolls over to the next Tuesday. Accounts marked with a flag (shared device, sign-up burst, no deposits, inactive) are worth a look before you approve.</p>";
+    });
+  }
+  function affApps(o) {
+    api({ action: "admAffOverview" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var rows = r.affs.filter(function (a) { return a.status === "pending"; });
+      o.innerHTML = '<h2 style="margin:0 0 8px">Applications</h2>' + (rows.length ? '<p class="m">Click an application to see the player\'s account first, or open it to read the signed agreement, then approve (set the starting rate) or reject.</p>' + rows.map(function (a) { var id = esc(a.id); return '<div class="card hero clk" data-pu="' + esc(a.uid) + '" data-pc="aff" data-pa="' + id + '" data-ps="pending"><div><b>' + esc(a.name) + '</b><div class="m">Code ' + esc(a.code) + '</div></div><div class="f"><button class="sm" data-pu="' + esc(a.uid) + '" data-pc="aff" data-pa="' + id + '" data-ps="pending">Player</button><button class="go" data-af="' + id + '">Review agreement</button><button data-do="affSet" data-id="' + id + '" data-r="approved">Approve</button><button class="bad" data-do="affSet" data-id="' + id + '" data-r="rejected">Reject</button></div></div>'; }).join("") : '<div class="card"><p class="m">No applications waiting.</p></div>');
+    });
+  }
+  /* ---------- Share links (owner key): locked-pick links made from admin ---------- */
+  var SLK = { d: null, sel: {}, q: "" }, SLORD = { "1x2": ["1", "X", "2"], dc: ["1X", "12", "X2"], dnb: ["1", "2"], ou25: ["Over", "Under"], ou15: ["Over", "Under"], ou35: ["Over", "Under"], btts: ["Yes", "No"], oe: ["Odd", "Even"] }, SLNAME = { "1x2": "1X2", dc: "Double chance", dnb: "Draw no bet", ou25: "Over/Under 2.5", ou15: "Over/Under 1.5", ou35: "Over/Under 3.5", btts: "Both teams to score", oe: "Goals odd/even" }, SLSH = { "1x2": "1X2", dc: "DC", dnb: "DNB", ou25: "O/U 2.5", ou15: "O/U 1.5", ou35: "O/U 3.5", btts: "BTTS", oe: "Odd/Even" };
+  function slBase() { var v = ""; try { v = localStorage.getItem("q247a.site") || ""; } catch (e) {} return v || (SLK.d && SLK.d.siteUrl) || ""; }
+  function slUrl(base, code, promo) { return String(base).replace(/[?#].*$/, "") + "?slip=" + code + (promo ? "&ref=" + promo : ""); }
+  function slTime(ms) { return new Date(ms).toLocaleString("en-GB", { timeZone: "Africa/Nairobi", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }); }
+  function slLeft(ms) { var m = Math.max(0, Math.round((ms - Date.now()) / 60000)), h = Math.floor(m / 60); return h > 0 ? h + "h " + (m % 60) + "m" : m + "m"; }
+  function slCopy(t) { var done = function () { toast("Copied."); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () { uiPrompt("Copy this link:", t); }); else uiPrompt("Copy this link:", t); }
+  function slipLinks(o) {
+    if (ROLE !== "owner") { o.innerHTML = '<p class="err">Share links can only be created with the owner key.</p>'; return; }
+    loading(o); SLK.sel = {}; SLK.q = "";
+    api({ action: "admSlipMatches" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      SLK.d = r; slDraw(o);
+    }).catch(function () { o.innerHTML = '<p class="err">Network problem. Try again.</p>'; });
+  }
+  function slDraw(o) {
+    var d = SLK.d;
+    o.innerHTML = '<h2 style="margin:0 0 8px">Share links</h2><p class="m">Create a link with the picks and the stake locked. Players see only the stake and the total odds until they log in and place the bet. When you share it, say that picks are not advice and the service is 18+.</p>' +
+      '<div class="card"><b>1. Pick the matches</b> <span class="m">(one pick per match, up to ' + d.maxLegs + ')</span><div class="f"><input id="slQ" placeholder="Search team or league" style="flex:1;min-width:200px"></div><div id="slM"></div></div>' +
+      '<div class="card"><b>2. The slip</b><div id="slS" style="margin-top:6px"></div><div class="slf">' +
+      '<label>Stake (KES)<br><input id="slStake" type="number" min="' + d.min + '" step="1" placeholder="e.g. 500" style="width:120px"></label>' +
+      '<label>From<br><select id="slFrom"><option value="house">247BET Official</option>' + d.affs.map(function (a) { return '<option value="' + esc(a.id) + '">' + esc(a.name) + " (" + esc(a.code) + ")</option>"; }).join("") + "</select></label>" +
+      '<label>Promo code (official links)<br><input id="slPromo" maxlength="12" placeholder="optional" style="width:120px"></label>' +
+      '<label>Campaign name<br><input id="slCamp" maxlength="24" placeholder="optional" style="width:150px"></label>' +
+      '<label>Expires after<br><select id="slHrs"><option value="6">6 hours</option><option value="24" selected>24 hours</option><option value="48">48 hours</option></select></label>' +
+      '<label>Max bets (0 = no limit)<br><input id="slMax" type="number" min="0" value="100" style="width:110px"></label></div>' +
+      '<label class="slc"><input id="slHigh" type="checkbox"> I confirm a stake above KES ' + d.cap + " (up to KES " + d.adminMax + ")</label>" +
+      '<div class="slf"><label style="flex:1;min-width:260px">Player site address (the page where index.html lives)<br><input id="slSite" style="width:100%" placeholder="https://yourname.github.io/your-site/" value="' + esc(slBase()) + '"></label></div>' +
+      '<label class="slc" id="slNW"><input id="slNotify" type="checkbox"> Also send the link to the affiliate\'s Inbox (when an affiliate is chosen)</label>' +
+      '<div class="f"><button class="go" id="slGo">Create link</button></div><div id="slOut"></div></div>' +
+      '<div class="card"><b>Links made here</b><div id="slL" style="margin-top:6px"><div class=skl></div><div class=skl2></div><div class=skl3></div></div></div>';
+    $("#slQ").oninput = function () { SLK.q = this.value.toLowerCase(); slMatches(); };
+    $("#slStake").oninput = slSel; $("#slFrom").onchange = function () { var h = this.value === "house"; $("#slPromo").disabled = !h; $("#slNotify").disabled = h; if (!h) $("#slPromo").value = ""; };
+    $("#slFrom").onchange(); $("#slGo").onclick = slCreate;
+    $("#slM").onclick = function (e) {
+      var b = e.target.closest("[data-m]"); if (!b) return;
+      var id = b.dataset.m, mk = b.dataset.k, l = b.dataset.l, cur = SLK.sel[id];
+      if (cur && cur.mk === mk && cur.l === l) delete SLK.sel[id];
+      else { if (!cur && Object.keys(SLK.sel).length >= d.maxLegs) { toast("Up to " + d.maxLegs + " selections.", true); return; } SLK.sel[id] = { mk: mk, l: l }; }
+      slMatches(); slSel();
+    };
+    $("#slS").onclick = function (e) { var b = e.target.closest("[data-rm]"); if (!b) return; delete SLK.sel[b.dataset.rm]; slMatches(); slSel(); };
+    slMatches(); slSel(); slLinks();
+  }
+  function slFind(id) { return SLK.d.matches.filter(function (m) { return m.id === id; })[0]; }
+  function slMatches() {
+    var q = SLK.q, list = SLK.d.matches.filter(function (m) { return !q || (m.home + " " + m.away + " " + m.lg).toLowerCase().indexOf(q) > -1; }).slice(0, 60);
+    $("#slM").innerHTML = list.length ? list.map(function (m) {
+      return '<div class="slm"><b>' + esc(m.home) + " v " + esc(m.away) + '</b> <span class="m">' + esc(m.lg) + " &middot; " + esc(slTime(m.t)) + '</span><div class="f">' + ["1x2", "dc", "dnb", "ou25", "ou15", "ou35", "btts", "oe"].map(function (k) {
+        var x = m.m[k]; if (!x) return "";
+        return '<span class="m">' + SLSH[k] + "</span>" + SLORD[k].filter(function (l) { return x[l]; }).map(function (l) {
+          var on = SLK.sel[m.id] && SLK.sel[m.id].mk === k && SLK.sel[m.id].l === l;
+          return '<button type="button" class="sm' + (on ? " go" : "") + '" data-m="' + esc(m.id) + '" data-k="' + k + '" data-l="' + l + '">' + l + " " + x[l].toFixed(2) + "</button>";
+        }).join("");
+      }).join("") + "</div></div>";
+    }).join("") : '<p class="m">No matches found.</p>';
+  }
+  function slTotal() { var t = 1, n = 0; Object.keys(SLK.sel).forEach(function (id) { var m = slFind(id), s = SLK.sel[id]; if (m && m.m[s.mk] && m.m[s.mk][s.l]) { t *= m.m[s.mk][s.l]; n++; } }); return { odds: Math.round(t * 100) / 100, n: n }; }
+  function slSel() {
+    var ids = Object.keys(SLK.sel), t = slTotal(), st = parseFloat($("#slStake") ? $("#slStake").value : "") || 0;
+    $("#slS").innerHTML = ids.length ? ids.map(function (id) { var m = slFind(id), s = SLK.sel[id]; return '<div class="f" style="margin:3px 0"><span style="flex:1">' + (m ? esc(m.home + " v " + m.away) : esc(id)) + ' <span class="m">' + esc(SLNAME[s.mk]) + " &middot; " + esc(s.l) + " @ " + (m && m.m[s.mk] ? m.m[s.mk][s.l].toFixed(2) : "?") + '</span></span><button type="button" class="sm" data-rm="' + esc(id) + '">Remove</button></div>'; }).join("") +
+      '<p class="m" style="margin:6px 0 0">' + t.n + " selection" + (t.n === 1 ? "" : "s") + " &middot; total odds " + t.odds.toFixed(2) + (st ? " &middot; potential return about KES " + (Math.round(st * t.odds * 100) / 100).toLocaleString("en-KE") + " (before any multibet boost)" : "") + "</p>" : '<p class="m">No selections yet. Tap an odd above.</p>';
+  }
+  function slCreate() {
+    var d = SLK.d, legs = Object.keys(SLK.sel).map(function (id) { return { mid: id, mk: SLK.sel[id].mk, l: SLK.sel[id].l }; });
+    if (!legs.length) { toast("Pick at least one match.", true); return; }
+    var stake = Math.round(parseFloat($("#slStake").value) * 100) / 100;
+    if (!(stake >= d.min)) { toast("Minimum stake is KES " + d.min + ".", true); return; }
+    if (stake > d.adminMax) { toast("The most you can set is KES " + d.adminMax + ".", true); return; }
+    if (stake > d.cap && !$("#slHigh").checked) { toast("Tick the box to confirm a stake above KES " + d.cap + ".", true); return; }
+    var site = $("#slSite").value.trim(); if (!/^https:\/\/.{4,}/.test(site)) { toast("Enter the player site address starting with https://", true); return; }
+    try { localStorage.setItem("q247a.site", site); } catch (e) {}
+    var from = $("#slFrom").value, btn = $("#slGo"); btn.disabled = true;
+    act({ op: "slipCreate", legs: legs, stake: stake, from: from, promo: $("#slPromo").value, camp: $("#slCamp").value, hours: Number($("#slHrs").value), maxBets: Number($("#slMax").value) || 0, high: $("#slHigh").checked, notify: $("#slNotify").checked, siteUrl: site }).then(function (r) {
+      btn.disabled = false; if (!r.ok) return;
+      var url = slUrl(site, r.code, r.promo), txt = "247BET slip: " + r.n + (r.n === 1 ? " pick" : " picks") + ", total odds " + r.odds.toFixed(2) + ". Stake KES " + stake + ". The picks are revealed when you place the bet. 18+. Picks are not advice. Link valid for " + r.hours + " hours: " + url;
+      $("#slOut").innerHTML = '<div class="f"><input id="slLink" readonly style="flex:1;min-width:260px" value="' + esc(url) + '"><button type="button" class="go" id="slCp">Copy link</button><a id="slWa" target="_blank" rel="noopener"><button type="button">Share on WhatsApp</button></a></div>';
+      $("#slWa").href = "https://wa.me/?text=" + encodeURIComponent(txt); $("#slCp").onclick = function () { slCopy(url); };
+      slLinks();
+    }).catch(function () { btn.disabled = false; toast("Network problem. Try again.", true); });
+  }
+  function slLinks() {
+    api({ action: "admSlipList" }).then(function (r) {
+      var box = $("#slL"); if (!box) return;
+      if (!r.ok) { box.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      if (!r.list.length) { box.innerHTML = '<p class="m">No links made here yet.</p>'; return; }
+      var base = slBase();
+      box.innerHTML = '<div class="tw"><table><tr>' + ["Code", "From", "Stake", "Picks", "Opened", "Bets", "Stake taken", "Open payout exposure", "Status", "Made", ""].map(th).join("") + "</tr>" + r.list.map(function (x) {
+        var live = x.status === "live";
+        return "<tr><td>" + esc(x.code) + (x.camp ? '<br><span class="m">' + esc(x.camp) + "</span>" : "") + "</td><td>" + esc(x.from) + "</td><td>" + x.stake + "</td><td>" + x.n + "</td><td>" + x.opens + "</td><td>" + x.bets + (x.maxBets ? " / " + x.maxBets : "") + "</td><td>" + x.taken + "</td><td>" + x.exposure + "</td><td>" + esc(x.status) + (live ? '<br><span class="m">' + slLeft(x.expires) + " left</span>" : "") + "</td><td>" + esc(slTime(x.created)) + '</td><td><button type="button" class="sm" data-cp="' + esc(x.code) + '" data-pr="' + esc(x.promo) + '">Copy link</button> ' + (x.status === "revoked" || x.status === "expired" ? "" : '<button type="button" class="sm bad" data-rv="' + esc(x.code) + '">Revoke</button>') + "</td></tr>";
+      }).join("") + "</table></div>";
+      box.onclick = function (e) {
+        var c = e.target.closest("[data-cp]"), v = e.target.closest("[data-rv]");
+        if (c) { var b2 = slBase(); if (!b2) { toast("Enter the player site address above first.", true); return; } slCopy(slUrl(b2, c.dataset.cp, c.dataset.pr)); }
+        if (v) uiConfirm("Revoke link " + v.dataset.rv + "? Nobody new will be able to bet on it. Bets already placed stay.", "Revoke link", "Revoke", true).then(function (ok) { if (ok) act({ op: "slipRevoke", id: v.dataset.rv }).then(function () { slLinks(); }); });
+      };
+    }).catch(function () {});
+  }
+  function affList(o) {
+    api({ action: "admAffOverview" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      o.innerHTML = '<h2 style="margin:0 0 8px">All affiliates</h2>' + (r.affs.length ? bigTable(["Affiliate", "Code", "Status", "Terms", "Referred (30d)", "Depositors (30d)", "Earned (30d)", "Total earned", "Available", "Active (30d)", "Net revenue", "Cost vs revenue", "Country", "Flags"], r.affs.map(function (a) { return [a.name, a.code, a.status, a.rate + "% + KES " + a.cpa, a.regs, a.deps, a.earned, a.cum, a.avail, a.active, a.netRev, a.netRev > 0 ? Math.round(a.total / a.netRev * 100) + "%" : "-", a.country || "-", (a.flags || []).join("; ") || "-"]; }), function (x) { var a = r.affs.filter(function (k) { return k.code === x[1]; })[0]; return a ? '<button class="sm go" data-af="' + esc(a.id) + '">Open</button>' : ""; }) : '<div class="card"><p class="m">No affiliates yet.</p></div>');
+    });
+  }
+  function logosTab(o) {
+    api({ action: "admLogos" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var A = r.auto, autoCard = "";
+      if (A) {
+        var warn = [];
+        if (A.paused) warn.push("Paused after errors until " + esc(A.paused) + " UTC. Fix the problem, then tap Run sync now.");
+        if (A.tokenDays !== null && A.tokenDays <= 14) warn.push("The GitHub token ends in " + Math.max(A.tokenDays, 0) + " day(s). Create a new one and update GITHUB_TOKEN.");
+        if (A.timers >= 18) warn.push("This project has " + A.timers + " of the 20 timers Apps Script allows.");
+        autoCard = '<div class="card"><b>Automatic sync: ' + (A.on ? "ON (every 4 hours)" : "OFF") + '</b><p class="m">Working runs today ' + A.runs + " of " + A.runsMax + " &middot; timer time today " + A.mins + " of " + A.minsMax + " min &middot; API-Football used " + r.apiToday + " of " + r.cap + (A.apiLeft != null ? " (API-Football reports " + A.apiLeft + " left)" : "") + " &middot; GitHub saves today " + A.commits + " &middot; timers in this project " + A.timers + " of 20" + (A.tokenDays !== null ? " &middot; GitHub token ends in " + A.tokenDays + " day(s)" : "") + "</p>" + warn.map(function (w) { return '<p class="err">' + w + "</p>"; }).join("") + '<div class="f"><button id="lgAuto" class="' + (A.on ? "" : "go") + '">' + (A.on ? "Turn automatic sync off" : "Turn automatic sync on") + "</button></div></div>";
+      }
+      var c = r.counts, s = r.setup, L = r.last || {}, lab = { review: "Needs a check", miss: "Not found", "new": "Waiting to be searched", queued: "Ready to upload" };
+      var rows = r.need.map(function (x) {
+        var b = function (op, t, cls) { return '<button class="sm ' + (cls || "") + '" data-op="' + op + '" data-k="' + esc(x.key) + '" data-t="' + esc(x.team) + '">' + t + "</button>"; };
+        var acts = x.status === "review" ? b("logoApprove", "Approve", "go") + b("logoSet", "Set ID") + b("logoSkip", "Skip") : x.status === "queued" ? "" : (x.status === "new" ? "" : b("logoSet", "Set ID", "go") + b("logoRetry", "Retry")) + (x.status === "new" ? "" : b("logoSkip", "Skip"));
+        return "<tr><td>" + esc(x.team) + "</td><td>" + esc(lab[x.status] || x.status) + "</td><td>" + esc(x.cand ? x.cand + (x.apiId ? " (ID " + x.apiId + ")" : "") : "") + "</td><td>" + esc(x.note) + '</td><td><div class="f">' + acts + "</div></td></tr>";
+      }).join("");
+      o.innerHTML = '<h2 style="margin:0 0 8px">Team logos</h2>' +
+        '<div class="k"><div><b>' + c.ok + "</b><span>Live on the site</span></div><div><b>" + c.queued + "</b><span>Ready to upload</span></div><div><b>" + c.review + "</b><span>Need a check</span></div><div><b>" + (c.miss + c.fresh) + "</b><span>Not found or waiting</span></div></div>" +
+        autoCard + '<div class="card"><b>Set-up</b><p class="m">API-Football key: ' + (s.apiKey ? "set" : "MISSING") + " &middot; GitHub: " + (s.github ? "set (" + esc(s.repo) + ", branch " + esc(s.branch) + ")" : "MISSING") + (L.t ? " Last run " + (L.auto ? "(automatic) " : "") + esc(String(L.t).slice(0, 16).replace("T", " ")) + " UTC: " + esc(L.msg || "") : "") + '</p><div class="f"><button class="go" id="lgRun">Run sync now</button></div></div>' +
+        (rows ? '<div class="tw" style="margin-top:12px"><table><tr><th>Team</th><th>Status</th><th>Match found</th><th>Note</th><th></th></tr>' + rows + "</table></div>" : '<p class="m">Nothing needs attention. Teams from new matches are added and searched automatically.</p>') +
+        '<p class="m">Each logo is searched once, downloaded once and saved to your GitHub logos site, so it is never requested again. A team with no logo keeps its coloured initials badge. Set ID: the team number from the API-Football dashboard (Teams).</p>';
+      $("#lgRun").onclick = function () { act({ op: "logoSync" }).then(function () { show("Logos"); }); };
+      if ($("#lgAuto")) $("#lgAuto").onclick = function () { act({ op: "logoAuto", on: !A.on }).then(function () { show("Logos"); }); };
+      o.onclick = function (e) {
+        var b = e.target.closest && e.target.closest("button[data-op]"); if (!b) return; var op = b.getAttribute("data-op"), key = b.getAttribute("data-k");
+        if (op === "logoSet") { uiPrompt("Enter the API-Football team ID for " + b.getAttribute("data-t") + " (numbers only).", "", "Team ID").then(function (v) { if (v == null || !String(v).trim()) return; act({ op: op, key: key, id: String(v).trim() }).then(function (x) { if (x.ok) show("Logos"); }); }); return; }
+        act({ op: op, key: key }).then(function (x) { if (x.ok) show("Logos"); });
+      };
+    });
+  }
+  function oddsCredits(o) {
+    api({ action: "admOddsCredits" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var ok = function (s) { return s === "working" ? "var(--g)" : s === "unknown" ? "var(--m)" : "var(--r)"; };
+      o.innerHTML = '<h2 style="margin:0 0 8px">Odds API credits</h2><div class="k"><div><b>' + r.total + "</b><span>Credits left, all keys</span></div><div><b>" + r.keys.length + "</b><span>Keys linked</span></div><div><b>" + r.reserve + "</b><span>Reserve (fetching stops below this)</span></div></div>" +
+        (r.keys.length ? '<div class="tw" style="margin-top:12px"><table><tr><th>Key</th><th>Ends with</th><th>Credits left</th><th>Used</th><th>Status</th><th>In use</th></tr>' + r.keys.map(function (k) { return "<tr><td>#" + k.n + "</td><td>..." + esc(k.tail) + "</td><td>" + (k.remaining === null ? "?" : k.remaining) + "</td><td>" + (k.used === null ? "?" : k.used) + '</td><td style="color:' + ok(k.status) + '">' + esc(k.status) + "</td><td>" + (k.active ? "Yes" : "") + "</td></tr>"; }).join("") + "</table></div>" : '<div class="card"><p class="err">No Odds API keys found. Add ODDS_API_KEYS in Script properties.</p></div>') +
+        '<div class="f"><button class="go" id="ocR">Refresh</button></div><p class="m">Checked ' + esc(String(r.checked).slice(0, 16).replace("T", " ")) + " UTC. This check costs no credits. The system moves to the next key when one runs out, and starts again from key #1 each month. Run installOddsCreditsTrigger once to get a daily low-credit email.</p>";
+      $("#ocR").onclick = function () { show("OddsCredits"); };
+    });
+  }
+  function affHome(o) {
+    api({ action: "admAffOverview" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var pend = r.affs.filter(function (a) { return a.status === "pending"; }).length;
+      o.innerHTML = '<h2 style="margin:0 0 8px">Affiliate programme</h2>' + affTodo(r) + (pend ? '<div class="card" style="border-color:#ffc247"><b>' + pend + " application" + (pend > 1 ? "s" : "") + " waiting for approval</b></div>" : "") +
+        '<div class="k"><div><b>' + sum(r.days, "regs") + "</b><span>Referred players (30d)</span></div><div><b>" + sum(r.days, "deps") + "</b><span>New depositors (30d)</span></div><div><b>KES " + sum(r.days, "net") + "</b><span>Net revenue from referred (30d)</span></div><div><b>KES " + sum(r.days, "earned") + "</b><span>Affiliate earnings (30d)</span></div><div><b>KES " + (r.days.length ? r.days[r.days.length - 1].cum : 0) + "</b><span>Total owed to affiliates</span></div></div>" +
+        '<div class="card"><b>Affiliate earnings per day</b><span class="m"> (last 30 days, red = a day that reduced earnings)</span>' + chart(r.days, "earned", "#4ff32c", "KES ") + '</div><div class="card"><b>New referred players per day</b>' + chart(r.days, "regs", "#6fb2ff", "") + "</div>" +
+        '<div class="card"><b>Top affiliates by active players</b>' + (function () { var t = r.affs.filter(function (a) { return a.status === "approved"; }).sort(function (x, y) { return y.active - x.active; }).slice(0, 5); return t.length ? bigTable(["#", "Affiliate", "Code", "Active (30d)", "Net revenue", "Commission earned", "Cost vs revenue"], t.map(function (a, i) { return [i + 1, a.name, a.code, a.active, a.netRev, a.total, a.netRev > 0 ? Math.round(a.total / a.netRev * 100) + "%" : "-"]; })) : '<p class="m">No approved affiliates yet.</p>'; })() + '</div>' +
+        '<div class="tw"><table><tr><th>Affiliate</th><th>Code</th><th>Status</th><th>Terms</th><th>Referred (30d)</th><th>Depositors (30d)</th><th>Earned (30d)</th><th>Total earned</th><th>Flags</th><th></th></tr>' + r.affs.map(function (a) { return "<tr><td>" + esc(a.name) + "</td><td>" + esc(a.code) + "</td><td>" + esc(a.status) + "</td><td>" + a.rate + "% + KES " + a.cpa + "</td><td>" + a.regs + "</td><td>" + a.deps + "</td><td>" + a.earned + "</td><td>" + a.cum + "</td><td>" + esc((a.flags || []).join("; ") || "-") + '</td><td><button class="sm go" data-af="' + esc(a.id) + '">Open</button></td></tr>'; }).join("") + "</table></div>";
+    });
+  }
+  /* ---------- Affiliate page ---------- */
+  function affPage(id) {
+    nav("Affiliates"); lastView = function () { affPage(id); }; var o = $("#out"); loading(o);
+    api({ action: "admAff", id: id }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var a = r.aff, s = r.stats, u = r.user, ap = a.status === "approved", ei = esc(a.id);
+      o.innerHTML = '<div class="f"><button data-t="Affiliates">&lsaquo; All affiliates</button></div><div class="card hero"><div><h2>' + esc(u.name) + '</h2><span class="m">Code ' + esc(a.code) + " &middot; " + esc(a.status) + " &middot; " + a.rate + "% revenue share &middot; CPA KES " + a.cpa + " &middot; " + esc(u.phone) + (a.country ? " &middot; " + esc(a.country) : "") + " &middot; applied " + esc(String(a.created).slice(0, 10)) + '</span><p class="m">' + esc(a.notes) + '</p></div><div class="bal">KES ' + s.earned + "<small>Total earned</small></div></div>" +
+        '<div class="card"><div class="f"><button class="go" data-do="affSet" data-id="' + ei + '" data-r="approved">' + (ap ? "Edit terms" : "Approve") + "</button>" + (ap ? '<button class="bad" data-do="affSet" data-id="' + ei + '" data-r="suspended">Suspend</button>' : a.status === "pending" ? '<button class="bad" data-do="affSet" data-id="' + ei + '" data-r="rejected">Reject</button>' : "") + '<button data-ae="' + ei + '" data-v="' + esc(JSON.stringify([a.code, a.status, a.rate, a.cpa, a.parentCode || "", a.notes])) + '">Edit all terms</button><button data-aj="' + ei + '">Adjust earnings</button>' + (ap ? '<button class="go" data-do="affApprove" data-id="' + ei + '">Approve for this payout</button>' : "") + '<button data-msg="' + esc(a.userId) + '">Message</button><button data-open="' + esc(a.userId) + '">Player account</button></div><p class="m">Approvals are accepted from Monday 8:00 until Tuesday 13:00; only approved earnings are paid, on Tuesday from 13:00. A rate change applies only to revenue from that day; earlier earnings stay at the old rate.</p></div>' +
+        '<div class="k">' + [["Clicks", s.clicks], ["Registrations", s.registrations], ["Depositors", s.depositors], ["Active (30d)", s.active], ["Conversion", s.conversion + "%"], ["Net revenue", "KES " + s.netRevenue], ["Revenue share", "KES " + s.revShare], ["CPA earned", "KES " + s.cpaEarned], ["Team override", "KES " + s.override], ["Adjustments", "KES " + s.adjust], ["Paid", "KES " + s.paid], ["Available", "KES " + s.available]].map(function (x) { return "<div><b>" + esc(x[1]) + "</b><span>" + x[0] + "</span></div>"; }).join("") + "</div>" +
+        '<div class="card"><b>Earnings per day</b><span class="m"> (last 30 days &middot; KES ' + sum(r.series, "earned") + ')</span>' + chart(r.series, "earned", "#4ff32c", "KES ") + '</div><div class="card"><b>Referred players per day</b><span class="m"> (' + sum(r.series, "regs") + ' in 30 days &middot; ' + sum(r.series, "deps") + ' new depositors)</span>' + chart(r.series, "regs", "#6fb2ff", "") + '</div>' +
+        (r.share ? '<div class="card"><b>Slip sharing</b> <span class="m">&middot; ' + (r.share.blocked ? "Switched off" : r.share.on ? "Unlocked" : "Locked") + " &middot; " + r.share.active + " active players (unlock at " + r.share.need + ", keep at " + r.share.keep + ") &middot; stake cap KES " + r.share.cap + " &middot; Slip Star this month: " + r.share.award.count + " qualified players, KES " + r.share.award.earned + '</span><div class="f"><button data-sh="' + ei + '" data-v="' + esc(JSON.stringify([r.share.override || "auto", r.share.capSet === "" ? "" : r.share.capSet])) + '">Slip sharing settings</button></div></div>' : "") +
+        '<div class="card"><b>Referred players</b>' + (r.players.length ? bigTable(["Player", "Joined", "Deposited", "Active 30d", "Net revenue", "Commission", "Counted"], r.players.map(function (x) { return [x.who, String(x.joined).slice(0, 10), x.deposited ? "Yes" : "No", x.active ? "Yes" : "No", x.net, x.commission, x.counted ? "Yes" : "No (shared device)"]; })) : '<p class="m">No referred players yet.</p>') + "</div>" +
+        '<div class="card"><b>Payout history</b><span class="m"> (automatic, every Tuesday 13:00 to 14:00 EAT, into the player wallet, minimum KES 500)</span>' + (r.payouts.length ? bigTable(["id", "Amount", "Status", "Paid", "Note"], r.payouts.map(function (x) { return [x.id, x.amount, x.status, x.t, x.note]; })) : '<p class="m">No payouts yet.</p>') + "</div>" +
+        (r.contract ? '<div class="card"><b>Signed affiliate agreement (latest)</b><p class="m">Contract ' + esc(r.contract.version) + " &middot; signed by " + esc(r.contract.signature) + " on " + esc(String(r.contract.signedAt).slice(0, 16).replace("T", " ")) + '</p><div class="k">' + [["Full name", r.contract.data.fullName], ["Account number", r.contract.data.acct || u.acct], ["Phone", r.contract.data.phone], ["Website", r.contract.data.website || "-"], ["Channel / audience", r.contract.data.channel || "-"], ["Audience size", r.contract.data.audience], ["Traffic source", r.contract.data.source], ["Proposed promo code", r.contract.data.promo || "-"], ["Recruiter code", r.contract.data.recruiter || "-"], ["Country", r.contract.data.country || a.country || "-"], ["Agreement fingerprint", r.contract.data.textHash ? String(r.contract.data.textHash).slice(0, 16) + "..." : "not stored (older contract)"], ["Device", r.contract.data.device || "-"], ["Browser", String(r.contract.data.ua || "-").slice(0, 60)], ["Time zone", r.contract.data.tz || "-"], ["Applied again", r.contract.data.reapply ? "Yes" : "No"]].map(function (x) { return "<div><b>" + esc(x[1]) + "</b><span>" + x[0] + "</span></div>"; }).join("") + '</div><p class="m">Declarations accepted: 18+, adults only, no guaranteed-win claims, no fake sign-ups, terms, Tuesday wallet payout.</p></div>' : '<div class="card"><p class="m">No signed agreement on file (applied before the contract form).</p></div>') +
+        '<div class="card"><b>Change log</b>' + (r.log && r.log.length ? bigTable(["When", "Change"], r.log.map(function (x) { return [String(x.t).slice(0, 16).replace("T", " "), x.c]; })) : '<p class="m">No changes yet.</p>') + "</div>" +
+        '<div class="card"><b>Recruited affiliates</b>' + (r.team.length ? bigTable(["Code", "Status", "Override earned"], r.team.map(function (x) { return [x.code, x.status, x.earned]; })) : '<p class="m">None.</p>') + "</div>";
+    });
+  }
+  function pBtns(r) {
+    var id = esc(r[0]), on = r[5] === "active";
+    return '<button class="sm go" data-open="' + id + '">Open</button><button class="sm" data-msg="' + id + '">Message</button><button class="sm bad" data-do="resetPw" data-id="' + id + '">Reset pw</button><button class="sm" data-do="userStatus" data-id="' + id + '" data-r="' + (on ? "suspended" : "active") + '">' + (on ? "Suspend" : "Activate") + "</button>";
+  }
+  function search(q) {
+    nav(""); lastView = function () { search(q); }; var o = $("#out"); loading(o);
+    api({ action: "admFind", q: q }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      o.innerHTML = r.rows.length ? '<p class="m">' + r.rows.length + " player(s) found.</p>" + bigTable(r.headers, r.rows, pBtns) : '<p class="m">No player found for "' + esc(q) + '".</p>';
+    });
+  }
+  function openPlayer(id) {
+    nav(""); lastView = function () { openPlayer(id); }; var o = $("#out"); loading(o);
+    api({ action: "admPlayer", id: id }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var u = r.row, on = u[5] === "active"; curP = u[0];
+      o.innerHTML = '<div class="card hero"><div><h2>' + esc(u[3]) + '</h2><span class="m">Account ' + esc(u[1]) + " &middot; " + esc(u[2]) + " &middot; " + esc(u[5]) + " &middot; ID " + esc(u[0]) + " &middot; joined " + esc(String(u[4]).slice(0, 10)) + " &middot; " + esc(u[6]) + '</span></div><div class="bal">KES ' + esc(u[7]) + "<small>Wallet balance (cash)</small><small style=\"color:#ffd166\">Bonus balance KES " + esc(u[8] || 0) + " (play only)</small></div></div>" +
+        '<div class="card"><b>Wallet control</b> <span class="m">(every change is logged in the Ledger and shown in the player\'s Inbox)</span><div class="f"><input id="wA" type="number" min="0" step="any" placeholder="Amount (KES)"><input id="wN" size="34" placeholder="Reason (required)"><button class="go" data-w="add">Add money</button><button class="bad" data-w="ded">Deduct</button><button data-w="set">Set exact balance</button></div></div>' +
+        '<div class="card"><b>Account</b><div class="f"><button data-ep="1" data-v="' + esc([u[3], u[2], u[6]].join("|")) + '">Edit profile</button><button data-msg="' + esc(u[0]) + '">Message</button><button data-do="freeGrant" data-id="' + esc(u[0]) + '">Give free bonus</button><button data-do="resetPw" data-id="' + esc(u[0]) + '">Reset password</button><button data-do="killSessions" data-id="' + esc(u[0]) + '">Log out everywhere</button><button class="' + (on ? "bad" : "go") + '" data-do="userStatus" data-id="' + esc(u[0]) + '" data-r="' + (on ? "suspended" : "active") + '">' + (on ? "Suspend account" : "Activate account") + '</button><button class="bad" data-du="' + esc(u[0]) + '">Delete player</button></div></div>' +
+        r.sections.map(function (s) { return '<div class="card"><b>' + esc(s.name) + '</b> <span class="m">(latest ' + s.rows.length + ")</span>" + (s.rows.length ? bigTable(s.headers, s.rows, s.name === "Bets" ? betBtns : s.name === "Ledger" ? function (x) { return delBtn("Ledger", esc(x[0])); } : null) : '<p class="m">Nothing yet.</p>') + "</div>"; }).join("");
+    });
+  }
+  /* ---------- Jackpot desk: the picker's drafts, approve or edit then approve ---------- */
+  var JD = {};
+  function jdWhen(t) { return new Date(t).toLocaleString("en-KE", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); }
+  function jdOpt(c) { return '<option value="' + esc(c.mid) + '">' + esc(jdWhen(c.t) + " | " + c.league + " | " + c.home + " v " + c.away + " | " + c.h + "/" + c.d + "/" + c.a + " | " + c.score + (c.strict ? "" : " (relaxed)")) + "</option>"; }
+  function jdCard(id) {
+    var s = JD[id], T = s.T, n = s.picks.length, first = n ? Math.min.apply(null, s.picks.map(function (m) { return m.t; })) : 0, used = {};
+    s.picks.forEach(function (m) { used[m.mid] = 1; });
+    var opts = s.cands.filter(function (c) { return !used[c.mid]; }).map(jdOpt).join("");
+    var rows = s.picks.map(function (m, i) {
+      return "<tr><td>" + (i + 1) + "</td><td>" + esc(jdWhen(m.t)) + "</td><td>" + esc(m.league) + "</td><td>" + esc(m.home + " v " + m.away) + "</td><td>" + m.h + "</td><td>" + m.d + "</td><td>" + m.a + "</td><td>" + m.score + "</td><td>" + (m.strict ? "Even" : '<span class="err">Relaxed</span>') + "</td><td>" +
+        '<select data-jd="swap" data-id="' + esc(id) + '" data-i="' + i + '"><option value="">Swap for...</option>' + opts + '</select><button class="sm bad" data-jd="rm" data-id="' + esc(id) + '" data-i="' + i + '">Remove</button></td></tr>';
+    }).join("");
+    var low = []; for (var q = 1; q < T.tierCount; q++) low.push(T.size - q); 
+    return '<div class="card" id="jd_' + esc(id) + '"><b>' + esc(T.name) + "</b> &middot; Entry KES " + T.fee + " &middot; Top prize if posted now KES " + Number(T.top).toLocaleString("en-KE") + ' <span class="m">&middot; ' + n + " of " + T.size + " matches &middot; closes " + (first ? esc(jdWhen(first)) : "-") + "</span>" +
+      '<p class="m">The top prize (' + T.size + ' correct) is locked when you post and shown to players. Lower prizes (' + low.join(", ") + ' correct) are not shown: you set them after full time. Draft ' + esc(id) + " made " + esc(jdWhen(s.d.created)) + ".</p>" + (s.d.note ? '<p class="err">' + esc(s.d.note) + "</p>" : "") +
+      '<div class="tw"><table><tr><th>#</th><th>Kickoff</th><th>League</th><th>Match</th><th>1</th><th>X</th><th>2</th><th>Balance</th><th>Status</th><th>Edit</th></tr>' + rows + "</table></div>" +
+      (n < T.size ? '<div class="f"><select data-jd="add" data-id="' + esc(id) + '"><option value="">Add a match (' + (T.size - n) + ' more needed)...</option>' + opts + "</select></div>" : "") +
+      '<div class="f"><button data-jd="save" data-id="' + esc(id) + '">Save edit</button><button class="go" data-jd="approve" data-id="' + esc(id) + '">Approve &amp; post</button><button class="bad" data-jd="reject" data-id="' + esc(id) + '">Reject</button></div></div>';
+  }
+  /* ---------- results in: type the prize for each lower tier, then confirm ---------- */
+  var JA = {};
+  function jaKes(n) { return "KES " + Number(n).toLocaleString("en-KE", { maximumFractionDigits: 2 }); }
+  function jaEach(total, winners) { return winners > 0 && total > 0 ? Math.floor(total / winners * 100) / 100 : 0; }
+  function jaCard(j) {
+    var rows = j.tiers.map(function (t, k) {
+      var top = k === 0;
+      return "<tr><td><b>" + t.correct + " correct</b>" + (top ? ' <span class="m">(top prize, locked)</span>' : "") + "</td><td>" + t.winners + "</td><td>" +
+        (top ? jaKes(j.top) : '<input class="jaT" type="number" min="0" step="any" data-jp="' + esc(j.id) + '" data-c="' + t.correct + '" data-w="' + t.winners + '" placeholder="' + (t.winners ? "Total KES for this tier" : "No winners") + '"' + (t.winners ? "" : " disabled") + ">") +
+        '</td><td class="jaE" data-e="' + t.correct + '">' + (top ? (t.winners ? jaKes(jaEach(j.top, t.winners)) : "-") : "-") + "</td></tr>";
+    }).join("");
+    var res = j.matches.map(function (m, i) { return (i + 1) + ". " + esc(m.home) + " v " + esc(m.away) + ": <b>" + esc(m.result) + "</b>"; }).join(" &middot; ");
+    return '<div class="card" style="border-color:#4ff32c" id="ja_' + esc(j.id) + '"><b>' + esc(j.name) + "</b> &middot; " + esc(j.id) + ' <span class="m">&middot; results are in, waiting for your prizes</span>' +
+      '<div class="k" style="margin:8px 0"><div><b>' + j.entries + "</b><span>Entries</span></div><div><b>" + esc(jaKes(j.gross)) + "</b><span>Entry money collected</span></div><div><b>" + esc(jaKes(j.top)) + "</b><span>Top prize (locked)</span></div></div>" +
+      '<p class="m">' + res + "</p>" +
+      '<div class="tw"><table><tr><th>Tier</th><th>Winners</th><th>Total to pay this tier</th><th>Each winner gets</th></tr>' + rows + "</table></div>" +
+      '<p class="m">Type any total for each lower tier. It is split equally between that tier\'s winners. A tier with no winners pays nothing and the money stays with you. Nothing is paid until you press Confirm.</p>' +
+      '<div class="f"><button class="go" data-ja="confirm" data-id="' + esc(j.id) + '">Confirm &amp; pay</button></div></div>';
+  }
+  function jaCalc(inp) {
+    var w = Number(inp.dataset.w), v = Number(inp.value), cell = inp.closest("tr").querySelector(".jaE");
+    if (cell) cell.textContent = w > 0 && v > 0 ? jaKes(jaEach(v, w)) : "-";
+  }
+  document.addEventListener("input", function (e) { if (e.target.classList && e.target.classList.contains("jaT")) jaCalc(e.target); });
+  function jaConfirm(id) {
+    var j = JA[id]; if (!j) return;
+    var totals = {}, lines = [], sum = j.top;
+    j.tiers.forEach(function (t, k) {
+      if (k === 0) { lines.push(t.correct + " correct: " + t.winners + " winner(s), " + (t.winners ? jaKes(jaEach(j.top, t.winners)) + " each" : "no winner")); return; }
+      var inp = document.querySelector('.jaT[data-jp="' + id + '"][data-c="' + t.correct + '"]'), v = inp ? Number(inp.value) || 0 : 0;
+      totals[t.correct] = v;
+      lines.push(t.correct + " correct: " + t.winners + " winner(s), " + (t.winners ? jaKes(jaEach(v, t.winners)) + " each (total " + jaKes(v) + ")" : "no winner, nothing paid"));
+      if (t.winners) sum += jaEach(v, t.winners) * t.winners;
+    });
+    if (!j.tiers[0].winners) sum -= j.top;
+    uiConfirm(j.name + " (" + id + ")\nEntry money collected: " + jaKes(j.gross) + "\n\n" + lines.join("\n") + "\n\nTotal that will be paid: " + jaKes(sum) + "\n\nThis pays the winners' wallets and cannot be undone. Confirm?", "Confirm prizes", "Confirm & pay", true).then(function (ok) { if (!ok) return; act({ op: "jpConfirm", id: id, totals: totals }).then(function (r) { if (r && r.ok) show("JpDesk"); }); });
+  }
+  /* --- Super 5 Predictor desk --- */
+  var PD = {};
+  function pdT(ms) { return new Date(ms).toLocaleString("en-GB", { timeZone: "Africa/Nairobi", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }); }
+  function pdCard(x) {
+    var st = { draft: "Draft: waiting for you", open: "Open", awaiting: "Results in: waiting for your prizes", settled: "Paid", rejected: "Rejected" }[x.status] || x.status;
+    var h = '<div class="card" data-pdid="' + esc(x.id) + '"><b>Round ' + esc(x.id) + '</b> <span class="m">' + esc(st) + " | entries " + x.entries + " | first kickoff " + esc(pdT(x.closes)) + "</span>" + (x.note && x.status === "draft" ? '<p class="err">' + esc(x.note) + "</p>" : "");
+    if (x.status === "draft") {
+      var opts = x.matches.concat(x.cands);
+      for (var i = 0; i < 5; i++) { var cur = x.matches[i] ? x.matches[i].mid : ""; h += '<div class="f"><b>' + (i + 1) + '</b><select data-pdm="' + i + '">' + (cur ? "" : '<option value="">Choose a match</option>') + opts.map(function (c) { return '<option value="' + esc(c.mid) + '"' + (c.mid === cur ? " selected" : "") + ">" + esc(c.home + " v " + c.away + " (" + c.league + ", " + pdT(c.t) + ")") + "</option>"; }).join("") + "</select></div>"; }
+    } else h += x.matches.map(function (m) { return "<div>" + m.n + ". " + esc(m.home + " v " + m.away) + (m.hs != null ? " <b>" + m.hs + "-" + m.as + "</b>" : "") + "</div>"; }).join("");
+    if (x.status === "awaiting" || x.status === "settled") h += '<table><tr><th>Exact</th><th>Winners</th><th>Total</th><th>Each</th><th>Paid as</th></tr>' + x.tiers.map(function (t) { return "<tr><td>" + t.correct + " of 5</td><td>" + t.winners + "</td><td>" + jaKes(t.prize) + "</td><td>" + jaKes(t.each) + "</td><td>" + (t.kind === "cash" ? "cash wallet" : "bonus balance") + "</td></tr>"; }).join("") + "</table>";
+    if (x.status === "draft" || x.status === "awaiting") h += '<div class="f">' + [5, 4, 3].map(function (k) { return '<label>' + k + "/5 total <input data-pdp=\"" + k + '" value="' + Number(x.prizes[k]) + '" size="8"></label>'; }).join(" ") + "</div>";
+    if (x.status === "draft") h += '<div class="f"><button data-pd="save" data-id="' + esc(x.id) + '">Save changes</button><button class="go" data-pd="post" data-id="' + esc(x.id) + '">Approve &amp; post</button><button data-pd="reject" data-id="' + esc(x.id) + '">Reject</button></div>';
+    if (x.status === "awaiting") h += '<div class="f"><button class="go" data-pd="confirm" data-id="' + esc(x.id) + '">Confirm &amp; pay</button></div>';
+    return h + "</div>";
+  }
+  function predDesk(o) {
+    api({ action: "admDo", op: "predList" }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      PD = {}; r.rounds.forEach(function (x) { PD[x.id] = x; });
+      o.innerHTML = '<div class="card"><b>Predictor desk</b><p class="m">Every Friday the system drafts 5 weekend matches. Nothing goes live until you press Approve &amp; post. After full time the round waits here for you to confirm the prizes: 5/5 is paid as cash to the wallet, 3/5 and 4/5 as bonus balance (under 3/5 wins nothing). Each amount is a total shared equally among that group\'s winners.</p><div class="f"><button data-pd="new">Draft this weekend now</button></div></div>' + (r.rounds.length ? r.rounds.map(pdCard).join("") : '<p class="m">No rounds yet.</p>');
+    });
+  }
+  function pdClick(b) {
+    var d = b.dataset, card = b.closest(".card"), id = d.id, pr = {}, mids = [];
+    if (card) { card.querySelectorAll("[data-pdp]").forEach(function (i) { pr[i.dataset.pdp] = Number(i.value) || 0; }); card.querySelectorAll("select[data-pdm]").forEach(function (s) { mids.push(s.value); }); }
+    if (d.pd === "new") { uiConfirm("Make a fresh predictor draft for the coming weekend?", "New draft", "Make draft").then(function (ok) { if (ok) act({ op: "predMake" }).then(function () { show("PredDesk"); }); }); return; }
+    if (d.pd === "save") { act({ op: "predSave", id: id, mids: mids, prizes: pr }).then(function (r) { if (r && r.ok) show("PredDesk"); }); return; }
+    if (d.pd === "post") { uiConfirm("Post this round now? Players can enter immediately and it closes at the first kickoff.", "Approve and post", "Approve & post").then(function (ok) { if (ok) act({ op: "predPost", id: id, mids: mids, prizes: pr }).then(function (r) { if (r && r.ok) show("PredDesk"); }); }); return; }
+    if (d.pd === "reject") { uiConfirm("Reject this draft?", "Reject draft", "Reject", true).then(function (ok) { if (ok) act({ op: "predReject", id: id }).then(function () { show("PredDesk"); }); }); return; }
+    if (d.pd === "confirm") {
+      var x = PD[id], lines = x ? x.tiers.map(function (t) { var tot = pr[t.correct] != null ? pr[t.correct] : t.prize; return t.correct + " of 5: " + t.winners + " winner(s), " + (t.winners ? jaKes(Math.floor(tot / t.winners * 100) / 100) + " each" : "nobody") + (t.kind === "cash" ? " (cash)" : " (bonus)"); }).join("\n") : "";
+      uiConfirm("Round " + id + "\n\n" + lines + "\n\nThis pays the winners and cannot be undone. Confirm?", "Confirm prizes", "Confirm & pay").then(function (ok) { if (ok) act({ op: "predConfirm", id: id, prizes: pr }).then(function (r) { if (r && r.ok) show("PredDesk"); }); });
+    }
+  }
+  function jpDesk(o) {
+    Promise.all([api({ action: "admDo", op: "jpAwaiting" }), api({ action: "admDo", op: "jpDrafts" })]).then(function (rs) {
+      var wa = rs[0], r = rs[1], aw = "";
+      if (wa && wa.ok && wa.jackpots.length) { JA = {}; wa.jackpots.forEach(function (j) { JA[j.id] = j; }); aw = "<h3>Waiting for your prizes</h3>" + wa.jackpots.map(jaCard).join(""); }
+      if (!r.ok) { o.innerHTML = aw + '<p class="err">' + esc(r.error) + "</p>"; return; }
+      JD = {};
+      r.drafts.forEach(function (d) { JD[d.id] = { d: d, picks: d.matches.slice(), cands: d.cands.slice(), seed: 0, T: r.types[d.type] }; });
+      o.innerHTML = aw + '<div class="card"><b>Jackpot desk</b><p class="m">The picker drafts evenly matched games: Midweek Millionaire (Tue + Wed kickoffs) every Sunday, Super Millionaire (Sat + Sun kickoffs) every Wednesday. Nothing goes live until you press Approve &amp; post. Balance 0 = perfectly even (like 2.9 / 2.9 / 2.9); lower is more even. The top prize grows every Monday and is locked when you post.</p>' +
+        '<div class="f"><button data-jd="new" data-ty="MID">Draft Midweek Millionaire now</button><button data-jd="new" data-ty="WKD">Draft Super Millionaire now</button></div></div>' +
+        (r.drafts.length ? r.drafts.map(function (d) { return jdCard(d.id); }).join("") : '<p class="m">No drafts waiting.</p>');
+    });
+  }
+  function jdRedraw(id) { var el = document.getElementById("jd_" + id); if (el) el.outerHTML = jdCard(id); }
+  function jdSend(op, id) {
+    var s = JD[id];
+    return act({ op: op, id: id, ids: s.picks.map(function (m) { return m.mid; }), seed: 0 });
+  }
+  function jdClick(b) {
+    var d = b.dataset, id = d.id, s = JD[id];
+    if (d.jd === "new") { uiConfirm("Make a fresh draft? Any waiting draft of this jackpot is replaced.", "New draft", "Make draft").then(function (ok) { if (ok) act({ op: "jpDraftNow", type: d.ty }).then(function () { show("JpDesk"); }); }); return; }
+    if (!s) return;
+    if (d.jd === "rm") { OUT_DIRTY = true; s.picks.splice(Number(d.i), 1); jdRedraw(id); return; }
+    if (d.jd === "save") { jdSend("jpDraftSave", id).then(function (r) { if (r && r.ok) show("JpDesk"); }); return; }
+    if (d.jd === "reject") { uiConfirm("Reject this draft?", "Reject draft", "Reject", true).then(function (ok) { if (ok) act({ op: "jpDraftReject", id: id }).then(function () { show("JpDesk"); }); }); return; }
+    if (d.jd === "approve") {
+      if (s.picks.length !== s.T.size) { uiAlert("You need exactly " + s.T.size + " matches (you have " + s.picks.length + ").", "Not ready"); return; }
+      uiConfirm("Post " + s.T.name + " now? Players can enter immediately and it closes at the first kickoff.", "Approve and post", "Approve & post").then(function (ok) { if (ok) jdSend("jpDraftApprove", id).then(function (r) { if (r && r.ok) show("JpDesk"); }); });
+    }
+  }
+  function jdChange(sel) {
+    var d = sel.dataset, s = JD[d.id]; if (!s || !sel.value) return;
+    var c = s.cands.filter(function (x) { return x.mid === sel.value; })[0]; if (!c) return;
+    if (d.jd === "swap") { var old = s.picks[Number(d.i)]; s.picks[Number(d.i)] = c; s.cands = s.cands.filter(function (x) { return x.mid !== c.mid; }); if (old) s.cands.push(old); }
+    else if (d.jd === "add") { s.picks.push(c); s.cands = s.cands.filter(function (x) { return x.mid !== c.mid; }); }
+    s.picks.sort(function (x, y) { return x.t - y.t; });
+    jdRedraw(d.id);
+  }
+  document.addEventListener("change", function (e) { if (e.target.dataset && (e.target.dataset.jd === "swap" || e.target.dataset.jd === "add")) jdChange(e.target); });
+  function funnelCard(r) {
+    var f = r.funnel; if (!f) return "";
+    function pc(a, b) { return b ? Math.round(a * 100 / b) + "%" : "-"; }
+    var h = '<div class="card"><b>Deposit funnel (30 days)</b><br>Registered ' + f.registered + " &rarr; tried to deposit " + f.tried + " (" + pc(f.tried, f.registered) + ") &rarr; paid " + f.paid + " (" + pc(f.paid, f.tried) + " of those who tried)";
+    Object.keys(f.lanes || {}).sort().forEach(function (k) { var L = f.lanes[k]; h += "<div>" + (k === "-" ? "No lane (refused)" : "Lane " + k) + ": " + L.opened + " opened &middot; " + L.paid + " paid (" + pc(L.paid, L.opened) + ") &middot; " + L.failed + " failed &middot; " + L.pending + " pending</div>"; });
+    return h + "</div>";
+  }
+  function payCard(r) {
+    var L = r.payLanes || [], col = { ready: "#4ff32c", unstable: "#ffc247", resting: "#ff6b6b" };
+    var h = '<div class="card"><b>Payment lanes</b> <span class="m">(Paynecta TapFlows linked for automatic fail-over)</span><br>';
+    if (!r.paymentsOn) h += '<span class="err">Deposits are OFF. ' + esc(r.payWhy || "No complete lane found.") + "</span>";
+    else h += L.map(function (x) {
+      return '<div>Lane ' + x.lane + " &middot; " + esc(x.tapflow) + ' <b style="color:' + (col[x.status] || "#fff") + '">' + esc(x.status) + "</b>" + (x.fails ? " &middot; " + x.fails + " recent failure" + (x.fails > 1 ? "s" : "") : "") + (x.resumesIn ? " &middot; retried in " + x.resumesIn + " min" : "") + (x.why && x.status !== "ready" ? " &middot; " + esc(x.why) : "") + "</div>";
+    }).join("");
+    return h + '<div class="f"><button id="plReset">Mark all lanes ready</button></div></div>';
+  }
+  function tools(o) {
+    o.innerHTML = '<div class="card"><b>Odds &amp; payments</b><div class="f"><button id="ro">Refresh odds now</button><button id="tp">Test Paynecta connection</button></div></div>' +
+      '<div class="card"><b>Bet settlement</b> <span class="m">(automatic settlement checks every 10 minutes)</span><div class="f"><button class="go" data-do="settleNow">Settle now</button><button data-do="autoOn">Auto-settle ON</button><button class="bad" data-do="autoOff">Auto-settle OFF</button></div></div>' +
+      '<div class="card"><b>Send a message</b> <span class="m">(shows in the player\'s Inbox; leave "To" empty to message everyone)</span><div class="f"><input id="mT" placeholder="To: account no, phone or ID"><input id="mH" placeholder="Title"><input id="mB" size="40" placeholder="Message"><button id="mS" class="go">Send</button></div></div>' +
+      '<div class="card"><b>Adjust a wallet</b> <span class="m">(refunds, corrections; always logged)</span><div class="f"><input id="aU" placeholder="User ID (U...)"><input id="aA" type="number" placeholder="Amount (+/-)"><input id="aN" placeholder="Reason"><button id="ab">Apply</button></div></div>' +
+      '<div class="card"><b>Create jackpot</b><div class="f"><select id="jT"><option value="MID">Midweek Millionaire 13</option><option value="WKD">Super Millionaire 17</option></select><button id="jL">Load matches</button><button id="jC" class="go">Create</button></div><div id="jM" style="max-height:260px;overflow:auto"></div></div>' +
+      '<div class="card"><b>Enter jackpot results</b> <span class="m">(normally automatic. Saves the results and moves the jackpot to the Jackpot desk, where you set the prizes)</span><div class="f"><input id="sI" placeholder="Jackpot ID (J...)"><input id="sR" size="40" placeholder="Results e.g. 1,X,2,1,... (V = void)"><button id="sB" class="go">Save results</button></div></div>';
+    $("#ro").onclick = function () { act({ op: "refreshOdds" }); };
+    $("#tp").onclick = function () { act({ op: "testPay" }); };
+    $("#mS").onclick = function () { var go = function () { act({ op: "sendMsg", to: $("#mT").value, title: $("#mH").value, text: $("#mB").value }).then(function (r) { if (r && r.ok) { $("#mH").value = ""; $("#mB").value = ""; } }); }; if (!$("#mT").value.trim()) uiConfirm("Send this to EVERY player?", "Message everyone", "Send to everyone", true).then(function (ok) { if (ok) go(); }); else go(); };
+    $("#ab").onclick = function () { act({ op: "adjust", id: $("#aU").value.trim(), amount: $("#aA").value, note: $("#aN").value }); };
+    $("#sB").onclick = function () {
+      var id = $("#sI").value.trim(), res = $("#sR").value.split(",").map(function (x) { return x.trim().toUpperCase(); });
+      api({ action: "admDo", op: "previewJp", id: id, results: res }).then(function (r) {
+        if (!r.ok) { uiAlert(r.error); return; }
+        if (r.preview.v2) {
+          var q = r.preview;
+          uiConfirm(q.name + "\nEntries: " + q.entries + "\nEntry money: KES " + q.gross + "\nTop prize (locked): KES " + q.top + "\n" + q.tiers.map(function (t) { return t.correct + " correct: " + t.winners + " winner(s)"; }).join("\n") + "\n\nSave these results? Nothing is paid until you set the prizes in the Jackpot desk.", "Save results", "Save results").then(function (ok) { if (ok) act({ op: "settleJp", id: id, results: res }).then(function () { show("JpDesk"); }); });
+          return;
+        }
+        var p = r.preview, lines = p.tiers.map(function (t) { return t.correct + " correct: " + t.winners + " winner(s)" + (t.winners ? ", KES " + t.each + " each" : ", rolls over KES " + t.share); });
+        uiPrompt(p.name + "\nEntries: " + p.entries + "\nPool: KES " + p.pool + "\nVoid matches: " + p.voids + "\n" + lines.join("\n") + "\nTotal paid out: KES " + p.paid + "\nRolls over: KES " + p.carry + "\n\nThis cannot be undone. Type " + id + " to confirm.", "", "Type the jackpot ID").then(function (typed) {
+          if (typed !== id) { uiAlert("Cancelled. Nothing was paid."); return; }
+          act({ op: "settleJp", id: id, results: res });
+        });
+      });
+    };
+    $("#jL").onclick = function () { api({ action: "admDo", op: "upcoming" }).then(function (r) { $("#jM").innerHTML = r.ok ? r.matches.map(function (m) { return '<label style="display:block;padding:3px 0"><input type="checkbox" value="' + esc(m.id) + '"> ' + esc(new Date(m.t).toLocaleString("en-KE", { dateStyle: "short", timeStyle: "short" }) + " | " + m.league + " | " + m.home + " v " + m.away) + "</label>"; }).join("") : esc(r.error); }); };
+    $("#jC").onclick = function () { var ids = Array.prototype.map.call(document.querySelectorAll("#jM input:checked"), function (x) { return x.value; }); act({ op: "createJp", type: $("#jT").value, ids: ids, seed: 0 }); };
+  }
+  /* what the confirm box says for each action */
+  var CT = {
+    wdPaid: ["Mark as SENT / PAID", "Mark this withdrawal as Sent / Paid? Only do this after the NET amount has gone to the player on M-Pesa.", "Yes, it was sent", false],
+    wdProcess: ["In process", "Tell the player this withdrawal is now in process?", "Mark in process", false],
+    wdVerify: ["Verified", "Mark this withdrawal as verified?", "Mark verified", false],
+    wdReject: ["Reject withdrawal", "Reject this withdrawal? The money goes back to the player's wallet.", "Reject and refund", true],
+    recheckDeposit: ["Re-check deposit", "Ask the payment provider again about this deposit?", "Re-check", false],
+    resetPw: ["Reset password", "Reset this player's password and log them out everywhere? You will then send them the temporary password.", "Reset password", true],
+    bonusCancel: ["Cancel bonus", "Cancel this bonus and remove what is left of it?", "Cancel bonus", true],
+    bonusRelease: ["Release bonus", "Release what is left of this bonus into the player's cash wallet?", "Release", false],
+    holdApprove: ["Approve", "Approve this held item?", "Approve", false],
+    holdDismiss: ["Dismiss", "Dismiss this held item? The bet stays open; settle it by hand if you want.", "Dismiss", true],
+    affApprove: ["Approve earnings", "Approve this affiliate's earnings for this Tuesday?", "Approve", false],
+    affApproveAll: ["Approve all", "Approve every affiliate's available earnings for this Tuesday?", "Approve all", false],
+    affUnapprove: ["Withdraw approval", "Withdraw the approval for this Tuesday?", "Withdraw", true],
+    killSessions: ["Log out everywhere", "Log this player out of every device?", "Log out", true],
+    freeGrant: ["Give free bonus", "Give this player the KES 50 free registration bonus now? Only do this after they gave a genuine reason. It is valid for 24 hours and works like the normal free bonus.", "Give free bonus", false],
+    devRemove: ["Remove device", "Remove this device record?", "Remove", true]
+  };
+  function afterAct(b) {
+    var inPanel = b.closest && b.closest("#pnl");
+    if (inPanel) {
+      var c = PN && PN.ctx, tr = c && c.id && c.sheet ? document.querySelector('#out tr[data-row="' + c.id + '"]') : null;
+      if (c && (c.type === "aff" || c.type === "aprv")) { closePanel(); return softView(); }
+      if (PN) loadPanel();
+      if (tr) return refreshRow(tr);
+      return c && c.sheet ? undefined : softView();
+    }
+    var tr2 = b.closest && b.closest("tr[data-row]");
+    if (tr2 && document.contains(tr2) && LV && ROWSHEET[tr2.dataset.sheet]) return refreshRow(tr2);
+    return softView();
+  }
+  var ROWSHEET = { Withdrawals: 1, Deposits: 1, Bonuses: 1, Holds: 1, Resets: 1, Referrals: 1, Messages: 1, Ledger: 1 };
+  /* only the row that changed is fetched and redrawn */
+  function refreshRow(tr) {
+    var sheet = tr.dataset.sheet, id = tr.dataset.row;
+    return apiRaw({ action: "admRow", sheet: sheet, id: id }).then(function (r) {
+      if (!document.contains(tr)) return;
+      if (!r.ok) { softView(); return; }
+      if (r.gone) { tr.remove(); return; }
+      if (!LV || LV.t !== sheet) { softView(); return; }
+      if (LV.spec && LV.spec.f && !LV.spec.f(r.row[LV.spec.col])) { tr.style.transition = "opacity .4s"; tr.style.opacity = "0"; setTimeout(function () { if (tr.parentNode) tr.remove(); }, 420); return; }
+      var tb = document.createElement("tbody"); tb.innerHTML = rowHtml(sheet, LV.h, r.row, LV.hasAct); var nt = tb.firstElementChild; if (!nt) return;
+      nt.className = "flash"; tr.replaceWith(nt);
+    }).catch(function () { softView(); });
+  }
+  document.addEventListener("click", function (e) {   // a fresh look is wanted: drop the read cache before the button's own handler runs
+    var b = e.target.closest && e.target.closest("button"); if (!b) return;
+    if (/refresh|filter|search|load more|apply/i.test(b.textContent) || b.dataset.ci === "refresh" || b.dataset.bf) { RC = {}; EP++; }
+  }, true);
+  document.addEventListener("click", async function (e) {
+    if (!e.target.closest("#bellp") && !e.target.closest(".bell")) { var bp = $("#bellp"); if (bp) bp.hidden = true; }
+    var pu = e.target.closest("[data-pu]"), tb0 = e.target.closest("button,a,input,select,textarea,label");
+    if (pu && (!tb0 || tb0 === pu)) { e.preventDefault(); return openPanel(pu.dataset.pu, { type: pu.dataset.pc, sheet: pu.dataset.px, id: pu.dataset.pi, aid: pu.dataset.pa, st: pu.dataset.ps }); }
+    var jr = e.target.closest("tr[data-jp]"); if (jr && !e.target.closest("button")) { var jn = jr.nextElementSibling; if (jn) jn.hidden = !jn.hidden; return; }
+    var wf = e.target.closest("[data-wf]"); if (wf) { WV.f = wf.dataset.wf; return watchView($("#out")); }
+    var wt = e.target.closest("[data-wt]"); if (wt) { var nb = document.querySelector('#nav button[data-t="' + wt.dataset.wt + '"]'); if (nb) nb.click(); return; }
+    var br = e.target.closest("tr[data-bet]"); if (br && !e.target.closest("button")) return betPage(br.dataset.bet);
+    var b = e.target.closest("button"); if (!b || b.disabled) return;
+    if (b.classList.contains("bell")) return toggleBell();
+    if (b.dataset.nid) return goNote(PL.items.filter(function (n) { return String(n.id) === b.dataset.nid; })[0]);
+    if (b.dataset.nact === "read") { PL.items.forEach(function (n) { n.read = true; }); PL.unread = 0; renderBell(); renderBellPanel(); return; }
+    if (b.id === "pnlx") return closePanel();
+    if (b.dataset.jd) return jdClick(b);
+    if (b.dataset.pd) return pdClick(b);
+    if (b.dataset.ja === "confirm") return jaConfirm(b.dataset.id);
+    if (b.dataset.t) { closePanel(); return show(b.dataset.t); }
+    if (b.dataset.bf) { BF.st = $("#bfS").value; BF.q = $("#bfQ").value.trim(); return betsList($("#out")); }
+    if (b.dataset.lgx) { var tr = document.querySelector('tr[data-lg="' + b.dataset.lgx + '"]'); if (tr && document.querySelectorAll("tr[data-lg]").length > 1) tr.remove(); else toast("A bet needs at least one selection.", true); return; }
+    if (b.dataset.lgsave) {
+      var legs = Array.prototype.map.call(document.querySelectorAll("tr[data-lg]"), function (tr) { var g = { i: Number(tr.dataset.lg) }; tr.querySelectorAll("[data-f]").forEach(function (f) { g[f.dataset.f] = f.value; }); return g; });
+      if (!(await uiConfirm("Save these selections? Odds and payout will be recalculated.", "Save selections", "Save"))) return;
+      act({ op: "betLegs", id: b.dataset.lgsave, legs: legs, note: $("#lgN").value }).then(function () { betPage(b.dataset.lgsave); }); return;
+    }
+    if (b.dataset.ct) return chatThread(b.dataset.ct);
+    if (b.dataset.af) { closePanel(); return affPage(b.dataset.af); }
+    if (b.dataset.ci) {
+      var ci = b.dataset.ci;
+      if (ci === "refresh" || ci === "back") return show("Chat");
+      if (ci === "send") { var tx = $("#crT").value.trim(); if (!tx) return; var ag = setAgent($("#crA") ? $("#crA").value : agent()); if (!ag) { toast("Enter your initials (e.g. JK) before replying.", true); if ($("#crA")) $("#crA").focus(); return; } act({ op: "chatReply", id: chatU, text: tx, agent: ag }).then(function () { $("#crT").value = ""; OUT_DIRTY = false; chatThread(chatU); }); return; }
+      if (ci === "close") { if (!(await uiConfirm("Close this chat? It will leave the waiting list until the player writes again.", "Close chat", "Close chat"))) return; act({ op: "chatClose", id: chatU }).then(function () { show("Chat"); }); return; }
+    }
+    if (b.dataset.del) {
+      var ds = b.dataset.del, di = b.dataset.id, rv = "0", dtr = b.closest("tr[data-row]");
+      if (!(await uiConfirm("Permanently delete " + ds + " row " + di + "? This cannot be undone.", "Delete", "Delete", true))) return;
+      if (ds === "Bets") rv = (await uiConfirm("Also undo this bet's effect on the player's wallet (refund an open bet, take back a payout)?", "Wallet", "Yes, undo it", false, "No, leave the wallet")) ? "1" : "0";
+      act({ op: "delRow", sheet: ds, id: di, reverse: rv }).then(function (r) { if (r && r.ok && dtr && document.contains(dtr)) { dtr.remove(); return; } if (lastView) return lastView(); var cur = document.querySelector("#nav .on"); show(cur ? cur.dataset.t : "stats"); }); return;
+    }
+    if (b.dataset.du) {
+      var du = b.dataset.du; if ((await uiPrompt("Type DELETE to permanently remove player " + du, "", "Type DELETE")) !== "DELETE") return;
+      var pg = (await uiConfirm("Also erase ALL of this player's bets, ledger, deposits, withdrawals, bonuses and messages?\n\nErase everything removes every record. Keep records deletes only the player.", "Erase their records?", "Erase everything", true, "Keep the records")) ? "1" : "0";
+      act({ op: "delUser", id: du, purge: pg }).then(function () { lastView = null; show("Users"); }); return;
+    }
+    if (b.dataset.w) {
+      var wa = Number($("#wA").value), wn = $("#wN").value.trim(), k = b.dataset.w;
+      if (!(wa >= 0) || (k !== "set" && !(wa > 0))) { toast("Enter an amount.", true); return; }
+      if (!wn) { toast("A reason is required.", true); return; }
+      if (!(await uiConfirm((k === "add" ? "Add KES " : k === "ded" ? "Deduct KES " : "Set the balance to KES ") + wa + "?", "Wallet change", "Apply", k === "ded"))) return;
+      act(k === "set" ? { op: "setBalance", id: curP, amount: wa, note: wn } : { op: "adjust", id: curP, amount: k === "ded" ? -wa : wa, note: wn }).then(function () { openPlayer(curP); }); return;
+    }
+    if (b.dataset.be) { var bv = b.dataset.v.split("|"), bid = b.dataset.be; dlg("Edit bet " + bid, [["status", "Status", bv[0], "select", ["open", "won", "lost", "void"]], ["stake", "Stake (KES)", bv[1], "number"], ["odds", "Total odds", bv[2], "number"], ["potential", "Payout if won (KES)", bv[3], "number"], ["note", "Reason", ""]], function (v) { act({ op: "betEdit", id: bid, status: v.status, stake: v.stake, odds: v.odds, potential: v.potential, note: v.note }).then(function () { if (lastView) lastView(); }); }); return; }
+    if (b.dataset.ep) { var pv = b.dataset.v.split("|"); dlg("Edit profile", [["name", "Full name", pv[0]], ["phone", "Phone (254...)", pv[1]], ["currency", "Currency", pv[2], "select", ["KES", "GBP"]]], function (v) { act({ op: "editUser", id: curP, name: v.name, phone: v.phone, currency: v.currency }).then(function () { openPlayer(curP); }); }); return; }
+    if (b.dataset.affdl) { var dk = b.dataset.affdl; api({ action: "admAffReport", kind: dk }).then(function (r) { if (!r.ok) { toast(r.error || "Could not build the list.", true); return; } dlCsv([r.headers].concat(r.rows), r.name || "affiliates"); }); return; }
+    if (b.dataset.sh) { var sv = JSON.parse(b.dataset.v), sid = b.dataset.sh; dlg("Slip sharing settings", [["mode", "Access: auto (50 to unlock, keep at 40), allow (always on) or block (off)", sv[0], "select", ["auto", "allow", "block"]], ["cap", "Stake cap override in KES (empty = automatic)", sv[1], "number"]], function (v) { act({ op: "shareSet", id: sid, mode: v.mode, cap: v.cap }).then(function () { if (lastView) lastView(); }); }); return; }
+    if (b.dataset.ae) { var ev = JSON.parse(b.dataset.v), eid = b.dataset.ae; dlg("Edit affiliate", [["code", "Referral code", ev[0]], ["status", "Status", ev[1], "select", ["pending", "approved", "suspended", "rejected"]], ["rate", "Revenue share % (25 to 45)", ev[2], "number"], ["cpa", "CPA per depositor (KES)", ev[3], "number"], ["parent", "Recruiter code (optional)", ev[4]], ["notes", "Notes", ev[5]]], function (v) { act({ op: "affEdit", id: eid, code: v.code, status: v.status, rate: v.rate, cpa: v.cpa, parent: v.parent, notes: v.notes }).then(function () { if (lastView) lastView(); }); }); return; }
+    if (b.dataset.aj) { var jid = b.dataset.aj; dlg("Adjust earnings", [["amount", "Amount in KES (negative to deduct)", "", "number"], ["reason", "Reason (required)", ""]], function (v) { act({ op: "affAdjust", id: jid, amount: v.amount, reason: v.reason }).then(function () { if (lastView) lastView(); }); }); return; }
+    if (b.dataset.open) { closePanel(); return openPlayer(b.dataset.open); }
+    if (b.dataset.msg) { var mid = b.dataset.msg; dlg("Message to the player", [["t", "Title", ""], ["b", "Message", ""]], function (v) { if (!v.t.trim() || !v.b.trim()) { toast("Title and message are required.", true); return; } act({ op: "sendMsg", to: mid, title: v.t, text: v.b }); }, "Send"); return; }
+    if (b.dataset["do"]) {
+      var d = b.dataset, op = d["do"], o = { op: op, id: d.id, result: d.r, status: d.r };
+      if (op === "chatReply") { var ag2 = agent() || setAgent(await uiPrompt("Your initials (e.g. JK)")); if (!ag2) return; o.text = await uiPrompt("Reply to player (as " + ag2 + ")"); if (!o.text) return; o.agent = ag2; act(o).then(function () { show("Chat"); }); return; }
+      if (op === "setResult") { var sc = await uiPrompt("90-minute score, e.g. 2-1"), mm = sc && sc.match(/^\s*(\d+)\D+(\d+)\s*$/); if (!mm) return; o.hs = mm[1]; o.as = mm[2]; }
+      if (op === "wdReject") { var rn = await uiPrompt("Reason for rejecting (optional). The player is refunded.", "", "Reason"); if (rn === null) return; o.note = rn || ""; }
+      if (op === "affSet" && d.r === "approved") { o.rate = await uiPrompt("Terms: revenue share % (25 to 45; starts at 25 and grows with active players: 35 at 10 active, 45 at 25 active), CPA in KES. e.g. 25,0 or 35,100", "25,0", "Rate %, CPA"); if (o.rate === null) return; }
+      var ct = CT[op] || ["Confirm", "Confirm: " + op + " " + d.id + (d.r ? " -> " + d.r : "") + "?", "Confirm", /^(suspended|rejected)$/.test(d.r || "")];
+      if (!(await uiConfirm(ct[1], ct[0], ct[2], ct[3] || (op === "userStatus" && d.r === "suspended")))) return;
+      b.disabled = true; b.classList.add("wait");
+      var res = await act(o);
+      b.classList.remove("wait"); b.disabled = false;
+      return afterAct(b);
+    }
+  });
+
+  /* ---- every list: search, date range, CSV export, load more ---- */
+  function csvq(v) { v = String(v == null ? "" : v); if (/^[=@]/.test(v) || (/^[+-]/.test(v) && isNaN(Number(v)))) v = "'" + v; return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  function dlCsv(rows, name) { var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["\ufeff" + rows.map(function (r) { return r.map(csvq).join(","); }).join("\r\n")], { type: "text/csv" })); a.download = name + "-" + new Date().toISOString().slice(0, 10) + ".csv"; document.body.appendChild(a); a.click(); a.remove(); }
+  function decorate() {
+    var o = $("#out");
+    Array.prototype.forEach.call(o.querySelectorAll(".tw"), function (w) {
+      if (w.dataset.tb) return; var tb = w.querySelector("table"); if (!tb || tb.rows.length < 3) return; w.dataset.tb = "1";
+      var hd = Array.prototype.map.call(tb.rows[0].cells, function (c) { return c.textContent; }), dc = -1, i;
+      for (i = 0; i < hd.length && dc < 0; i++) { var c1 = tb.rows[1].cells[i]; if (c1 && /^\d{4}-\d{2}-\d{2}/.test(c1.textContent)) dc = i; }
+      var bar = document.createElement("div"); bar.className = "f tbar";
+      bar.innerHTML = '<input class="ts" placeholder="Search this list" style="flex:1;min-width:150px">' + (dc > -1 ? '<label class="m">From <input type="date" class="d1"></label><label class="m">To <input type="date" class="d2"></label>' : "") + '<button class="sm tx">Export CSV</button>' + (o.dataset.list ? '<button class="sm tl">Load more rows (up to 5,000)</button>' : "") + '<span class="m tc"></span>';
+      w.parentNode.insertBefore(bar, w);
+      function dkey(t) { var d = new Date(t.replace(" ", "T")); if (isNaN(d)) return ""; return /T|\d:\d/.test(t) ? d.toLocaleDateString("en-CA", { timeZone: "Africa/Nairobi" }) : t.slice(0, 10); }
+      function run() {
+        var q = bar.querySelector(".ts").value.toLowerCase().trim(), a = dc > -1 ? bar.querySelector(".d1").value : "", z = dc > -1 ? bar.querySelector(".d2").value : "", shown = 0, total = 0, r;
+        for (r = 1; r < tb.rows.length; r++) {
+          var row = tb.rows[r], ok = true; total++;
+          if (q && row.textContent.toLowerCase().indexOf(q) < 0) ok = false;
+          if (ok && (a || z) && dc > -1) { var k = dkey(row.cells[dc].textContent); if (k && ((a && k < a) || (z && k > z))) ok = false; }
+          row.style.display = ok ? "" : "none"; if (ok) shown++;
+        }
+        bar.querySelector(".tc").textContent = shown + " of " + total + " rows";
+      }
+      bar.addEventListener("input", run); run();
+      bar.querySelector(".tx").onclick = function () {
+        var last = /^actions$/i.test(hd[hd.length - 1]) ? hd.length - 1 : hd.length, out = [], r, c;
+        for (r = 0; r < tb.rows.length; r++) { if (r > 0 && tb.rows[r].style.display === "none") continue; var cells = []; for (c = 0; c < last; c++) cells.push(tb.rows[r].cells[c] ? tb.rows[r].cells[c].textContent : ""); out.push(cells); }
+        var cur = document.querySelector("#nav .on"); dlCsv(out, "247bet-" + (cur ? cur.dataset.t : "list"));
+      };
+      var tl = bar.querySelector(".tl"); if (tl) tl.onclick = function () { FULL = true; var cur = document.querySelector("#nav .on"); show(cur ? cur.dataset.t : "stats"); };
+    });
+  }
+  var mo = new MutationObserver(function () { clearTimeout(mo.h); mo.h = setTimeout(decorate, 60); });
+  mo.observe($("#out"), { childList: true, subtree: true });
+
+  /* ---- reports and safety ---- */
+  function reports(o) {
+    var m = new Date().toISOString().slice(0, 7);
+    o.innerHTML = '<h2 style="margin:0 0 8px">Reports &amp; safety</h2>' +
+      '<div class="card"><b>Checks</b><div class="f"><button data-rp="recon">Reconciliation now</button><button data-rp="fraud">Fraud flags</button></div><p class="m">Reconciliation compares deposits, withdrawals and wallet balances with the Ledger. It also runs every morning and emails you if anything is off.</p></div>' +
+      '<div class="card"><b>Accounting and tax exports</b><div class="f"><label class="m">From <input id="rpA" type="month" value="' + m + '"></label><label class="m">To <input id="rpB" type="month" value="' + m + '"></label></div><div class="f"><button data-rp="tax">Monthly totals</button><button data-rp="taxPlayers">Per-player totals</button></div><p class="m">Totals from the Ledger. Confirm which licence, ID-verification and tax rules apply to you with a licensed Kenyan advisor before filing from them.</p></div>' +
+      '<div class="card"><b>Affiliate statement and campaigns</b><div class="f"><input id="rpC" placeholder="Affiliate referral code" style="max-width:220px"><input id="rpM" type="month" value="' + m + '"><button data-rp="statement">Monthly statement</button><button data-rp="campaigns">Campaign results</button></div></div>' +
+      (ROLE === "owner" ? '<div class="card"><b>Safety</b><div class="f"><button data-rp2="backupNow">Back up the sheet now</button><button data-rp2="alertTest">Send a test alert</button></div><p class="m">Backups go to Google Drive in the folder 247Bet Backups (newest 14 kept).</p></div>' : "") + '<div id="rpOut"></div>';
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-rp],[data-rp2]"); if (!b) return;
+    if (b.dataset.rp2) { act({ op: b.dataset.rp2 }); return; }
+    var o = $("#rpOut"); o.innerHTML = '<p class="m">Working...</p>';
+    function v(id) { var el = $(id); return el ? el.value : ""; }
+    api({ action: "admReport", kind: b.dataset.rp, from: v("#rpA"), to: v("#rpB"), code: v("#rpC"), month: v("#rpM") }).then(function (r) {
+      if (!r.ok) { o.innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      o.innerHTML = '<div class="card"><h3>' + esc(r.title) + "</h3>" + (r.note ? '<p class="m">' + esc(r.note) + "</p>" : "") + (r.rows.length ? bigTable(r.headers, r.rows) : '<p class="m">Nothing to show for this period.</p>') + "</div>";
+    }).catch(function () { o.innerHTML = '<p class="err">Could not reach the server.</p>'; });
+  });
+  $("#mbtn").onclick = function () { document.body.classList.toggle("menu"); };
+  function signOut() { sessionStorage.clear(); location.reload(); }
+  $("#out2").onclick = signOut; $("#out3").onclick = signOut;
+  $("#ks").onclick = function () { var k = $("#k"), h = k.type === "password"; k.type = h ? "text" : "password"; this.textContent = h ? "Hide" : "Show"; };
+  $("#qb").onclick = function () { var q = $("#q").value.trim(); if (q) search(q); };
+  $("#q").onkeydown = function (e) { if (e.key === "Enter") $("#qb").onclick(); };
+  $("#u").value = U || (function () { try { return localStorage.getItem("247u"); } catch (e) { return ""; } })() || "https://script.google.com/macros/s/AKfycbwdELw9L8ENkynwEhCnM0xvaiY1nha1sjAgznudoVEJWacdddMXBlsqlIAD50dzEFRciQ/exec";
+  function enter() { $(".brand").innerHTML = '247<b>Bet</b> Admin <small style="font-size:11.5px;color:var(--m);font-weight:600;text-transform:capitalize">' + esc(ROLE) + "</small>"; $("#login").hidden = true; $("#boot").hidden = true; $("#app").hidden = false; $("#whoR").textContent = ROLE; var ag = agent(); $("#whoA").innerHTML = ag ? " &middot; <b>" + esc(ag) + "</b>" : ""; show("stats"); startPulse(); }
+  function showLogin(msg) { $("#boot").hidden = true; $("#app").hidden = true; $("#login").hidden = false; if (msg) $("#le").textContent = msg; setTimeout(function () { $("#k").focus(); }, 50); }
+  function agent() { try { return (localStorage.getItem("247ag") || "").toUpperCase(); } catch (e) { return ""; } }
+  function setAgent(v) { v = String(v || "").replace(/[^A-Za-z]/g, "").toUpperCase().slice(0, 4); try { localStorage.setItem("247ag", v); } catch (e) {} var w = $("#whoA"); if (w) w.innerHTML = v ? " &middot; <b>" + esc(v) + "</b>" : ""; return v; }
+  $("#lf").onsubmit = function (ev) {
+    ev.preventDefault(); var b = $("#in"); U = $("#u").value.trim(); K = $("#k").value; $("#le").textContent = "";
+    if (!K) { $("#le").textContent = "Enter your admin key."; return; }
+    if (!/^https:\/\/script\.google\.com\//.test(U)) { $("#adv").open = true; $("#le").textContent = "The Apps Script URL looks wrong. Open Connection settings."; return; }
+    b.disabled = true; b.textContent = "Signing in...";
+    api({ action: "admStats" }).then(function (r) {
+      if (!r.ok) { $("#le").textContent = r.error || "Wrong admin key."; return; }
+      sessionStorage.setItem("u", U); sessionStorage.setItem("k", K); try { localStorage.setItem("247u", U); } catch (e) {} ROLE = r.role || "owner"; enter();
+    }).catch(function () { $("#le").textContent = "Could not reach the server. Check your connection and the URL."; })
+      .then(function () { b.disabled = false; b.textContent = "Log in"; });
+  };
+  if (U && K) api({ action: "admStats" }).then(function (r) { if (r.ok) { ROLE = r.role || "owner"; enter(); } else { sessionStorage.clear(); K = ""; showLogin(); } }).catch(function () { showLogin("Could not reach the server."); });
+  else showLogin();
+  /* =====================================================================
+   * BATCH 2: player panel (opens before any approval), auto-refresh pulse, notifications, idle sign-out
+   * ===================================================================== */
+  function chip(st) {
+    var m = { pending: "var(--a)", processing: "var(--a)", verified: "var(--a)", open: "var(--a)", success: "var(--g)", paid: "var(--g)", active: "var(--g)", won: "var(--g)", rejected: "var(--r)", failed: "var(--r)", suspended: "var(--r)", lost: "var(--r)" }, c = m[st] || "var(--m)";
+    return '<span class="chip" style="color:' + c + ";border-color:" + c + '">' + esc(st) + "</span>";
+  }
+  function opened(uid) { try { return !!JSON.parse(sessionStorage.getItem("247op") || "{}")[uid]; } catch (e) { return false; } }
+  function markOpened(uid) {
+    try { var m = JSON.parse(sessionStorage.getItem("247op") || "{}"); m[uid] = Date.now(); sessionStorage.setItem("247op", JSON.stringify(m)); } catch (e) {}
+    $$('button[data-do="wdPaid"]').forEach(function (b) { if (b.dataset.uid === uid) { b.disabled = false; b.removeAttribute("title"); } });
+  }
+  function openPanel(uid, ctx) {
+    PN = { uid: uid, ctx: ctx || {} };
+    $("#pnl").hidden = false; $("#pnlbg").hidden = false; document.body.classList.add("pnlon");
+    $("#pnlt").textContent = "Player"; $("#pnlb").innerHTML = '<div class=skl></div><div class=skl2></div><div class=skl3></div>'; loadPanel();
+  }
+  function closePanel() { PN = null; $("#pnl").hidden = true; $("#pnlbg").hidden = true; document.body.classList.remove("pnlon"); }
+  function loadPanel() {
+    var P = PN; if (!P) return; var c = P.ctx, calls = [apiRaw({ action: "admPanel", id: P.uid })];
+    if (c.sheet && c.id) calls.push(apiRaw({ action: "admRow", sheet: c.sheet, id: c.id }));
+    Promise.all(calls).then(function (rs) {
+      if (PN !== P) return; var r = rs[0];
+      if (!r.ok) { $("#pnlb").innerHTML = '<p class="err">' + esc(r.error) + "</p>"; return; }
+      var rec = rs[1] && rs[1].ok && !rs[1].gone ? rs[1].row : null, gone = !!(rs[1] && rs[1].gone);
+      P.uid = r.user.id; markOpened(r.user.id);
+      $("#pnlb").innerHTML = pnlHtml(r, c, rec, gone);
+    }).catch(function () { if (PN === P) $("#pnlb").innerHTML = '<p class="err">Network problem. Try again.</p>'; });
+  }
+  var PCOLS = { Deposits: [["created", 5], ["amount", 3], ["status", 4]], Withdrawals: [["created", 5], ["amount", 3], ["status", 4], ["net", 8]], Bets: [["placed", 3], ["stake", 4], ["odds", 5], ["payout", 6], ["status", 7]], Bonuses: [["type", 2], ["amount", 3], ["left", 14], ["status", 7]] };
+  function pnlSec(s) {
+    var cs = PCOLS[s.name]; if (!cs) return "";
+    return '<div class="pcard"><b>' + (s.name === "Bets" ? "Recent bets" : "Recent " + s.name.toLowerCase()) + "</b>" + (s.rows.length ? '<div class="tw"><table><tr>' + cs.map(function (c) { return "<th>" + c[0] + "</th>"; }).join("") + "</tr>" + s.rows.map(function (x) {
+      return "<tr>" + cs.map(function (c) { var v = x[c[1]]; if (c[0] === "created" || c[0] === "placed") v = v ? when(v) : ""; return "<td>" + (c[0] === "status" ? chip(String(v)) : esc(v == null ? "" : v)) + "</td>"; }).join("") + "</tr>";
+    }).join("") + "</table></div>" : '<p class="m">Nothing yet.</p>') + "</div>";
+  }
+  function pnlRecord(c, rec, gone, u) {
+    if (!c.type) return "";
+    var h = "";
+    if (c.sheet && (gone || !rec)) return '<div class="pcard"><p class="m">This record is no longer in the list.</p></div>';
+    if (c.type === "wd") {
+      var op = rec[4] !== "paid" && rec[4] !== "rejected", id = esc(rec[0]), ph = String(rec[2]).replace(/^'/, "");
+      h = '<div class="pcard" style="border-color:var(--g)"><b>Withdrawal ' + id + "</b> " + chip(rec[4]) + '<div class="k" style="margin:8px 0"><div><b>KES ' + esc(rec[8] !== "" && rec[8] != null ? rec[8] : rec[3]) + '</b><span>NET to send</span></div><div><b>KES ' + esc(rec[3]) + '</b><span>Requested</span></div></div><div class="m">To ' + esc(ph) + " &middot; " + esc(when(rec[5])) + (rec[6] ? " &middot; " + esc(rec[6]) : "") + "</div>" +
+        (op ? '<div class="f" style="margin-top:8px"><button class="sm" data-do="wdProcess" data-id="' + id + '">In process</button><button class="sm" data-do="wdVerify" data-id="' + id + '">Verified</button><button class="sm go" data-do="wdPaid" data-id="' + id + '" data-uid="' + esc(u.id) + '">Sent / Paid</button><button class="sm bad" data-do="wdReject" data-id="' + id + '">Reject</button></div><p class="m">Send the NET amount on M-Pesa first, then press Sent / Paid.</p>' : "") + "</div>";
+    } else if (c.type === "dep") {
+      var dp = rec[4] === "pending", did = esc(rec[0]);
+      h = '<div class="pcard" style="border-color:var(--g)"><b>Deposit ' + did + "</b> " + chip(rec[4]) + '<div class="k" style="margin:8px 0"><div><b>KES ' + esc(rec[3]) + '</b><span>Amount</span></div></div><div class="m">' + esc(String(rec[2]).replace(/^'/, "")) + " &middot; " + esc(when(rec[5])) + "</div>" + (dp ? '<div class="f" style="margin-top:8px"><button class="sm go" data-do="recheckDeposit" data-id="' + did + '">Re-check with provider</button></div>' : "") + "</div>";
+    } else if (c.type === "reset") {
+      var rp = rec[4] === "pending";
+      h = '<div class="pcard" style="border-color:var(--g)"><b>Password reset request</b> ' + chip(rec[4]) + '<div class="m">' + esc(when(rec[3])) + "</div>" + (rp ? '<div class="f" style="margin-top:8px"><button class="sm go" data-do="resetPw" data-id="' + esc(u.id) + '">Reset password</button></div><p class="m">Then send the player their temporary password (WhatsApp or call).</p>' : "") + "</div>";
+    } else if (c.type === "hold") {
+      var ho = rec[5] === "open", hid = esc(rec[0]);
+      h = '<div class="pcard" style="border-color:var(--a)"><b>Held item</b> ' + chip(rec[5]) + '<p class="m">' + esc(rec[3]) + "</p>" + (ho ? '<div class="f"><button class="sm go" data-do="holdApprove" data-id="' + hid + '">Approve</button><button class="sm bad" data-do="holdDismiss" data-id="' + hid + '">Dismiss</button></div>' : "") + "</div>";
+    } else if (c.type === "aff") {
+      var ai = esc(c.aid);
+      h = '<div class="pcard" style="border-color:var(--g)"><b>Affiliate application</b><div class="f" style="margin-top:8px"><button class="sm go" data-do="affSet" data-id="' + ai + '" data-r="approved">Approve</button><button class="sm bad" data-do="affSet" data-id="' + ai + '" data-r="rejected">Reject</button><button class="sm" data-af="' + ai + '">Read agreement</button></div></div>';
+    } else if (c.type === "aprv") {
+      var ai2 = esc(c.aid), okk = c.st === "ok";
+      h = '<div class="pcard" style="border-color:var(--g)"><b>Tuesday earnings approval</b><div class="f" style="margin-top:8px"><button class="sm go" data-do="affApprove" data-id="' + ai2 + '">' + (okk ? "Re-approve" : "Approve") + '</button>' + (okk ? '<button class="sm bad" data-do="affUnapprove" data-id="' + ai2 + '">Withdraw</button>' : "") + '<button class="sm" data-af="' + ai2 + '">Affiliate page</button></div></div>';
+    }
+    return h;
+  }
+  function pnlHtml(r, c, rec, gone) {
+    var u = r.user, money = r.role !== "support", p = r.pres, h = "";
+    $("#pnlt").textContent = u.name;
+    h += '<div class="pcard"><b style="font-size:16px">' + esc(u.name) + "</b> " + chip(u.status) + '<div class="m">Account ' + esc(u.acct) + " &middot; " + esc(u.phone) + " &middot; joined " + esc(String(u.created).slice(0, 10)) + "</div>" + (p ? '<div class="m">Last login ' + esc(ago(p.login)) + " &middot; last seen " + esc(ago(p.seen)) + "</div>" : "");
+    if (money) h += '<div class="k" style="margin-top:10px"><div><b>KES ' + esc(u.balance) + "</b><span>Wallet balance</span></div><div><b>KES " + esc(u.bonus || 0) + "</b><span>Bonus balance</span></div></div>";
+    h += "</div>";
+    if (r.flags && r.flags.length) h += '<div class="pcard" style="border-color:var(--r)"><b style="color:var(--r)">Flags</b><ul class="pfl">' + r.flags.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" + (r.devices.others.length ? '<div class="m">Same device: ' + r.devices.others.map(function (o) { return '<a href="#" class="lk" data-pu="' + esc(o.id) + '">' + esc(o.name) + " (" + esc(o.acct) + ")</a>"; }).join(", ") + "</div>" : "") + "</div>";
+    h += pnlRecord(c, rec, gone, u);
+    h += '<div class="f"><button class="go" data-open="' + esc(u.id) + '">Open full account</button><button data-msg="' + esc(u.id) + '">Message</button></div>';
+    r.sections.forEach(function (s) { h += pnlSec(s); });
+    return h;
+  }
+  $("#pnlbg").onclick = closePanel;
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && PN && !document.querySelector("dialog[open]")) closePanel(); });
+
+  /* ---------- notifications: bell, toasts, sound ---------- */
+  var PL = { base: null, items: [], unread: 0, counts: {}, tm: null, act: Date.now(), warn: null, busy: false, pend: false, nid: 0 };
+  var NAVB = { Watch: ["wtOne", "wtTwo"], WdOpen: ["wd"], DepPending: ["dep"], Chat: ["human", "waiting"], Resets: ["resets"], AffApps: ["affApps"], JpDesk: ["drafts", "jpAwait"], Holds: ["holds"] };
+  var TAB_KEYS = { WdHome: ["wd", "wdLast"], WdOpen: ["wd", "wdLast"], WdAll: ["wd", "wdLast"], WdPaid: ["wd", "wdLast"], WdRejected: ["wd", "wdLast"], DepHome: ["dep", "depOk"], DepPending: ["dep", "depOk"], DepDone: ["dep", "depOk"], DepFailed: ["dep", "depOk"], DepAll: ["dep", "depOk"], Chat: ["human", "waiting", "chatAt"], Watch: ["wtOne", "wtTwo", "mbLast"], Resets: ["resets", "resetLast"], Holds: ["holds"], AffApps: ["affApps"], AffApprovals: ["affApps"], Affiliates: ["affApps"], JpDesk: ["drafts", "jpAwait"], JpHome: ["drafts", "jpAwait"] };
+  var ALL_KEYS_TABS = { stats: 1, Activity: 1, BetsHome: 1 };
+  function badgeVal(k) { var c = PL.counts || {}; if (k === "Chat") return Number(c.human) || Number(c.waiting) || 0; return NAVB[k].reduce(function (a, x) { return a + (Number(c[x]) || 0); }, 0); }
+  function applyBadges() {
+    Object.keys(NAVB).forEach(function (k) {
+      var btn = document.querySelector('#nav button[data-t="' + k + '"]'); if (!btn) return;
+      var n = badgeVal(k), sp = btn.querySelector(".nb");
+      if (n > 0) { if (!sp) { sp = document.createElement("span"); sp.className = "nb"; btn.appendChild(sp); } sp.textContent = n; } else if (sp) sp.remove();
+    });
+    $$("#nav details").forEach(function (d) {
+      var tot = 0; $$("button[data-t]", d).forEach(function (b) { if (NAVB[b.dataset.t]) tot += badgeVal(b.dataset.t); });
+      var sm = d.querySelector("summary"), sp = sm && sm.querySelector(".nb"); if (!sm) return;
+      if (tot > 0) { if (!sp) { sp = document.createElement("span"); sp.className = "nb"; sm.appendChild(sp); } sp.textContent = tot; } else if (sp) sp.remove();
+    });
+  }
+  function renderBell() {
+    $$(".bell").forEach(function (b) { var sp = b.querySelector(".bc"); if (!sp) return; if (PL.unread > 0) { sp.hidden = false; sp.textContent = PL.unread > 99 ? "99+" : PL.unread; } else sp.hidden = true; });
+    document.title = (PL.unread > 0 ? "(" + PL.unread + ") " : "") + "247Bet Admin";
+  }
+  function sndOn() { try { return localStorage.getItem("247snd") !== "off"; } catch (e) { return true; } }
+  function renderBellPanel() {
+    var bp = $("#bellp"); if (!bp) return;
+    bp.innerHTML = '<div class="bh"><b>Notifications</b><span class="f" style="margin:0"><label><input type="checkbox" id="sndT"' + (sndOn() ? " checked" : "") + '> Sound</label><button class="sm" data-nact="read">Mark all read</button></span></div>' +
+      (PL.items.length ? PL.items.map(function (n) { return '<button class="bi' + (n.read ? "" : " nw") + '" data-nid="' + n.id + '"><b>' + esc(n.title) + "</b>" + (n.detail ? "<small>" + esc(n.detail) + "</small>" : "") + "<small>" + esc(ago(n.t)) + "</small></button>"; }).join("") : '<p class="m" style="padding:10px">Nothing new since you signed in. New withdrawals, deposits, chats and requests will appear here.</p>');
+    var st = $("#sndT"); if (st) st.onchange = function () { try { localStorage.setItem("247snd", st.checked ? "on" : "off"); } catch (e) {} if (st.checked) beep(); };
+  }
+  function toggleBell() {
+    var bp = $("#bellp"); if (!bp.hidden) { bp.hidden = true; return; }
+    renderBellPanel(); bp.hidden = false;
+    PL.items.forEach(function (n) { n.read = true; }); PL.unread = 0; renderBell();   // shown as new once, then counted as seen
+  }
+  function goNote(n) {
+    if (!n) return;
+    if (!n.read) { n.read = true; PL.unread = Math.max(0, PL.unread - 1); renderBell(); }
+    var bp = $("#bellp"); if (bp) bp.hidden = true;
+    var g = n.go || {}; closePanel();
+    if (g.chat) return chatThread(g.chat);
+    show(g.tab || "stats"); if (g.pu) openPanel(g.pu, g.ctx || {});
+  }
+  function addNote(ev) {
+    var n = { id: ++PL.nid, t: Date.now(), title: ev.title, detail: ev.detail || "", go: ev.go, read: false };
+    PL.items.unshift(n); PL.items = PL.items.slice(0, 30); PL.unread++; renderBell();
+    var box = $("#ntoasts"), el = document.createElement("div"); el.className = "nt";
+    el.innerHTML = "<b>" + esc(n.title) + "</b>" + (n.detail ? "<span>" + esc(n.detail) + "</span>" : "") + '<button class="x" aria-label="Dismiss">&times;</button>';
+    el.onclick = function (e) { if (e.target.closest(".x")) { e.stopPropagation(); el.remove(); return; } el.remove(); goNote(n); };
+    box.appendChild(el); while (box.children.length > 4) box.removeChild(box.firstChild);
+    setTimeout(function () { if (el.parentNode) el.remove(); }, 9000);
+  }
+  var AC = null;
+  function unlockAudio() { try { if (!AC) { var C = window.AudioContext || window.webkitAudioContext; if (C) AC = new C(); } if (AC && AC.state === "suspended") AC.resume(); } catch (e) {} }
+  document.addEventListener("click", unlockAudio, true); document.addEventListener("keydown", unlockAudio, true);
+  function beep() {
+    if (!sndOn() || !AC || AC.state !== "running") return;
+    try { var t = AC.currentTime; [[880, 0], [1175, 0.14]].forEach(function (p) { var o = AC.createOscillator(), g = AC.createGain(); o.type = "sine"; o.frequency.value = p[0]; g.gain.setValueAtTime(0.0001, t + p[1]); g.gain.exponentialRampToValueAtTime(0.18, t + p[1] + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + p[1] + 0.2); o.connect(g); g.connect(AC.destination); o.start(t + p[1]); o.stop(t + p[1] + 0.22); }); } catch (e) {}
+  }
+
+  /* ---------- pulse: a counts-only call (answered from a 10 s server cache) ---------- */
+  function money(n) { return "KES " + Number(n || 0).toLocaleString("en-KE"); }
+  function many(n, one, more) { return n > 1 ? n + " " + more : one; }
+  function onPulse(r) {
+    var c = r.c || {}, L = r.latest || {}, B = PL.base, ev = [];
+    PL.counts = c; applyBadges();
+    var cur = document.querySelector("#nav .on"), tab = cur ? cur.dataset.t : "", rel = null;
+    if (B) {
+      var up = function (k) { return c[k] !== undefined && B[k] !== undefined && c[k] > B[k]; };
+      if (up("wdLast")) ev.push({ title: many(c.wdLast - B.wdLast, "New withdrawal request", "new withdrawal requests"), detail: L.wd ? (L.wd.name || "Player") + " - " + money(L.wd.amt) : "", go: { tab: "WdOpen", pu: L.wd && L.wd.uid, ctx: L.wd && { type: "wd", sheet: "Withdrawals", id: L.wd.id } } });
+      if (up("depOk")) ev.push({ title: many(c.depOk - B.depOk, "Deposit received", "deposits received"), detail: L.dep ? (L.dep.name || "Player") + " - " + money(L.dep.amt) : "", go: { tab: "DepDone", pu: L.dep && L.dep.uid, ctx: L.dep && { type: "dep", sheet: "Deposits", id: L.dep.id } } });
+      if (up("human")) ev.push({ title: "A customer asked for a human agent", detail: L.chat ? L.chat.name : "", go: L.chat ? { chat: L.chat.uid } : { tab: "Chat" } });
+      else if (c.chatAt !== undefined && B.chatAt !== undefined && c.chatAt > B.chatAt) ev.push({ title: "New chat message", detail: L.chat ? L.chat.name : "", go: L.chat ? { chat: L.chat.uid } : { tab: "Chat" } });
+      if (up("resetLast")) ev.push({ title: "Password reset request", detail: L.reset ? L.reset.name : "", go: { tab: "Resets", pu: L.reset && L.reset.uid, ctx: L.reset && { type: "reset", sheet: "Resets", id: L.reset.id } } });
+      if (up("affApps")) ev.push({ title: "New affiliate application", detail: L.aff ? L.aff.name : "", go: { tab: "AffApps" } });
+      if (up("jpAwait")) ev.push({ title: "Jackpot results are in: set the prizes", go: { tab: "JpDesk" } });
+      if (up("drafts")) ev.push({ title: "A jackpot draft is waiting for approval", go: { tab: "JpDesk" } });
+      if (up("mbLast")) ev.push({ title: "New multibet placed", detail: L.mb ? (L.mb.name || "Player") + " - " + L.mb.n + " selections - stake " + money(L.mb.stake) + " - to win " + money(L.mb.pot) : "", go: { tab: "Watch" } });
+      if (up("wtOne")) ev.push({ title: "Congratulation alert: " + many(c.wtOne - B.wtOne, "a ticket is", "tickets are") + " 1 match from winning", detail: "Open the Watchlist", go: { tab: "Watch" } });
+      if (up("holds")) ev.push({ title: "An item was put on hold", go: { tab: "Holds" } });
+      var keys = ALL_KEYS_TABS[tab] ? Object.keys(c) : (TAB_KEYS[tab] || []);
+      rel = keys.some(function (k) { return c[k] !== B[k]; });
+    }
+    PL.base = c;
+    if (ev.length) { ev.reverse().forEach(addNote); beep(); }
+    if (rel) PL.pend = true;
+    if (PL.pend) { RC = {}; EP++; if (softRefresh()) PL.pend = false; else if (cur && NOSOFT[tab]) PL.pend = false; }   // busy: try again on the next pulse
+  }
+  function pulse() {
+    if (!K || !U || PL.busy) return Promise.resolve();
+    PL.busy = true;
+    return apiRaw({ action: "admPulse" }).then(function (r) { PL.busy = false; if (r && r.ok) onPulse(r); }).catch(function () { PL.busy = false; });
+  }
+  /* every 15 s while you work (5 s on Withdrawals, Deposits and Chat); every 60 s after 2 minutes idle; paused when the tab is hidden */
+  function nextDelay() {
+    if (document.hidden) return 0;
+    var idle = Date.now() - PL.act; if (idle >= 30 * 60000) return 0;
+    if (idle >= 120000) return 60000;
+    var cur = document.querySelector("#nav .on"), t = cur ? cur.dataset.t : "";
+    return /^(Wd|Dep|Chat)/.test(t) ? 5000 : 15000;
+  }
+  function loop() {
+    clearTimeout(PL.tm); if (!K || $("#app").hidden) return;
+    var d = nextDelay(); if (!d) return;
+    PL.tm = setTimeout(function () { pulse().then(loop, loop); }, d);
+  }
+  function startPulse() { PL.base = null; PL.act = Date.now(); renderBell(); pulse().then(loop, loop); }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden || !K || $("#app").hidden) return;
+    idleTick(); if (!PL.warn) pulse().then(loop, loop);
+  });
+  var lastMove = 0;
+  ["mousedown", "keydown", "touchstart", "scroll", "mousemove"].forEach(function (n) {
+    window.addEventListener(n, function () {
+      if (PL.warn) return; var now = Date.now(); if (n === "mousemove" && now - lastMove < 1000) return; lastMove = now;
+      var was = now - PL.act; PL.act = now; if (was >= 120000 && K && !$("#app").hidden) pulse().then(loop, loop);
+    }, { passive: true, capture: true });
+  });
+  /* ---------- 30 minutes idle: warning, then sign-out ---------- */
+  function idleTick() { if (!K || $("#app").hidden || PL.warn) return; if (Date.now() - PL.act >= 30 * 60000) idleWarn(); }
+  setInterval(idleTick, 10000);
+  function idleWarn() {
+    var left = 60, d = document.createElement("dialog"); d.className = "uim"; PL.warn = d;
+    d.innerHTML = '<h3>Still there?</h3><div class="uim-m">You have been idle for 30 minutes. For safety you will be signed out in <b id="iw">60</b> seconds.</div><div class="f"><button class="go" id="iwk">Stay signed in</button><button id="iwo">Sign out now</button></div>';
+    document.body.appendChild(d); d.showModal();
+    var tm = setInterval(function () { left--; var el = d.querySelector("#iw"); if (el) el.textContent = left; if (left <= 0) { clearInterval(tm); signOut(); } }, 1000);
+    d.querySelector("#iwk").onclick = function () { clearInterval(tm); PL.warn = null; try { d.close(); } catch (e) {} d.remove(); PL.act = Date.now(); pulse().then(loop, loop); };
+    d.querySelector("#iwo").onclick = function () { clearInterval(tm); signOut(); };
+    d.addEventListener("cancel", function (ev) { ev.preventDefault(); });
+  }
+  document.addEventListener("click",function(e){if(e.target&&e.target.id==="plReset"){act({op:"resetLanes"}).then(function(){show("stats");});}});
+})();
+</script><script>
+(function () {
+  /* ---------- layout self-check: open the site with ?layout=debug to outline anything that overflows or wraps badly ---------- */
+  (function () {
+    if (!/[?&]layout=debug(&|$)/.test(location.search)) return;
+    var bar = document.createElement("button"), box = document.createElement("div"), tm = 0, last = "";
+    bar.type = "button"; bar.id = "lyDbg"; box.id = "lyPanel"; box.hidden = true;
+    document.body.appendChild(bar); document.body.appendChild(box);
+    function nm(el) { return el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") + (typeof el.className === "string" && el.className.trim() ? "." + el.className.trim().split(/\s+/).slice(0, 2).join(".") : ""); }
+    function scan() {
+      var old = document.querySelectorAll(".ly-bad"), i, el, r, cs, tn, n, rg, tops, tl, list = [], seen = {};
+      for (i = 0; i < old.length; i++) old[i].classList.remove("ly-bad");
+      var W = Math.min(window.innerWidth, (window.screen && screen.width) || 99999), all = document.body.getElementsByTagName("*");
+      var skip = "[hidden],#splash,.promo-run,.hs-track,.hs-slide,#chips,.chips,.fcols,.sr,#lyDbg,#lyPanel,dialog:not([open])";
+      function scrolls(e) { for (var a = e.parentElement; a && a !== document.documentElement; a = a.parentElement) { var o = getComputedStyle(a); if (/(auto|scroll)/.test(o.overflowX) && a.scrollWidth > a.clientWidth + 1) return true; } return false; }
+      function flag(e, why) { var k = nm(e) + why; if (seen[k]) return; seen[k] = 1; e.classList.add("ly-bad"); list.push(why + "  " + nm(e)); }
+      for (i = 0; i < all.length; i++) {
+        el = all[i]; if (el.tagName === "svg" || el.closest("svg") || el.closest(skip)) continue;
+        cs = getComputedStyle(el); if (cs.display === "none" || cs.visibility === "hidden") continue;
+        r = el.getBoundingClientRect(); if (!r.width || !r.height) continue;
+        if ((r.right > W + 1 || r.left < -1) && !scrolls(el)) flag(el, "sticks out " + Math.round(r.left) + ".." + Math.round(r.right));
+        if (!el.children.length && el.textContent.trim() && el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1 && /(hidden|clip)/.test(cs.overflowX) && cs.textOverflow !== "ellipsis") flag(el, "text cut");
+        if (/^(BUTTON|A)$/.test(el.tagName)) {
+          tn = []; for (n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.textContent.trim()) tn.push(n);
+          tl = tn.map(function (t) { return t.textContent.trim(); }).join(" ");
+          if (tn.length && tl.length < 18) { tops = {}; tn.forEach(function (t) { rg = document.createRange(); rg.selectNodeContents(t); [].forEach.call(rg.getClientRects(), function (q) { if (q.width > 2) tops[Math.round(q.top / 5)] = 1; }); }); if (Object.keys(tops).length > 1) flag(el, "label wraps"); }
+        }
+      }
+      var d = document.documentElement, over = d.scrollWidth - W; if (over > 1) list.unshift("page is " + over + "px wider than the screen");
+      var head = window.innerWidth + "x" + window.innerHeight + " " + (d.getAttribute("data-screen") || "") + (d.getAttribute("data-bigtext") ? " bigtext" : "") + (d.getAttribute("data-short") ? " short" : "");
+      bar.textContent = head + " | " + (list.length ? list.length + " issue" + (list.length > 1 ? "s" : "") : "clean");
+      bar.className = list.length ? "bad" : "ok";
+      last = head + "\n" + (list.length ? list.slice(0, 40).join("\n") : "No layout issues found on this screen.");
+      box.textContent = last;
+    }
+    function later() { clearTimeout(tm); tm = setTimeout(scan, 500); }
+    bar.addEventListener("click", function () { box.hidden = !box.hidden; if (!box.hidden) { scan(); try { navigator.clipboard.writeText(last); } catch (e) {} } });
+    window.addEventListener("resize", later); window.addEventListener("orientationchange", later);
+    try { new MutationObserver(later).observe(document.body, { childList: true, subtree: true }); } catch (e) {}
+    setTimeout(scan, 1500);
+  })();
+
+})();
+</script>
+</body></html>
