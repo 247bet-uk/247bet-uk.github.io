@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head><link rel="preconnect" href="https://script.google.com"><link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* Screen profile: labels the page with the size class it opened at (data-screen), the orientation, short landscape screens
+   and big system text, and updates when the phone rotates, the window resizes or the text size changes. The keyboard opening is ignored. */
+(function () {
+  var d = document.documentElement, lw = 0, lf = 0;
+  function mq(q) { try { return window.matchMedia(q).matches; } catch (e) { return false; } }
+  function profile() {
+    var w = window.innerWidth || d.clientWidth || 360, h = window.innerHeight || d.clientHeight || 640, f = parseFloat(getComputedStyle(d).fontSize) || 16;
+    if (w === lw && f === lf) return;
+    lw = w; lf = f;
+    d.setAttribute("data-screen", w < 340 ? "xs" : w < 380 ? "sm" : w < 480 ? "md" : w < 768 ? "lg" : w < 1024 ? "tablet" : "desktop");
+    d.setAttribute("data-orient", w > h ? "land" : "port");
+    if (mq("(orientation: landscape) and (max-height: 520px)")) d.setAttribute("data-short", "1"); else d.removeAttribute("data-short");
+    if (f > 17.5) d.setAttribute("data-bigtext", "1"); else d.removeAttribute("data-bigtext");
+  }
+  profile();
+  window.addEventListener("resize", profile); window.addEventListener("orientationchange", profile); window.addEventListener("DOMContentLoaded", profile);
+})();
+</script>
+<meta name="theme-color" content="#020b20">
+<meta name="color-scheme" content="dark light">
+<script>/* theme first, before anything paints: saved choice (dark | light | auto); with no saved choice it is AUTO and follows the phone */
+(function(){try{if(localStorage.getItem("q247.themeV")!=="3"){localStorage.removeItem("q247.theme");localStorage.setItem("q247.themeV","3")}var m=localStorage.getItem("q247.theme")||"auto",d=document.documentElement,light=m==="light"||(m==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);d.setAttribute("data-theme",light?"light":"dark");d.setAttribute("data-theme-mode",m);var t=document.querySelector('meta[name=theme-color]');if(t)t.setAttribute("content","#020b20")}catch(e){}})();
+</script>
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="247Bet">
+<meta property="og:title" content="247Bet | Football odds and jackpots">
+<meta property="og:description" content="Pre-match football odds, jackpots and instant wins. Build a slip in a few taps. 18+ only.">
+<meta property="og:url" content="https://247bet-uk.github.io/">
+<meta property="og:image" content="https://247bet-uk.github.io/Assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://247bet-uk.github.io/Assets/og-image.jpg">
+
+<script>/* Chrome fires the install prompt once, early: keep it so the menu's "Install APK" line can use it later */
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.q247InstallEvt=e;try{window.dispatchEvent(new Event("q247-install-ready"))}catch(x){}});
+window.addEventListener("appinstalled",function(){window.q247InstallEvt=null;try{window.dispatchEvent(new Event("q247-installed"))}catch(x){}});
+</script>
+<title>247Bet | Football odds and jackpots</title>
+<meta name="description" content="Pre-match football odds across the top European leagues. Build a slip in a few taps. 18+ only.">
+<link rel="preload" as="script" href="app.js?v=741736ba">
+<link rel="preload" as="image" href="Assets/hero-welcome.webp">
+<link rel="icon" type="image/png" sizes="48x48" href="Assets/favicon-48.png">
+<link rel="icon" type="image/png" sizes="32x32" href="Assets/favicon-32.png">
+<link rel="apple-touch-icon" href="Assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Tinos:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Tinos:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="app.css?v=741736ba">
+</head>
+<body>
+<div id="splash" role="status" aria-live="polite"><svg class="sp-pitch" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.4"><rect x="28" y="56" width="344" height="688" rx="6"/><path d="M28 400h344"/><circle cx="200" cy="400" r="60"/><circle cx="200" cy="400" r="3" fill="currentColor"/><rect x="108" y="56" width="184" height="96"/><rect x="108" y="648" width="184" height="96"/><rect x="154" y="56" width="92" height="40"/><rect x="154" y="704" width="92" height="40"/><path d="M152 152a56 56 0 0 0 96 0M152 648a56 56 0 0 1 96 0"/></g></svg><div class="sp-in"><div id="spWord" class="sp-word" aria-label="247Bet">247<b>Bet</b></div><img id="spImg" src="Assets/logo.png" alt="247Bet" width="300" height="300" hidden onload="this.hidden=false;var w=document.getElementById('spWord');if(w)w.hidden=true" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='Assets/logo.png'}else{this.hidden=true}"><span class="sp-bar" aria-hidden="true"></span><p class="sp-tag">Football odds and jackpots</p><p class="sp-t"><span class=skl></span><span class=skl2></span><span class=skl3></span></p></div></div>
+<a class="skip" href="#feed">Skip to matches</a>
+
+<div id="notice" class="notice" hidden></div>
+
+<header class="top">
+  <div class="top-in">
+    <button type="button" class="mbtn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuDrawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a class="brand" href="./" aria-label="247Bet home"><img src="Assets/logo.png" width="520" height="102" alt="247Bet"></a>
+    <nav class="tabs" aria-label="Main">
+      <a class="on" href="./" aria-current="page">Matches</a>
+      <button type="button" data-open="jackpots">Jackpots</button>
+      <button type="button" data-open="predictor">Predictor</button>
+      <button type="button" data-open="instant">Instant Wins</button>
+      <button type="button" data-open="bets">My bets</button>
+    </nav>
+    <div class="acts">
+      <button type="button" class="btn ghost" data-auth="login">Log in</button>
+      <button type="button" class="btn lime" data-auth="join">Sign up</button>
+    </div>
+  </div>
+</header>
+<div class="promo" id="promoBar">
+  <button type="button" class="promo-t" data-how="all" aria-label="Bonus offers and how to use them"><span class="promo-run" id="promoTxt"></span></button>
+</div>
+<button type="button" class="sat-bar" id="satBar" data-how="weekend" aria-label="Saturday bonus: tap for details"></button>
+<div class="vo-strip" id="voStrip" role="button" tabindex="0" aria-label="View-only access: tap for details"><span class="vo-t">&#128274; View only</span><span class="vo-l" id="voLeft"></span></div>
+
+<main class="layout">
+  <aside class="rail" aria-label="Leagues">
+    <h2 class="rail-h">Leagues</h2>
+    <div id="rail"></div>
+  </aside>
+
+  <section id="feed" class="feed" tabindex="-1">
+    <section id="land" class="land" aria-label="Welcome to 247Bet">
+      <div class="hs" id="hs" role="region" aria-roledescription="carousel" aria-label="Offers and hot matches">
+        <div class="hs-track" id="hsTrack"></div>
+        <div class="hs-dots" id="hsDots" role="group" aria-label="Choose slide"></div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <div class="drow">
+        <div class="days" id="days" role="group" aria-label="Show matches on"></div>
+        <label class="search">
+          <span class="sr">Search teams or leagues</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input id="q" type="search" placeholder="Search teams or leagues" autocomplete="off" enterkeyhint="search">
+          <button type="button" class="qx" id="qx" aria-label="Clear search" hidden>&times;</button>
+        </label>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="League"></div>
+    </div>
+
+    <div id="list" aria-live="polite"></div>
+    <div class="more-wrap"><button type="button" id="showMore" class="btn ghost" hidden>Show more matches</button></div>
+  </section>
+
+  <aside id="slip" class="slip" aria-label="Bet slip">
+    <div class="sl-h">
+      <h2>Bet slip <span id="slipCount" class="count">0</span></h2>
+      <div class="sl-hx">
+        <button type="button" id="slipShare" class="txt" hidden>Share</button>
+        <button type="button" id="slipClear" class="txt" hidden>Clear</button>
+        <label class="keep" title="Keep your picks and stake after you place a bet"><input type="checkbox" id="keepSlip" role="switch" aria-label="Keep betslip after placing a bet"><span>Keep slip</span><i></i></label>
+        <button type="button" id="slipClose" class="x" aria-label="Close bet slip">&times;</button>
+      </div>
+    </div>
+    <div id="slipBoost" class="sl-boost" hidden></div>
+    <div id="slipList"></div>
+    <div id="slipEmpty" class="sl-empty">
+      <p><b>Your slip is empty.</b></p>
+      <p>Tap any odds to add a selection. One selection per match.</p>
+    </div>
+    <div id="slipBody" class="sl-foot" hidden>
+      <div class="sl-top">
+        <div class="sl-od"><span>Total odds</span><b id="slipOdds">0.00</b></div>
+        <label class="sr" for="stake">Stake (KES)</label>
+        <input id="stake" type="text" inputmode="decimal" autocomplete="off" placeholder="Stake (KES)">
+      </div>
+      <div class="quick" role="group" aria-label="Quick stakes">
+        <button type="button" data-stake="100">100</button>
+        <button type="button" data-stake="500">500</button>
+        <button type="button" data-stake="1000">1,000</button>
+        <button type="button" data-stake="5000">5,000</button>
+      </div>
+      <div id="slipBoostRow" class="sl-bst" hidden><span id="slipBoostLbl">Multibet boost</span><span id="slipBoostAmt"></span></div>
+      <div class="sl-row"><span>Potential return</span><b id="slipReturn">KES 0.00</b></div>
+      <p id="slipMsg" class="sl-msg" role="alert"></p>
+      <p id="slipTask" class="bn-note" hidden></p>
+      <div id="slipBonus" class="sl-bon" hidden><label for="useBonus"><input type="checkbox" id="useBonus"><span id="useBonusTxt"></span></label><p id="slipBonusInfo"></p><button type="button" id="bonusAll" hidden>Stake all</button><button type="button" class="how-i" data-how="slip" aria-label="How to use your bonus">i</button></div>
+      <button type="button" id="place" class="btn lime wide">Log in to place bet</button>
+      <p id="slipNote" class="sl-note"></p>
+    </div>
+  </aside>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <section class="about" aria-labelledby="aboutH">
+      <div class="about-us">
+        <span class="kick">Bet smart. Bet simple.</span>
+        <h2 id="aboutH">About 247Bet</h2>
+        <p><b>247Bet</b> is an online sportsbook for the matches you follow: daily odds, jackpots and bonuses, with deposits and withdrawals from one wallet.</p>
+      </div>
+      <nav class="fcols" aria-label="Help and policies">
+        <div><span class="fh">Help</span>
+          <button type="button" data-info="faq">FAQ</button>
+          <button type="button" data-info="complaints">Complaints &amp; procedures</button>
+          <button type="button" data-info="affiliates">Affiliates</button></div>
+        <div><span class="fh">Legal</span>
+          <button type="button" data-info="terms">Terms &amp; conditions</button>
+          <button type="button" data-info="privacy">Privacy notice</button>
+          <button type="button" data-info="bonus">Bonus terms</button></div>
+        <div><span class="fh">Safer play</span>
+          <button type="button" data-info="rg">Responsible gambling</button>
+          <button type="button" data-info="protection">Player protection</button></div>
+      </nav>
+      <div class="trust">
+        <span class="age" aria-label="18 plus only">18+</span>
+        <a href="https://www.begambleaware.org" target="_blank" rel="noopener noreferrer">BeGambleAware</a>
+        <a href="https://www.gamcare.org.uk" target="_blank" rel="noopener noreferrer">GamCare</a>
+        <a href="https://www.gamblersanonymous.org" target="_blank" rel="noopener noreferrer">Gamblers Anonymous</a>
+        <a href="https://www.betblocker.org" target="_blank" rel="noopener noreferrer">BetBlocker</a>
+      </div>
+      <p id="licence" class="licence" hidden></p>
+    </section>
+    <p class="fnote"><b>Bet responsibly.</b> Gambling involves financial risk and can be addictive. Only stake what you can afford to lose. Betting is for adults aged 18 and over; underage gambling is an offence. <button type="button" class="flink" data-info="rg">Responsible gambling policy</button></p>
+    <p class="copy">&copy; 2026 247Bet. All rights reserved.</p>
+  </div>
+</footer>
+
+<div id="slipBar" class="slipbar">
+  <button type="button" id="slipBarBtn">
+    <span class="bar-l"><b id="barCount">0</b> <span id="barTxt">in slip</span></span>
+    <span class="bar-odds">Odds <b id="barOdds">0.00</b></span>
+    <span class="bar-go" id="barGo">View slip</span>
+  </button>
+</div>
+
+<div id="menuScrim" hidden></div>
+<aside id="menuDrawer" aria-label="Menu" hidden>
+  <div class="mh"><img src="Assets/logo.png" width="520" height="102" loading="lazy" decoding="async" alt="247Bet"><button type="button" class="mx" aria-label="Close menu">&times;</button></div>
+  <div class="mg">Play</div>
+  <a class="mi" href="./"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m12 7.5 3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/></svg></span><span class="mi-t">Matches</span></a>
+  <button type="button" class="mi" data-open="jackpots"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h10v4a5 5 0 0 1-10 0zM7 6H4v1.5A3 3 0 0 0 7 10.5M17 6h3v1.5a3 3 0 0 1-3 3M12 14v4M8.5 19h7"/></svg></span><span class="mi-t">Jackpots</span></button>
+  <button type="button" class="mi mi-pred" data-open="predictor"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span><span class="mi-t">Predictor<small class="mi-sub" id="miPredSub">Predict 5 scores, win cash</small></span><em class="mi-pill mi-pill-gold">Win cash</em></button>
+  <button type="button" class="mi" data-open="instant"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5.5 13.2h5.3L10 21l8-10.4h-5.4z"/></svg></span><span class="mi-t">Instant Wins</span></button>
+  <button type="button" class="mi" data-open="bets"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 0 0 2-2h12a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H6a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z"/></svg></span><span class="mi-t">My bets</span></button>
+  <div class="mg">Money and rewards</div>
+  <button type="button" class="mi" data-auth="wallet"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h11v4"/><path d="M4 7v10a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H6a2 2 0 0 1-2-2z"/><circle cx="16" cy="14" r="1"/></svg></span><span class="mi-t">Deposit and withdraw</span></button>
+  <button type="button" class="mi" data-info="bonus"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="9" width="17" height="11" rx="1.5"/><path d="M12 9v11M3.5 13h17M12 9C9.5 9 8 8 8 6.5S9.5 4.5 10.5 5 12 9 12 9zm0 0c2.5 0 4-1 4-2.5s-1.5-2-2.5-1.5S12 9 12 9z"/></svg></span><span class="mi-t">Bonuses and promotions</span></button>
+  <button type="button" class="mi mi-share" data-open="share"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.5" r="2.6"/><path d="m8.3 10.7 7.4-4M8.3 13.3l7.4 4"/></svg></span><span class="mi-t">Share &amp; Earn<small class="mi-sub">Share your bet, earn from wins</small></span><em class="mi-pill mi-pill-blue">5% of wins</em></button>
+  <button type="button" class="mi mi-aff" data-info="affiliates"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="2.6"/><circle cx="5.5" cy="17.5" r="2.6"/><circle cx="18.5" cy="17.5" r="2.6"/><path d="M10.6 8.3 6.9 15.1M13.4 8.3l3.7 6.8M8.1 17.5h7.8"/></svg></span><span class="mi-t">Affiliates</span><em class="mi-pill">Earn up to 45%</em></button>
+  <div class="mg">Account</div>
+  <button type="button" class="mi" id="chatOpen"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></span><span class="mi-t"><span>Live chat <b id="chatBadge" class="badge zero" style="position:static;display:inline-block;margin-left:6px" hidden>0</b></span></span></button>
+  <button type="button" class="mi" data-auth="account"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg></span><span class="mi-t">My account</span></button>
+  <button type="button" class="mi" data-info="rg"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c4-2.5 7-5.2 7-9.5V6l-7-3-7 3v5.5C5 15.8 8 18.5 12 21z"/><path d="M12 15.5s-3-1.8-3-3.9a1.7 1.7 0 0 1 3-1 1.7 1.7 0 0 1 3 1c0 2.1-3 3.9-3 3.9z"/></svg></span><span class="mi-t">Responsible gambling</span></button>
+  <div class="mg">App and display</div>
+  <button type="button" class="mi" id="menu-install" hidden><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v10M7.5 10.5 12 15l4.5-4.5M5 19h14"/></svg></span><span class="mi-t">Install APK</span></button>
+  <p class="mg-note" id="themeNote">Theme</p>
+  <div class="mi-theme" id="themeSw" role="group" aria-label="Theme"><button type="button" data-theme-set="dark" aria-pressed="false">Dark</button><button type="button" data-theme-set="light" aria-pressed="false">Light</button><button type="button" data-theme-set="auto" aria-pressed="false">Auto</button></div>
+  <div class="mg">Help and legal</div>
+  <button type="button" class="mi" data-info="terms"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9.5 12h5M9.5 15.5h5"/></svg></span><span class="mi-t">Terms and conditions</span></button>
+  <button type="button" class="mi" data-info="privacy"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></span><span class="mi-t">Privacy notice</span></button>
+  <button type="button" class="mi" data-info="protection"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c4-2.5 7-5.2 7-9.5V6l-7-3-7 3v5.5C5 15.8 8 18.5 12 21z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></svg></span><span class="mi-t">Player protection</span></button>
+  <button type="button" class="mi" data-info="faq"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2.9-1.2 1.8M12 17h.01"/></svg></span><span class="mi-t">FAQ</span></button>
+  <button type="button" class="mi" data-info="complaints"><span class="mi-i"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 5h11l-2 4 2 4H6"/></svg></span><span class="mi-t">Complaints</span></button>
+  <p class="mfoot">18+ only. Need help? <a href="https://www.begambleaware.org" target="_blank" rel="noopener noreferrer">BeGambleAware</a></p>
+  <p class="mcopy">&copy; 2026 247Bet | All Rights Reserved</p>
+</aside>
+
+<nav class="bnav" aria-label="Primary">
+  <a class="on" href="./" aria-current="page">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m12 7.5 3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/></svg>Matches
+  </a>
+  <button type="button" data-open="jackpots">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h10v4a5 5 0 0 1-10 0zM7 6H4v1.5A3 3 0 0 0 7 10.5M17 6h3v1.5a3 3 0 0 1-3 3M12 14v4M8.5 19h7"/></svg>Jackpots
+  </button>
+  <button type="button" id="bnavSlip">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16l-3-2-3 2-3-2-3 2zM9 9h6M9 13h4"/></svg>Slip<span id="bnavBadge" class="badge zero">0</span>
+  </button>
+  <button type="button" data-open="share" class="bn-share" aria-label="Share and earn">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.5" r="2.6"/><path d="m8.3 10.7 7.4-4M8.3 13.3l7.4 4"/></svg>Share<span class="bn-more"> &amp; Earn</span><span class="bn-pct" aria-hidden="true">5%</span>
+  </button>
+  <button type="button" data-open="bets">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a2 2 0 0 0 2-2h12a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H6a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z"/></svg>My bets
+  </button>
+</nav>
+
+<div id="scrim" class="scrim" hidden></div>
+
+<dialog id="sheet" class="sheet" aria-labelledby="sheetTitle">
+  <div class="sheet-h">
+    <div>
+      <p id="sheetLeague" class="sheet-lg"></p>
+      <h2 id="sheetTitle"></h2>
+      <p id="sheetWhen" class="sheet-when"></p>
+    </div>
+    <button type="button" class="x" data-close aria-label="Close markets">&times;</button>
+  </div>
+  <div id="sheetTabs" class="sheet-tabs" role="group" aria-label="Market group"></div>
+  <div id="sheetBody" class="sheet-body"></div>
+</dialog>
+
+<dialog id="lgDlg" class="modal" aria-labelledby="lgTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="lgTitle">Choose a league</h2>
+  <input id="lgQ" type="search" placeholder="Search leagues" autocomplete="off">
+  <div id="lgList"></div>
+</dialog>
+
+<dialog id="chatDlg" aria-labelledby="chatTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="chatTitle">Live chat</h2>
+  <div id="chatLog" aria-live="polite"></div>
+  <div id="chatQuick" class="cq"></div>
+  <form id="chatF" autocomplete="off"><input id="chatIn" maxlength="500" placeholder="Ask a question or type a message"><button type="submit" class="btn lime">Send</button></form>
+  <a class="btn ghost wide wa-btn" data-wa="chat" href="https://t.me/Official247Bet" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" fill="currentColor"/></svg>Continue on Telegram</a>
+</dialog>
+
+<dialog id="authDlg" class="modal" aria-labelledby="authTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <img src="Assets/logo.png" width="520" height="102" loading="lazy" decoding="async" alt="247Bet" class="modal-logo">
+  <h2 id="authTitle"></h2><div id="authBody"></div><a class="wa-foot" id="waAcct" hidden data-wa="acct" href="https://t.me/Official247Bet" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" fill="currentColor"/></svg>Need help? Chat with 247Bet on Telegram</a></dialog>
+
+<dialog id="jpDlg" class="modal fs" aria-labelledby="jpTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="jpTitle">Jackpots</h2>
+  <div id="jpBody" class="bl"></div>
+  <a class="wa-foot" data-wa="jp" href="https://t.me/Official247Bet" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" fill="currentColor"/></svg>Need help? Chat with 247Bet on Telegram</a>
+</dialog>
+
+<dialog id="betsDlg" class="modal fs" aria-labelledby="betsTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <button type="button" class="bk" id="betsBack" hidden aria-label="Back to my bets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <h2 id="betsTitle">My bets</h2>
+  <div id="betsBody" class="bl"></div>
+  <a class="wa-foot" data-wa="bets" href="https://t.me/Official247Bet" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" fill="currentColor"/></svg>Need help? Chat with 247Bet on Telegram</a>
+</dialog>
+
+<dialog id="iwDlg" class="modal" aria-labelledby="iwTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <div class="iw-head"><h2 id="iwTitle">Instant Wins</h2><p id="iwSub">Crash, spinners, slots and instant-win games</p></div>
+  <div id="iwChips" class="iw-chips" role="tablist" aria-label="Game category"></div>
+  <div id="iwBody" class="iw-body"></div>
+  <a class="wa-foot" data-wa="games" href="https://t.me/Official247Bet" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" fill="currentColor"/></svg>Need help? Chat with 247Bet on Telegram</a>
+</dialog>
+
+<dialog id="gameDlg" class="modal gmfull" aria-label="Save My Girl">
+  <div id="gmLoad" class="gm-load"><div class="gm-lc"><small>POWERED BY</small><div class="gm-lb">247<b>BET</b></div>
+    <svg class="gm-lballoon" viewBox="0 0 40 70" aria-hidden="true"><path d="M20 47 L16 53 Q20 55 24 53Z" fill="#b8123a"/><ellipse cx="20" cy="24" rx="17" ry="22" fill="#ff3d6e"/><ellipse cx="13" cy="15" rx="4" ry="7" fill="#fff" opacity=".35"/><path d="M20 53 Q24 60 20 68" stroke="#eceaf5" fill="none"/></svg>
+    <div class="gm-lt">ENTERING GIRL ZONE</div><div class="gm-li"><span id="gmLoadMsg">Initializing</span><span class="dots"><i>.</i><i>.</i><i>.</i><i>.</i></span></div>
+    <div class="gm-ld"><i></i><i></i></div><div class="gm-lbar"><i></i></div></div></div>
+  <div class="gm-top"><button type="button" class="gm-back" data-close>&lsaquo; Back</button><div class="gm-brand">247BET <b>Save My Girl</b></div><div class="gm-bal"><small>Balance</small><b id="gmBal">KES 0.00</b></div></div>
+  <div class="gm-hist"><div id="gmRecent" class="gm-recent" aria-label="Recent crash points"></div><button type="button" id="gmHistBtn" class="gm-hbtn" aria-expanded="false" aria-label="Round history">&#9662;</button></div>
+  <div id="gmHistPanel" class="gm-hpanel" hidden><div class="gm-hh">Round history <small>last 50 rounds</small></div><div id="gmHistAll" class="gm-hgrid"></div></div>
+  <div class="gm-scene" aria-live="polite"><div class="gm-rays"></div>
+    <svg viewBox="0 0 400 260" aria-hidden="true">
+      <defs><linearGradient id="gmFg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff3d6e" stop-opacity=".5"/><stop offset="1" stop-color="#ff3d6e" stop-opacity="0"/></linearGradient><radialGradient id="gmBg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ff7aa2"/><stop offset="1" stop-color="#d81b4a"/></radialGradient></defs>
+      <g fill="#fff" opacity=".6"><circle cx="40" cy="30" r="1"/><circle cx="120" cy="60" r="1.2"/><circle cx="210" cy="24" r=".9"/><circle cx="300" cy="50" r="1.3"/><circle cx="360" cy="110" r="1"/><circle cx="80" cy="120" r=".8"/><circle cx="250" cy="130" r="1"/><circle cx="170" cy="100" r=".8"/></g>
+      <path id="gmFill" d="" fill="url(#gmFg)"/><path id="gmCurve" d="" fill="none" stroke="#ff4d7e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="gmBurst" style="display:none"><polygon points="0,-38 8,-14 32,-22 16,-3 38,8 12,12 14,36 0,18 -14,36 -12,12 -38,8 -16,-3 -32,-22 -8,-14" fill="#ffd23f"/><polygon points="0,-24 5,-9 20,-14 10,-2 24,5 8,8 9,22 0,11 -9,22 -8,8 -24,5 -10,-2 -20,-14 -5,-9" fill="#ff4d7e"/></g>
+      <g id="gmGirl" style="transform:translate(70px,218px)">
+      <g transform="scale(1.25)"><g class="gm-sway">
+        <g id="gmBalloon"><path d="M11 -67 L6.5 -60 Q11 -58 15.5 -60Z" fill="#b8123a"/><ellipse cx="11" cy="-99" rx="27" ry="33" fill="url(#gmBg)"/><ellipse cx="1.5" cy="-111" rx="6.5" ry="11" fill="#fff" opacity=".38" transform="rotate(22 1.5 -111)"/></g>
+        <path d="M11 -60 Q15 -48 11 -33" stroke="#eceaf5" stroke-width="1.2" fill="none"/>
+        <g class="gm-legs"><path d="M-5 14 L-8 29" stroke="#2f6fd0" stroke-width="7" stroke-linecap="round"/><path d="M5 14 L9 28" stroke="#2f6fd0" stroke-width="7" stroke-linecap="round"/><path d="M-12 32 Q-9 28 -4 31 Q-3 36 -12 36Z" fill="#e53935"/><path d="M6 31 Q12 27 17 30 Q17 35 7 35Z" fill="#e53935"/><path d="M-12 35.2 L-3.5 35.2 M7 34.4 L16.5 34.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></g>
+        <path d="M-9 -9 Q-17 -1 -14 7" stroke="#f6cfa6" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M8 -10 Q14 -18 12 -26" stroke="#ffc933" stroke-width="5.5" stroke-linecap="round" fill="none"/><path d="M12 -25 L11 -32" stroke="#f6cfa6" stroke-width="4" stroke-linecap="round"/><circle cx="11" cy="-33" r="3.2" fill="#f6cfa6"/>
+        <path d="M-10 -12 Q0 -16 10 -12 L11 5 L-11 5Z" fill="#ffc933"/>
+        <path d="M-11 -3 L11 -3 L12.5 16 Q0 20 -12.5 16Z" fill="#2f6fd0"/><path d="M-7.5 -13 L-4 -13 L-4 -3 L-7.5 -3Z M4 -13 L7.5 -13 L7.5 -3 L4 -3Z" fill="#2f6fd0"/><circle cx="-5.8" cy="-4" r="1.3" fill="#ffd23f"/><circle cx="5.8" cy="-4" r="1.3" fill="#ffd23f"/><circle cx="0" cy="8" r="2.6" fill="#ffd23f"/><circle cx="0" cy="8" r="1" fill="#ff8f3f"/>
+        <ellipse cx="0" cy="-26" rx="13.5" ry="14.5" fill="#5a3418"/><path d="M-11 -25 Q-28 -21 -24 -3 Q-18 -12 -10 -13Z" fill="#6b4020"/><path d="M-11 -19 Q-21 -8 -17 5 Q-12 -4 -9 -8Z" fill="#5a3418"/>
+        <circle cx="0" cy="-23" r="10.5" fill="#f6cfa6"/>
+        <path d="M-10.8 -24 Q-8 -37 3 -35 Q11.5 -33 10.8 -22 Q5 -30 -2 -28 Q-7 -28 -10.8 -24Z" fill="#6b4020"/>
+        <path d="M-5.5 -35 L-16 -42 L-15 -29Z M-5.5 -35 L4 -43 L3 -31Z" fill="#ffd23f"/><circle cx="-5.5" cy="-35" r="2.6" fill="#f5b800"/><circle cx="-12.5" cy="-37" r=".9" fill="#f5b800"/><circle cx="0.8" cy="-38.5" r=".9" fill="#f5b800"/>
+        <ellipse cx="-3.8" cy="-23" rx="1.7" ry="2.3" fill="#2b1a10"/><ellipse cx="3.8" cy="-23" rx="1.7" ry="2.3" fill="#2b1a10"/><circle cx="-3.3" cy="-23.9" r=".7" fill="#fff"/><circle cx="4.3" cy="-23.9" r=".7" fill="#fff"/>
+        <path d="M-3.4 -17.3 Q0 -13.8 3.4 -17.3" stroke="#b3523a" stroke-width="1.3" fill="none" stroke-linecap="round"/><circle cx="-7" cy="-19" r="2" fill="#ff8aa0" opacity=".5"/><circle cx="7" cy="-19" r="2" fill="#ff8aa0" opacity=".5"/>
+      </g>
+
+      </g></g>
+    </svg>
+    <div class="gm-mid"><div id="gmSub" class="gm-sub">Connecting...</div><div id="gmX" class="gm-x wait">--</div></div>
+    <div class="gm-barw"><div id="gmBar" class="gm-bar"></div></div>
+  </div>
+  <div id="gmTick" class="gm-tick" hidden></div>
+  <div class="gm-panels">
+    <div class="gm-p" data-slot="A">
+      <div class="gm-pl"><div class="gm-ph">Bet A</div><div class="gm-st"><button type="button" data-gm="m" aria-label="Less">&minus;</button><input class="gs" type="text" inputmode="decimal" value="10" autocomplete="off" aria-label="Stake"><button type="button" data-gm="p" aria-label="More">+</button></div>
+      <div class="quick"><button type="button" data-gs="10">10</button><button type="button" data-gs="50">50</button><button type="button" data-gs="100">100</button><button type="button" data-gs="500">500</button></div></div>
+      <button type="button" class="btn wide gb" disabled>Wait</button>
+      <label class="gm-au">Auto cash out at (x) <input class="ga" type="text" inputmode="decimal" placeholder="off" autocomplete="off"></label><p class="gm-msg" role="alert"></p></div>
+    <div class="gm-p" data-slot="B">
+      <div class="gm-pl"><div class="gm-ph">Bet B</div><div class="gm-st"><button type="button" data-gm="m" aria-label="Less">&minus;</button><input class="gs" type="text" inputmode="decimal" value="10" autocomplete="off" aria-label="Stake"><button type="button" data-gm="p" aria-label="More">+</button></div>
+      <div class="quick"><button type="button" data-gs="10">10</button><button type="button" data-gs="50">50</button><button type="button" data-gs="100">100</button><button type="button" data-gs="500">500</button></div></div>
+      <button type="button" class="btn wide gb" disabled>Wait</button>
+      <label class="gm-au">Auto cash out at (x) <input class="ga" type="text" inputmode="decimal" placeholder="off" autocomplete="off"></label><p class="gm-msg" role="alert"></p></div>
+  </div>
+  <div class="gm-tabs"><button type="button" class="on" data-gmtab="gmAll">All bets</button><button type="button" data-gmtab="gmPrev">Previous</button><button type="button" data-gmtab="gmMine">My bets</button><button type="button" data-gmtab="gmTop">Top</button></div>
+  <div id="gmAll" class="gm-list"></div><div id="gmPrev" class="gm-list" hidden></div><div id="gmMine" class="gm-list" hidden></div><div id="gmTop" class="gm-list" hidden></div>
+  <details class="gm-fairbox"><summary>Provably fair game</summary><p id="gmFair" class="gm-fair"></p></details>
+  <p class="modal-note">One round at a time for every player. The server decides every result. A bet with an auto cash-out is paid even if you close the app. Odds are against you over time. 18+ only. Bet responsibly.</p>
+</dialog>
+
+
+<dialog id="voDlg" class="modal" aria-labelledby="voTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="voTitle">&#128274; View-only access</h2>
+  <p>You are signed in with a <b>temporary password</b>, so this account is open for <b>viewing only</b>.</p>
+  <p>To bet, deposit, withdraw, delete anything or change settings, please sign out and log in with your <b>main password</b>.</p>
+  <p>Forgot it? Tap <b>Forgot password</b> on the login screen and our team will help you.</p>
+  <div class="vo-b"><button type="button" class="btn lime wide" id="voOut">Sign out and use main password</button><button type="button" class="btn ghost wide" data-close>Keep viewing</button></div>
+</dialog>
+<dialog id="pbDlg" class="modal" aria-labelledby="pbTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="pbTitle">Place this bet</h2>
+  <div id="pbBody"></div>
+</dialog>
+<dialog id="shDlg" class="modal" aria-labelledby="shTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="shTitle">Share your slip</h2>
+  <div id="shBody"></div>
+</dialog>
+<dialog id="prDlg" class="modal" aria-labelledby="prTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="prTitle">Super 5 Predictor</h2>
+  <div id="prBody"></div>
+</dialog>
+<dialog id="seDlg" class="modal" aria-labelledby="seTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="seTitle">Share &amp; Earn</h2>
+  <div id="seBody"></div>
+</dialog>
+<dialog id="shrDlg" class="modal" aria-labelledby="shrTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="shrTitle">Shared slip</h2>
+  <div id="shrBody"></div>
+</dialog>
+<dialog id="affDlg" class="modal" aria-labelledby="affTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="affTitle">Affiliate programme</h2>
+  <div id="affBody" class="bl"></div>
+</dialog>
+
+<dialog id="hwDlg" class="modal wide" aria-labelledby="hwTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="hwTitle">How to use your bonus</h2>
+  <div id="hwBody" class="bl doc"></div>
+</dialog>
+
+<dialog id="infoDlg" class="modal wide" aria-labelledby="infoTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <h2 id="infoTitle"></h2>
+  <div id="infoBody" class="bl doc"></div>
+</dialog>
+
+<dialog id="satDlg" aria-labelledby="satTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <img class="pop-img" src="Assets/hero-saturday.webp" alt="" hidden onload="this.hidden=false" onerror="this.remove()">
+  <div class="pop-b">
+    <span class="sat-k">TODAY ONLY &middot; SATURDAY</span>
+    <h2 id="satTitle">Saturday bonus: 100% today</h2>
+    <div id="satTxt"></div>
+    <div id="satActs"></div>
+    <button type="button" class="btn ghost" data-close>Close</button>
+  </div>
+</dialog>
+
+<dialog id="popDlg" aria-labelledby="popTitle">
+  <button type="button" class="x" data-close aria-label="Close">&times;</button>
+  <img class="pop-img" id="popImg" src="Assets/popup.webp" alt="" hidden onload="this.hidden=false" onerror="this.remove()">
+  <div class="pop-b">
+    <h2 id="popTitle">Welcome to 247Bet</h2>
+    <p id="popTxt">Sign up in under a minute, deposit with M-Pesa and claim your welcome bonus on your first deposit. 18+ only.</p>
+    <button type="button" class="btn lime" data-auth="join" data-popclose>Sign up</button>
+    <button type="button" class="btn ghost" data-close>Maybe later</button>
+    <button type="button" class="btn ghost" id="popInstall" hidden>Install APK</button>
+  </div>
+</dialog>
+
+<div id="nbar" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var si=window.setInterval;
+  window.setInterval=function(f,t){ if(typeof f!=="function") return si.apply(window,arguments); var a=[].slice.call(arguments,2);
+    return si.call(window,function(){ if(document.hidden&&t<5000) return; return f.apply(this,a); },t); };
+  document.addEventListener("visibilitychange",function(){document.documentElement.classList.toggle("bg-hidden",document.hidden);});
+  function clickable(el){ for(var i=0;el&&el!==document.body&&el.nodeType===1&&i<4;i++,el=el.parentElement){
+    if(el.disabled) return null; var t=el.tagName;
+    if(t==="BUTTON"||t==="A"||t==="SUMMARY"||t==="SELECT"||el.getAttribute("role")==="button") return el;
+    try{ if(getComputedStyle(el).cursor==="pointer") return el; }catch(e){} } return null; }
+  document.addEventListener("pointerdown",function(e){ var el=clickable(e.target); if(!el) return; el.classList.add("tap");
+    clearTimeout(el.__tt); el.__tt=setTimeout(function(){el.classList.remove("tap");},700); },true);
+  function rel(){ setTimeout(function(){ [].forEach.call(document.querySelectorAll(".tap"),function(n){n.classList.remove("tap");}); },140); }
+  document.addEventListener("pointerup",rel,true); document.addEventListener("pointercancel",rel,true);
+  var LD=null,LB=null;
+  document.addEventListener("click",function(e){ var b=e.target.closest&&e.target.closest("button"); if(!b||b.disabled) return;
+    var o={el:b,t:Date.now()}; LD=o; if(!b.closest("dialog")) LB=o; },true);
+  window.__fb={
+    pick:function(){ var n=Date.now(); if(!LD||n-LD.t>400) return null;
+      if(LD.el.isConnected&&!LD.el.closest("dialog")) return LD.el;
+      if(LB&&LB.el.isConnected&&n-LB.t<60000) return LB.el; return null; },
+    on:function(b){ if(!b||b.classList.contains("busy")) return false;
+      try{ b.style.setProperty("--fbc",getComputedStyle(b).color); }catch(e){}
+      b.classList.add("busy"); b.setAttribute("aria-busy","true"); return true; },
+    off:function(b,added){ if(!b||!added) return; b.classList.remove("busy"); b.removeAttribute("aria-busy"); }
+  };
+})();
+</script>
+<script>
+/* ===== SETTINGS: edit this block only ===== */
+// 247BET front-end settings. Edit this file only.
+window.CFG = {
+  // Paste your deployed Google Apps Script web app URL here (it ends in /exec).
+  // While it still contains YOUR_API_ID the site shows sample odds so you can preview the design.
+  API_URL: "https://script.google.com/macros/s/AKfycbwdELw9L8ENkynwEhCnM0xvaiY1nha1sjAgznudoVEJWacdddMXBlsqlIAD50dzEFRciQ/exec",
+
+  // Brand images in the Assets folder. Missing files are skipped quietly, so you can add them one at a time.
+  IMAGES: {
+    loading: "Assets/logo.png",             // brand image on the "Loading..." splash
+    splash: "Assets/splash.webp",           // full-screen backdrop behind the splash
+    popup: "Assets/popup.webp",             // first-open welcome / app popup
+    matches: "Assets/match-bg.webp",        // background behind the matches area
+    offers: "Assets/promo-bg.webp"          // background for promo and referral offers
+  },
+  POPUP_ONCE: true,                          // true = show the welcome popup on the first visit only
+  MIN_STAKE: 50,
+  MAX_STAKE: 150000,
+  MAX_PAYOUT: 1500000,
+  SLIP_TEXT: "Big wins start with one bold pick. Place your bet and enjoy the game!",   // closing line under the Place bet button
+  REFRESH_MS: 60000,       // how often odds are re-fetched while the tab is open
+  PAGE: 30,                // matches shown before "Show more matches"
+  TG_USER: "Official247Bet",   // 247Bet Telegram support username (no @)
+  TZ: "Africa/Nairobi",    // kick-off times are always shown in this time zone
+  LOGOS: "https://247bet-uk.github.io/247bet-logos/",    // team logos are served from this GitHub Pages site (filled by Admin > Team logos)
+
+  // Shown in the footer and the policy pages. Leave blank until you have the real details.
+  SUPPORT_EMAIL: "",       // e.g. "support@yourdomain.com"; adds contact links to the policy pages
+  LICENCE: {               // the footer licence line only appears when operator AND licenceNo are filled in
+    operator: "",          // the legal company that runs the site
+    regNo: "",             // company registration number
+    address: "",           // registered office
+    regulator: "",         // the regulator that actually licenses YOU
+    licenceNo: "",         // YOUR licence number
+    regulatorUrl: ""       // https:// link to that regulator
+  }
+};
+/* speed: ask for the odds now, while the rest of the page is still being read; load() picks this answer up */
+(function () {
+  try {
+    if (!window.CFG || !CFG.API_URL || CFG.API_URL.indexOf("YOUR_API_ID") > -1) return;
+    var ctl = ("AbortController" in window) ? new AbortController() : null, t = setTimeout(function () { if (ctl) ctl.abort(); }, 15000);
+    window.__mPre = fetch(CFG.API_URL + "?action=getMatches", ctl ? { signal: ctl.signal } : undefined)
+      .then(function (r) { clearTimeout(t); if (!r.ok) throw new Error("http " + r.status); return r.json(); });
+    window.__mPre.catch(function () {});
+  } catch (e) {}
+})();
+</script>
+<script src="app.js?v=741736ba"></script>
+<script>
+if ("serviceWorker" in navigator && location.protocol === "https:") { window.addEventListener("load", function () { setTimeout(function () { navigator.serviceWorker.register("sw.js").catch(function () {}); }, 1500); }); }
+/* Update notice: opening the site or the installed app always fetches the newest page. A copy that stays open for hours is checked quietly
+   (a tiny "has it changed?" request) and shows an "Update now" bar when a new version has been published. */
+(function () {
+  if (location.protocol !== "https:" || !window.fetch) return;
+  var base = null, shown = false, dismissed = "", T = 0;
+  function key(r) { return (r.headers.get("etag") || "") + "|" + (r.headers.get("last-modified") || "") + "|" + (r.headers.get("content-length") || ""); }
+  function bar(k) {
+    if (shown || k === dismissed) return;
+    if (document.querySelector("dialog[open]")) { setTimeout(function () { bar(k); }, 3000); return; }   /* a pop-up window is open: wait until it is closed */
+    shown = true;
+    var d = document.createElement("div"); d.setAttribute("role", "status");
+    d.setAttribute("popover", "manual");   /* top layer: stays visible above the site's own pop-up windows */
+    d.style.cssText = "top:auto;margin:0;width:auto;height:auto;overflow:visible;position:fixed;left:10px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:600;display:flex;align-items:center;gap:10px;justify-content:space-between;padding:12px 14px;border-radius:14px;background:var(--surf,#0b1b3a);color:var(--text,#fff);border:1px solid var(--lime,#4ff32c);box-shadow:0 6px 24px rgba(0,0,0,.45);font-size:calc(14px * var(--ts))";
+    d.innerHTML = '<span><b>A new version of 247Bet is ready.</b></span><span style="display:flex;gap:8px;flex:none"><button type="button" data-u="1" style="border:0;border-radius:10px;padding:9px 14px;font-weight:700;background:var(--lime,#4ff32c);color:#04210a">Update now</button><button type="button" data-u="0" aria-label="Later" style="border:0;border-radius:10px;padding:9px 10px;background:transparent;color:inherit">Later</button></span>';
+    d.onclick = function (e) { var b = e.target.closest("[data-u]"); if (!b) return; if (b.getAttribute("data-u") === "1") location.reload(); else { dismissed = k; shown = false; d.remove(); } };
+    document.body.appendChild(d); try { d.showPopover && d.showPopover(); } catch (e) {}
+  }
+  function check() {
+    if (document.visibilityState !== "visible") return;
+    fetch(location.pathname, { method: "GET", cache: "no-cache", credentials: "same-origin" }).then(function (r) {
+      if (!r.ok) return; var k = key(r); try { r.body && r.body.cancel && r.body.cancel(); } catch (e) {}
+      if (base === null) base = k; else if (k !== base) bar(k);
+    }).catch(function () {});
+    try { navigator.serviceWorker && navigator.serviceWorker.getRegistration().then(function (g) { if (g) g.update().catch(function () {}); }); } catch (e) {}
+  }
+  window.addEventListener("load", function () { setTimeout(check, 8000); });
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") { clearTimeout(T); T = setTimeout(check, 1500); } });
+  setInterval(check, 10 * 60 * 1000);
+  try { if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.addEventListener("controllerchange", function () { bar("sw"); }); } catch (e) {}
+})();
+</script>
+<script id="theme-js">
+(function () {
+  "use strict";
+  var root = document.documentElement, mq = window.matchMedia ? matchMedia("(prefers-color-scheme: light)") : null;
+  function mode() { try { return localStorage.getItem("q247.theme") || "auto"; } catch (e) { return "auto"; } }
+  function apply() {
+    var m = mode(), light = m === "light" || (m === "auto" && mq && mq.matches);
+    root.setAttribute("data-theme", light ? "light" : "dark"); root.setAttribute("data-theme-mode", m);
+    var b = document.querySelectorAll("[data-theme-set]"); for (var i = 0; i < b.length; i++) b[i].setAttribute("aria-pressed", String(b[i].getAttribute("data-theme-set") === m));
+    var n = document.getElementById("themeNote"); if (n) n.textContent = "Theme: " + (m === "auto" ? "Auto (follows your phone)" : m === "light" ? "Light" : "Dark");
+  }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-theme-open]")) { var mb = document.getElementById("menuBtn"); if (mb) mb.click(); setTimeout(function () { var t = document.getElementById("themeSw"); if (t && t.scrollIntoView) t.scrollIntoView({ block: "center" }); }, 350); return; }
+    if (e.target.closest("[data-chat-go]")) { var co = document.getElementById("chatOpen"); if (co) co.click(); return; }
+    var b = e.target.closest("[data-theme-set]"); if (!b) return;
+    try { localStorage.setItem("q247.theme", b.getAttribute("data-theme-set")); } catch (x) {}
+    apply();
+  });
+  if (mq) { var f = function () { if (mode() === "auto") apply(); }; if (mq.addEventListener) mq.addEventListener("change", f); else if (mq.addListener) mq.addListener(f); }
+  apply();
+})();
+</script>
+<script id="install-js">
+(function () {
+  "use strict";
+  var line = document.getElementById("menu-install"), pop = document.getElementById("popInstall"); if (!line) return;
+  var ua = navigator.userAgent || "";
+  var standalone = function () { return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; };
+  var isIOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+  var inApp = /FBAN|FBAV|FB_IAB|Instagram|WhatsApp|musical_ly|TikTok|BytedanceWebview|Snapchat|Line\/|; wv\)/i.test(ua);
+  function show() { var h = !!standalone(); line.hidden = h; if (pop) pop.hidden = h; }
+  show();
+  window.addEventListener("q247-installed", function () { line.hidden = true; if (pop) pop.hidden = true; });
+  try { matchMedia("(display-mode: standalone)").addEventListener("change", show); } catch (e) {}
+  function close() { var o = document.getElementById("install-sheet"); if (o) o.remove(); }
+  function sheet(title, lead, steps, withCopy) {
+    close();
+    var o = document.createElement("div"); o.id = "install-sheet"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");
+    o.style.cssText = "position:fixed;inset:0;z-index:400;background:rgba(2,11,32,.82);display:flex;align-items:center;justify-content:center;padding:18px";
+    o.innerHTML = '<div style="max-width:360px;width:100%;background:var(--surf);border:1px solid var(--line2);border-radius:16px;padding:20px 18px;color:var(--text)"><div style="font-size:calc(30px * var(--ts));text-align:center">&#128241;</div><h3 style="margin:6px 0 8px;text-align:center">' + title + '</h3><p style="margin:0 0 4px;font-size:calc(13px * var(--ts));color:var(--mute)">' + lead + "</p>" + (steps ? '<ol class="ins-ol">' + steps.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ol>" : "") + (withCopy ? '<button type="button" class="btn lime wide" data-i="copy">Copy link</button>' : '<button type="button" class="btn lime wide" data-i="close">Got it</button>') + "</div>";
+    o.addEventListener("click", function (e) {
+      if (e.target === o || e.target.closest('[data-i="close"]')) return close();
+      var c = e.target.closest('[data-i="copy"]'); if (!c) return;
+      var url = location.href.split("#")[0].split("?")[0];
+      var done = function (ok) { c.textContent = ok ? "Link copied. Paste it in Chrome or Safari" : "Press and hold the address bar to copy"; };
+      try { navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); }); } catch (x) { done(false); }
+    });
+    document.body.appendChild(o);
+  }
+  function go(e) {
+    if (e) e.preventDefault();
+    var x = document.querySelector("#menuDrawer .mx"); if (x && document.getElementById("menuDrawer") && !document.getElementById("menuDrawer").hidden) x.click();
+
+    var ev = window.q247InstallEvt;
+    if (ev && ev.prompt) {                                       // Android Chrome / Edge: the phone's own install prompt
+      window.q247InstallEvt = null;
+      try { ev.prompt(); ev.userChoice.then(function (c) { if (c && c.outcome === "accepted") { line.hidden = true; if (pop) pop.hidden = true; } else window.q247InstallEvt = ev; }); } catch (z) { window.q247InstallEvt = ev; }
+      return;
+    }
+    if (inApp) return sheet("Open in your browser first", "This page is open inside another app (WhatsApp, Facebook, TikTok or similar), which cannot install apps. Open the same link in Chrome (Android) or Safari (iPhone), then choose Install APK again.", null, true);
+    if (isIOS) return sheet("Add 247Bet to your iPhone", "Use Safari for this. It takes four taps.", ["Tap the <b>Share</b> button (the square with an arrow) at the bottom of Safari.", "Scroll down and tap <b>Add to Home Screen</b>.", "Tap <b>Add</b> at the top right.", "Open <b>247Bet</b> from your home screen."]);
+    sheet("Add 247Bet to your phone", "Your browser does not show the install prompt by itself, but you can add it in a few taps.", ["Open your browser\u2019s menu (the three dots, usually top right).", "Tap <b>Install app</b> or <b>Add to Home screen</b>.", "Confirm. The 247Bet icon then appears on your home screen."]);
+  }
+  document.addEventListener("click", function (e) { if (e.target.closest("[data-install-go]")) go(e); });   // the home banner slide
+  line.addEventListener("click", go); if (pop) pop.addEventListener("click", function (e) { var d = pop.closest("dialog"); if (d && d.close) d.close(); go(e); });
+})();
+</script>
+</body>
+</html>
