@@ -1,0 +1,104 @@
+{
+  "name": "247Bet",
+  "short_name": "247Bet",
+  "id": "./",
+  "description": "Football odds, jackpots and instant wins. 18+ only.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020b20",
+  "theme_color": "#020b20",
+  "lang": "en-KE",
+  "dir": "ltr",
+  "categories": [
+    "sports",
+    "entertainment",
+    "games"
+  ],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "Assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "Assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "Assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "My bets",
+      "short_name": "My bets",
+      "description": "See your open and settled bets",
+      "url": "./?go=bets",
+      "icons": [
+        {
+          "src": "Assets/shortcut-bets.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Deposit",
+      "short_name": "Deposit",
+      "description": "Add money with M-Pesa",
+      "url": "./?go=deposit",
+      "icons": [
+        {
+          "src": "Assets/shortcut-deposit.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Jackpots",
+      "short_name": "Jackpot",
+      "description": "Play the Midweek and Weekend jackpots",
+      "url": "./?go=jackpot",
+      "icons": [
+        {
+          "src": "Assets/shortcut-jackpot.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "Assets/screenshot-home.png",
+      "sizes": "575x1095",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Football odds, today and tomorrow"
+    },
+    {
+      "src": "Assets/screenshot-jackpots.png",
+      "sizes": "575x1095",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Jackpots: Midweek and Super Millionaire"
+    },
+    {
+      "src": "Assets/screenshot-desktop.png",
+      "sizes": "1280x615",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "247Bet on desktop: odds, leagues and bet slip"
+    }
+  ]
+}
